@@ -7,8 +7,9 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body class="options">
-  <header class="r-head"><div class="p-brand"><img src="icons/icon32.png" alt="" width="28" height="28"><strong data-i18n="opt_title">Settings</strong></div></header>
-  <main class="o-main">
+  <header class="o-head"><div class="o-wrap"><div class="p-brand"><img src="icons/icon32.png" alt="" width="32" height="32"><strong data-i18n="opt_title">Settings</strong></div></div></header>
+  <main class="o-main o-wrap">
+    <div class="o-pair">
     <section>
       <h2 data-i18n="opt_language">Language</h2>
       <select id="lang">
@@ -26,6 +27,7 @@
         <option value="20" data-i18n="opt_fs_20">Extra large (20 px)</option>
       </select>
     </section>
+    </div>
     <section>
       <h2 data-i18n="opt_overlay_colors">Overlay colours</h2>
       <label><input type="color" id="c-headings"> <span data-i18n="overlay_headings">Headings</span></label>
@@ -38,13 +40,13 @@
       <label class="block"><input type="checkbox" id="serp-numbers"> <span data-i18n="opt_serp_numbers">Number organic results</span></label>
       <label class="block"><input type="checkbox" id="serp-ads"> <span data-i18n="opt_serp_ads">Highlight ads</span></label>
       <label class="block"><input type="checkbox" id="serp-features"> <span data-i18n="opt_serp_features">Label SERP features</span></label>
-      <label class="block"><span data-i18n="opt_serp_mydomain">Highlight my domain</span><br><input type="text" id="serp-mydomain" maxlength="253" spellcheck="false" data-i18n-placeholder="opt_serp_mydomain_ph"></label>
+      <label class="block o-field"><span data-i18n="opt_serp_mydomain">Highlight my domain</span><input type="text" id="serp-mydomain" maxlength="253" spellcheck="false" data-i18n-placeholder="opt_serp_mydomain_ph"></label>
       <p class="muted small" data-i18n="opt_serp_note"></p>
     </section>
     <section>
       <h2 data-i18n="opt_keywords">Keyword density</h2>
-      <label class="block"><span data-i18n="opt_stopwords">Extra stop words</span><textarea id="stopWords" rows="4" data-i18n-placeholder="opt_words_placeholder"></textarea></label>
-      <label class="block"><span data-i18n="opt_whitelist">Whitelist</span><textarea id="whitelist" rows="3" data-i18n-placeholder="opt_words_placeholder"></textarea></label>
+      <label class="block o-field"><span data-i18n="opt_stopwords">Extra stop words</span><textarea id="stopWords" rows="4" data-i18n-placeholder="opt_words_placeholder"></textarea></label>
+      <label class="block o-field"><span data-i18n="opt_whitelist">Whitelist</span><textarea id="whitelist" rows="3" data-i18n-placeholder="opt_words_placeholder"></textarea></label>
     </section>
     <section>
       <h2 data-i18n="opt_audit_groups">Audit groups shown</h2>
@@ -69,6 +71,7 @@
     </section>
     <p id="saved" class="muted" role="status"></p>
   </main>
+  <footer class="site-foot o-foot"><a href="https://blakfy.com/" target="_blank" rel="noopener noreferrer" class="credit" data-i18n="operated_by">Operated by Blakfy Studio</a></footer>
   <script src="options.js"></script>
 </body>
 </html>

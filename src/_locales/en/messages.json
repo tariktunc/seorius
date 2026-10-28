@@ -1818,5 +1818,9 @@
   },
   "f_sitemap_xo_not_listed": {
     "message": "The page is not listed in the {n} sitemap(s) on other hosts that were read."
+  },
+  "operated_by": {
+    "message": "Operated by Blakfy Studio",
+    "description": "Footer credit linking to blakfy.com"
   }
 }
