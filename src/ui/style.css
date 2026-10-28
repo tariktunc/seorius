@@ -1,11 +1,12 @@
-/* Seorius UI styles (own design). */
+/* Seorius UI styles (own design). Palette from the logo: navy #10243a + mint #7fd8c8 (src/icons/logo.svg). */
 :root {
-  --bg: #ffffff; --fg: #1d2330; --muted: #667085; --line: #e3e6ec; --soft: #f5f7fa; --accent: #0f6b5c;
-  --error: #c62828; --warning: #b45309; --notice: #1d4ed8; --pass: #15803d; --notrun: #6b7280;
+  --bg: #ffffff; --fg: #10243a; --muted: #5b6b7f; --line: #dde4ec; --soft: #f2f6f9; --accent: #10243a; --on-accent: #ffffff;
+  --error: #c62828; --warning: #b45309; --notice: #1d4ed8; --pass: #1f7a6c; --notrun: #64748b; --on-sev: #ffffff;
   font: 13px/1.45 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; color: var(--fg); background: var(--bg);
 }
 @media (prefers-color-scheme: dark) {
-  :root { --bg: #14171c; --fg: #e6e8eb; --muted: #9aa3b2; --line: #2a2f37; --soft: #1b1f26; --accent: #34b39d; --notice: #6b9cff; --warning: #f0a35a; --error: #ff6b6b; --pass: #4ade80; }
+  :root { --bg: #0b1a2b; --fg: #e6edf3; --muted: #9aabbd; --line: #22364d; --soft: #12263c; --accent: #7fd8c8; --on-accent: #10243a;
+    --notice: #8fb3ff; --warning: #f5b26b; --error: #ff8a8a; --pass: #7fd8c8; --notrun: #9aabbd; --on-sev: #0b1a2b; }
 }
 * { box-sizing: border-box; }
 body { margin: 0; }
@@ -13,7 +14,7 @@ h2 { font-size: 15px; margin: 12px 0 8px; }
 h3 { font-size: 13px; margin: 14px 0 6px; }
 a { color: var(--accent); }
 button, .button { font: inherit; border: 1px solid var(--line); background: var(--soft); color: var(--fg); padding: 4px 10px; border-radius: 5px; cursor: pointer; display: inline-block; }
-button.primary { background: var(--accent); border-color: var(--accent); color: #fff; }
+button.primary { background: var(--accent); border-color: var(--accent); color: var(--on-accent); }
 button:disabled { opacity: .55; cursor: default; }
 button.linkish { background: none; border: none; color: var(--accent); text-decoration: underline; padding: 0; }
 .muted { color: var(--muted); }
@@ -22,7 +23,7 @@ button.linkish { background: none; border: none; color: var(--accent); text-deco
 .error { color: var(--error); }
 pre { white-space: pre-wrap; word-break: break-word; background: var(--soft); padding: 8px; border-radius: 5px; max-height: 420px; overflow: auto; }
 
-.sev { display: inline-block; font-size: 11px; font-weight: 600; padding: 0 6px; border-radius: 4px; color: #fff; white-space: nowrap; }
+.sev { display: inline-block; font-size: 11px; font-weight: 600; padding: 0 6px; border-radius: 4px; color: var(--on-sev); white-space: nowrap; }
 .sev-error { background: var(--error); } .sev-warning { background: var(--warning); } .sev-notice { background: var(--notice); }
 .sev-pass { background: var(--pass); } .sev-not-run { background: var(--notrun); }
 .cnt { font-weight: 600; } .cnt-error { color: var(--error); } .cnt-warning { color: var(--warning); } .cnt-notice { color: var(--notice); } .cnt-not-run { color: var(--notrun); }
