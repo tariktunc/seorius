@@ -51,7 +51,7 @@ const tr = JSON.parse(await readFile(path.join(src, '_locales/tr/messages.json')
 const missing = [...Object.keys(en).filter((k) => !(k in tr)).map((k) => `tr:${k}`), ...Object.keys(tr).filter((k) => !(k in en)).map((k) => `en:${k}`)];
 if (missing.length) { console.error('Locale key mismatch:', missing.join(', ')); process.exit(1); }
 
-// ---- icons: teal rounded square with a white magnifier ----
+// ---- icons: logo C (S + Sirius star), rasterised here so no binary is checked in ----
 function crc32(buf) {
   let c; const table = crc32.t || (crc32.t = Array.from({ length: 256 }, (_, n) => { c = n; for (let k = 0; k < 8; k++) c = c & 1 ? 0xedb88320 ^ (c >>> 1) : c >>> 1; return c >>> 0; }));
   let crc = 0xffffffff;
@@ -64,30 +64,64 @@ function chunk(type, data) {
   const crc = Buffer.alloc(4); crc.writeUInt32BE(crc32(td));
   return Buffer.concat([len, td, crc]);
 }
+// Logo (src/icons/logo.svg, 128-unit box): navy disc, white "S" stroke, mint four-point star (Sirius).
+function cubic(p0, p1, p2, p3, n = 24) {
+  const out = [];
+  for (let i = 1; i <= n; i++) {
+    const t = i / n; const m = 1 - t;
+    out.push([m * m * m * p0[0] + 3 * m * m * t * p1[0] + 3 * m * t * t * p2[0] + t * t * t * p3[0], m * m * m * p0[1] + 3 * m * m * t * p1[1] + 3 * m * t * t * p2[1] + t * t * t * p3[1]]);
+  }
+  return out;
+}
+function poly(start, segs) {
+  const pts = [start]; let cur = start;
+  for (const [a, b, c] of segs) { pts.push(...cubic(cur, a, b, c)); cur = c; }
+  return pts;
+}
+const S_PATH = poly([84, 40], [[[78, 32], [68, 29], [58, 29]], [[44, 29], [34, 37], [34, 49]], [[34, 61], [45, 65], [58, 68]], [[72, 71], [82, 75], [82, 87]], [[82, 98], [72, 104], [60, 104]], [[48, 104], [40, 99], [35, 91]]]);
+const S_HALF_WIDTH = 5.5;
+function starPath(cx, cy, r, k) {
+  const i = r * k;
+  return poly([cx, cy - r], [
+    [[cx + i * 0.6, cy - i * 1.2], [cx + i * 1.2, cy - i * 0.6], [cx + r, cy]],
+    [[cx + i * 1.2, cy + i * 0.6], [cx + i * 0.6, cy + i * 1.2], [cx, cy + r]],
+    [[cx - i * 0.6, cy + i * 1.2], [cx - i * 1.2, cy + i * 0.6], [cx - r, cy]],
+    [[cx - i * 1.2, cy - i * 0.6], [cx - i * 0.6, cy - i * 1.2], [cx, cy - r]],
+  ]);
+}
+const STAR = starPath(94, 30, 16, 0.22);
+function segDist(px, py, [ax, ay], [bx, by]) {
+  const dx = bx - ax; const dy = by - ay; const l = dx * dx + dy * dy;
+  const t = l ? Math.max(0, Math.min(1, ((px - ax) * dx + (py - ay) * dy) / l)) : 0;
+  return Math.hypot(px - ax - t * dx, py - ay - t * dy);
+}
+function inside(px, py, pts) {
+  let c = false;
+  for (let i = 0, j = pts.length - 1; i < pts.length; j = i++) {
+    const [xi, yi] = pts[i]; const [xj, yj] = pts[j];
+    if ((yi > py) !== (yj > py) && px < ((xj - xi) * (py - yi)) / (yj - yi) + xi) c = !c;
+  }
+  return c;
+}
+function logoColor(x, y) {
+  if (Math.hypot(x - 64, y - 64) > 64) return null;
+  if (inside(x, y, STAR)) return [127, 216, 200];
+  for (let i = 1; i < S_PATH.length; i++) if (segDist(x, y, S_PATH[i - 1], S_PATH[i]) <= S_HALF_WIDTH) return [255, 255, 255];
+  return [16, 36, 58];
+}
 function png(size) {
-  const S = 4; const raw = Buffer.alloc(size * (size * 4 + 1));
-  const bg = [15, 107, 92];
+  const S = size <= 32 ? 8 : 4; const raw = Buffer.alloc(size * (size * 4 + 1));
   for (let y = 0; y < size; y++) {
     raw[y * (size * 4 + 1)] = 0;
     for (let x = 0; x < size; x++) {
-      let a = 0; let w = 0;
+      let a = 0; const sum = [0, 0, 0];
       for (let sy = 0; sy < S; sy++) for (let sx = 0; sx < S; sx++) {
-        const u = (x + (sx + 0.5) / S) / size; const v = (y + (sy + 0.5) / S) / size;
-        // rounded square, radius 0.2
-        const r = 0.2; const dx = Math.max(Math.abs(u - 0.5) - (0.5 - r), 0); const dy = Math.max(Math.abs(v - 0.5) - (0.5 - r), 0);
-        if (dx * dx + dy * dy > r * r) continue;
-        a++;
-        // magnifier ring centre (0.44,0.44) radius 0.22 thickness 0.075; handle to (0.76,0.76)
-        const d = Math.hypot(u - 0.44, v - 0.44);
-        const ring = Math.abs(d - 0.2) < 0.06;
-        const t = Math.max(0, Math.min(1, ((u - 0.58) + (v - 0.58)) / (2 * 0.2)));
-        const px = 0.58 + t * 0.2; const hd = Math.hypot(u - px, v - px);
-        const handle = hd < 0.07;
-        if (ring || handle) w++;
+        const c = logoColor(((x + (sx + 0.5) / S) / size) * 128, ((y + (sy + 0.5) / S) / size) * 128);
+        if (!c) continue;
+        a++; sum[0] += c[0]; sum[1] += c[1]; sum[2] += c[2];
       }
       const o = y * (size * 4 + 1) + 1 + x * 4;
-      const wf = a ? w / a : 0;
-      raw[o] = Math.round(bg[0] + (255 - bg[0]) * wf); raw[o + 1] = Math.round(bg[1] + (255 - bg[1]) * wf); raw[o + 2] = Math.round(bg[2] + (255 - bg[2]) * wf);
+      if (a) { raw[o] = Math.round(sum[0] / a); raw[o + 1] = Math.round(sum[1] / a); raw[o + 2] = Math.round(sum[2] / a); }
       raw[o + 3] = Math.round((a / (S * S)) * 255);
     }
   }
