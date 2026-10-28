@@ -134,3 +134,6 @@ GSC / GA4 per-page data through our own backend, with no third party.
 | UI language | Turkish and English, switchable in Settings |
 | Privacy policy | hosted on blakfy.com, next to the existing legal texts |
 | Chrome Web Store account | info@blakfy.com |
+| Logo | option C: "S" + four-point Sirius star on a navy disc (`src/icons/logo.svg`) |
+| Palette | from the logo: navy `#10243a` + mint `#7fd8c8`, WCAG AA in light and dark (`src/ui/style.css`) |
+| UI design | approved; Figma file "Seorius – UI v1" (Blakfy Studio team), 25 screens |
