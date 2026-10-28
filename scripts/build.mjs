@@ -1,4 +1,4 @@
-// Build: bundle the injected inspector and the three UI pages with esbuild, copy static files,
+// Build: bundle the injected inspector, the Google results script and the three UI pages with esbuild, copy static files,
 // and draw the toolbar icons (own artwork, generated here so no binary is checked in).
 import { build } from 'esbuild';
 import { mkdir, rm, cp, writeFile, readFile } from 'node:fs/promises';
@@ -19,6 +19,7 @@ await build({
     popup: path.join(src, 'ui/popup.js'),
     report: path.join(src, 'ui/report.js'),
     options: path.join(src, 'ui/options.js'),
+    serp: path.join(src, 'serp/serp.js'),
   },
   outdir: dist,
   bundle: true,
@@ -28,6 +29,21 @@ await build({
   legalComments: 'inline',
   logLevel: 'warning',
   plugins: [{
+    // The Google results script cannot load locale files (it makes no requests at all), so its
+    // serp_* strings are bundled in: { en: {...}, tr: {...} }.
+    name: 'serp-messages',
+    setup(b) {
+      b.onResolve({ filter: /^seorius:serp-messages$/ }, () => ({ path: 'serp-messages', namespace: 'seorius' }));
+      b.onLoad({ filter: /.*/, namespace: 'seorius' }, async () => {
+        const out = {};
+        for (const l of ['en', 'tr']) {
+          const j = JSON.parse(await readFile(path.join(src, `_locales/${l}/messages.json`), 'utf8'));
+          out[l] = Object.fromEntries(Object.entries(j).filter(([k]) => k.startsWith('serp_')).map(([k, v]) => [k, v.message]));
+        }
+        return { contents: JSON.stringify(out), loader: 'json' };
+      });
+    },
+  }, {
     // Rules files ship without their "$comment" / "evidence" documentation blocks: the code
     // reads only the values, and the source URLs inside the evidence notes are not needed at runtime.
     name: 'rules-values-only',
@@ -41,7 +57,7 @@ await build({
   }],
 });
 
-for (const f of ['manifest.json', 'ui/popup.html', 'ui/report.html', 'ui/options.html', 'ui/style.css']) await cp(path.join(src, f), path.join(dist, path.basename(f)));
+for (const f of ['manifest.json', 'ui/popup.html', 'ui/report.html', 'ui/options.html', 'ui/style.css', 'serp/serp.css']) await cp(path.join(src, f), path.join(dist, path.basename(f)));
 await cp(path.join(src, '_locales'), path.join(dist, '_locales'), { recursive: true });
 await cp(path.join(root, 'LICENSE'), path.join(dist, 'LICENSE'));
 

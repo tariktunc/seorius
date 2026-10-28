@@ -64,12 +64,6 @@
   "cnt_notrun": {
     "message": "not run"
   },
-  "tab_overview": {
-    "message": "Overview"
-  },
-  "tab_headings": {
-    "message": "Headings"
-  },
   "tab_images": {
     "message": "Images"
   },
@@ -78,9 +72,6 @@
   },
   "tab_social": {
     "message": "Social"
-  },
-  "tab_schema": {
-    "message": "Schema"
   },
   "sev_error": {
     "message": "error"
@@ -1305,5 +1296,137 @@
   },
   "ratio_def_live": {
     "message": "visible text characters ÷ rendered HTML characters (raw HTML not available)"
+  },
+  "tab_summary": {
+    "message": "Summary"
+  },
+  "tab_headers": {
+    "message": "Headers"
+  },
+  "tab_tools": {
+    "message": "Tools"
+  },
+  "popup_details": {
+    "message": "Details in report"
+  },
+  "popup_schema_types": {
+    "message": "Schema types"
+  },
+  "opt_serp": {
+    "message": "Google search results"
+  },
+  "opt_serp_enabled": {
+    "message": "Show the Seorius overlay on Google search results"
+  },
+  "opt_serp_numbers": {
+    "message": "Number organic results"
+  },
+  "opt_serp_ads": {
+    "message": "Highlight ads"
+  },
+  "opt_serp_features": {
+    "message": "Label SERP features"
+  },
+  "opt_serp_mydomain": {
+    "message": "Highlight my domain"
+  },
+  "opt_serp_mydomain_ph": {
+    "message": "example.com"
+  },
+  "opt_serp_note": {
+    "message": "Runs only on Google web search pages. It reads the results already on the page and sends nothing anywhere."
+  },
+  "serp_title": {
+    "message": "Seorius search results panel"
+  },
+  "serp_collapse": {
+    "message": "Hide"
+  },
+  "serp_expand": {
+    "message": "Show"
+  },
+  "serp_organic": {
+    "message": "Organic"
+  },
+  "serp_ads": {
+    "message": "Ads"
+  },
+  "serp_ad_top": {
+    "message": "top"
+  },
+  "serp_ad_bottom": {
+    "message": "bottom"
+  },
+  "serp_ad_badge": {
+    "message": "Ad #{n}"
+  },
+  "serp_pos_title": {
+    "message": "Organic position {n}"
+  },
+  "serp_my_domain": {
+    "message": "My domain"
+  },
+  "serp_features": {
+    "message": "SERP features"
+  },
+  "serp_none": {
+    "message": "none detected"
+  },
+  "serp_toggle_numbers": {
+    "message": "Numbers"
+  },
+  "serp_toggle_ads": {
+    "message": "Ad highlight"
+  },
+  "serp_toggle_features": {
+    "message": "Feature labels"
+  },
+  "serp_export": {
+    "message": "Export CSV"
+  },
+  "serp_aio_title": {
+    "message": "AI Overview sources ({n})"
+  },
+  "serp_aio_export": {
+    "message": "Sources CSV"
+  },
+  "serp_locale": {
+    "message": "Search as"
+  },
+  "serp_country": {
+    "message": "Country"
+  },
+  "serp_language": {
+    "message": "Language"
+  },
+  "serp_apply": {
+    "message": "Reload"
+  },
+  "serp_privacy": {
+    "message": "Read from this page only. Nothing is sent anywhere."
+  },
+  "serp_feat_featured_snippet": {
+    "message": "Featured snippet"
+  },
+  "serp_feat_paa": {
+    "message": "People also ask"
+  },
+  "serp_feat_local_pack": {
+    "message": "Local pack (map)"
+  },
+  "serp_feat_video": {
+    "message": "Video carousel"
+  },
+  "serp_feat_images": {
+    "message": "Image pack"
+  },
+  "serp_feat_top_stories": {
+    "message": "Top stories"
+  },
+  "serp_feat_sitelinks": {
+    "message": "Sitelinks"
+  },
+  "serp_feat_ai_overview": {
+    "message": "AI Overview"
   }
 }

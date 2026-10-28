@@ -1,0 +1,21 @@
+/* Seorius marks on Google results pages. Injected by the manifest (no inline <style>, so Google's CSP
+   is never involved). Every rule targets only Seorius' own data-seorius-serp* attributes. Palette:
+   navy #10243a + mint #7fd8c8; ads use amber so they never look like organic results. Text size
+   follows the user setting (--seorius-fs, set per node), never below 14px. */
+[data-seorius-serp] { all: revert; box-sizing: border-box; font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; font-size: max(14px, calc(var(--seorius-fs, 14px) * 0.875)); line-height: 1.4; letter-spacing: 0; text-transform: none; text-decoration: none; }
+
+/* organic position badge (before the title) */
+[data-seorius-serp="pos"] { display: inline-block; min-width: 1.9em; margin-right: 8px; padding: 0 6px; border-radius: 5px; background: #10243a; color: #7fd8c8; font-weight: 700; text-align: center; vertical-align: middle; }
+[data-seorius-serp="pos"][data-theme="dark"] { background: #7fd8c8; color: #10243a; }
+[data-seorius-serp="mine"] { display: inline-block; margin-right: 6px; padding: 0 6px; border-radius: 5px; border: 1px solid #1f7a6c; color: #1f7a6c; background: #e6f7f3; font-weight: 600; vertical-align: middle; }
+[data-seorius-serp="mine"][data-theme="dark"] { border-color: #7fd8c8; color: #7fd8c8; background: #12263c; }
+[data-seorius-serp-mine] { outline: 3px solid #1f7a6c !important; outline-offset: 6px !important; border-radius: 6px; }
+
+/* ads: amber tint + border + "Ad #n" badge, separate from organic numbering */
+[data-seorius-serp-ad] { background: rgba(245, 178, 107, .14) !important; box-shadow: inset 4px 0 0 #b45309, 0 0 0 2px #b45309 !important; border-radius: 8px !important; padding: 6px 10px !important; margin-bottom: 10px !important; }
+[data-seorius-serp="ad"] { display: inline-block; margin: 0 0 4px; padding: 1px 8px; border-radius: 5px; background: #b45309; color: #fff; font-weight: 700; }
+[data-seorius-serp="ad"][data-theme="dark"] { background: #f5b26b; color: #10243a; }
+
+/* SERP feature chip (top of the feature block) */
+[data-seorius-serp="chip"] { display: inline-block; margin: 0 6px 6px 0; padding: 0 8px; border-radius: 5px; border: 1px solid #10243a; background: #e6f7f3; color: #10243a; font-weight: 600; }
+[data-seorius-serp="chip"][data-theme="dark"] { border-color: #7fd8c8; background: #12263c; color: #7fd8c8; }

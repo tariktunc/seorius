@@ -4,6 +4,7 @@ import { GROUPS } from '../lib/audit.mjs';
 import { compareMatrix } from '../lib/compare.mjs';
 import { toCsv, fileStamp } from '../lib/csv.mjs';
 import { AGENTS } from '../lib/robots.mjs';
+import { toolLinks } from '../lib/tools.mjs';
 import SRULES from '../engine/seorius-rules.json';
 
 const $ = (id) => document.getElementById(id);
@@ -292,23 +293,7 @@ function sCompare() {
 }
 
 function sTools() {
-  const u = encodeURIComponent(scan.url);
-  let host = '';
-  try { host = new URL(scan.url).hostname; } catch { /* keep */ }
-  const tools = [
-    ['Google Rich Results Test', `https://search.google.com/test/rich-results?url=${u}`],
-    ['Schema Markup Validator', `https://validator.schema.org/#url=${u}`],
-    ['PageSpeed Insights', `https://pagespeed.web.dev/analysis?url=${u}`],
-    ['W3C HTML Validator', `https://validator.w3.org/nu/?doc=${u}`],
-    ['W3C CSS Validator', `https://jigsaw.w3.org/css-validator/validator?uri=${u}`],
-    ['Facebook Sharing Debugger', `https://developers.facebook.com/tools/debug/?q=${u}`],
-    ['LinkedIn Post Inspector', `https://www.linkedin.com/post-inspector/inspect/${u}`],
-    ['Wayback Machine', `https://web.archive.org/web/*/${scan.url}`],
-    ['Security Headers', `https://securityheaders.com/?q=${u}&followRedirects=on`],
-    ['SSL Labs', `https://www.ssllabs.com/ssltest/analyze.html?d=${encodeURIComponent(host)}`],
-    ['Google site:', `https://www.google.com/search?q=${encodeURIComponent(`site:${host}`)}`],
-    ['Bing site:', `https://www.bing.com/search?q=${encodeURIComponent(`site:${host}`)}`],
-  ];
+  const tools = toolLinks(scan.url);
   return section('tools', el('p', { class: 'muted small' }, t('tools_note')), el('ul', { class: 'tools' }, tools.map(([n, href]) => el('li', {}, el('a', { href, target: '_blank', rel: 'noopener noreferrer' }, n)))));
 }
 
@@ -347,6 +332,8 @@ function renderAll() {
       el('span', { class: 'muted small' }, t('scanned_at', { at: new Date(scan.scannedAt).toLocaleString() }))));
   $('r-nav').replaceChildren(el('ul', {}, SECTIONS.map((s) => el('li', {}, el('a', { href: `#s-${s}` }, t(`sec_${s}`))))));
   $('r-main').replaceChildren(...SECTIONS.map((s) => RENDER[s]()));
+  // Opened from a popup tab's "Details in report" link: jump to that section once it exists.
+  if (!renderAll.jumped && /^#s-[a-z]+$/.test(location.hash)) { renderAll.jumped = true; document.querySelector(location.hash)?.scrollIntoView(); }
 }
 
 // ---------- actions ----------

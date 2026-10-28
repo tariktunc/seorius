@@ -1,38 +1,20 @@
 // Shared UI helpers: settings, locale loading, DOM builder, tab injection.
 // Page data is always inserted as text (textContent / attributes), never as HTML.
 
-export const DEFAULT_SETTINGS = {
-  lang: 'auto',
-  fontSize: 16,
-  overlayColors: { headings: '#7c3aed', links: '#dc2626', images: '#ea580c' },
-  stopWords: '',
-  whitelist: '',
-  auditGroups: { technical: true, content: true, mobile: true, social: true },
-  columns: {
-    links: { url: true, count: true, anchors: true, anchorType: true, rel: true, type: true, status: true },
-    images: { src: true, alt: true, title: true, dims: true, natural: true, rendered: true, bytes: true, format: true },
-  },
-};
+import { DEFAULT_SETTINGS, mergeSettings, FONT_SIZES, fontPx } from '../lib/settings.mjs';
 
-const merge = (d, s) => {
-  if (!s || typeof s !== 'object' || Array.isArray(s)) return s === undefined ? d : s;
-  const o = { ...d };
-  for (const k of Object.keys(s)) o[k] = d && typeof d[k] === 'object' && !Array.isArray(d[k]) ? merge(d[k], s[k]) : s[k];
-  return o;
-};
+export { DEFAULT_SETTINGS, mergeSettings, FONT_SIZES };
 
 export async function loadSettings() {
   const { settings } = await chrome.storage.sync.get('settings');
-  return merge(DEFAULT_SETTINGS, settings || {});
+  return mergeSettings(settings);
 }
-export const FONT_SIZES = [14, 16, 18, 20];
 /** Applies the user text size (px) to the page; never below 14px. */
 export function applyFontSize(s) {
-  const px = FONT_SIZES.includes(Number(s.fontSize)) ? Number(s.fontSize) : DEFAULT_SETTINGS.fontSize;
+  const px = fontPx(s);
   document.documentElement.style.setProperty('--fs', `${px}px`);
 }
 export async function saveSettings(s) { await chrome.storage.sync.set({ settings: s }); }
-export const mergeSettings = (s) => merge(DEFAULT_SETTINGS, s || {});
 
 let MSG = {};
 export function resolveLang(s) {

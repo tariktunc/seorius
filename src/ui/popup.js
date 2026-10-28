@@ -1,10 +1,9 @@
 import { loadSettings, applyFontSize, resolveLang, loadLocale, applyI18n, t, el, sevBadge, findingText, checkName, isInspectable, scanTab, callInTab, watchTab, errorText, short } from './common.js';
 import { renderPreview, kvTable, schemaTypeList } from './views.js';
+import { POPUP_TABS, toolLinks, reportPath } from '../lib/tools.mjs';
 
-let tab; let settings; let scan = null; let active = 'overview';
+let tab; let settings; let scan = null; let active = 'summary';
 const $ = (id) => document.getElementById(id);
-
-const TABS = ['overview', 'headings', 'images', 'links', 'social', 'schema'];
 
 function statusOf(key) { return scan.audit.checks.find((c) => c.key === key)?.status || 'not-run'; }
 
@@ -29,32 +28,36 @@ function renderSummary() {
       el('span', { class: 'cnt cnt-not-run' }, `${c['not-run']} ${t('cnt_notrun')}`)));
 }
 
-function renderAttention() {
-  const a = $('attention'); a.replaceChildren();
-  if (!scan) return;
-  a.append(el('h2', {}, t('needs_attention')));
-  if (!scan.audit.attention.length) { a.append(el('p', { class: 'muted' }, t('attention_none'))); return; }
-  a.append(el('ul', { class: 'findings' }, scan.audit.attention.map((f) => el('li', {}, sevBadge(f.severity), ' ', el('strong', {}, checkName(f.check)), ': ', findingText(f)))));
+/** Top findings (the first five failing or warning checks). */
+function attention() {
+  const a = el('div', { class: 'p-attention' }, el('h3', {}, t('needs_attention')));
+  if (!scan.audit.attention.length) a.append(el('p', { class: 'muted' }, t('attention_none')));
+  else a.append(el('ul', { class: 'findings' }, scan.audit.attention.map((f) => el('li', {}, sevBadge(f.severity), ' ', el('strong', {}, checkName(f.check)), ': ', findingText(f)))));
+  return a;
 }
+
+const openReport = (popupTab) => chrome.tabs.create({ url: chrome.runtime.getURL(reportPath(tab.id, popupTab)) });
 
 function renderTabs() {
   const n = $('tabs'); n.replaceChildren();
-  for (const k of TABS) n.append(el('button', { type: 'button', role: 'tab', class: k === active ? 'tab active' : 'tab', 'aria-selected': k === active ? 'true' : 'false', onclick: () => { active = k; renderTabs(); renderPanel(); } }, t(`tab_${k}`)));
+  for (const { id: k, label } of POPUP_TABS) n.append(el('button', { type: 'button', role: 'tab', class: k === active ? 'tab active' : 'tab', 'aria-selected': k === active ? 'true' : 'false', onclick: () => { active = k; renderTabs(); renderPanel(); } }, t(label)));
 }
 
 function renderPanel() {
   const p = $('panel'); p.replaceChildren();
   if (!scan) return;
   const e = scan.engine;
-  if (active === 'overview') {
+  if (active === 'summary') {
     p.append(
       row(t('f_title'), e.title.text ? `${e.title.text} (${t('chars', { n: e.title.length })})` : null, 'title'),
       row(t('f_description'), e.metaDescription.text ? `${e.metaDescription.text} (${t('chars', { n: e.metaDescription.length })})` : null, 'description'),
       row(t('f_canonical'), e.canonical.href ? `${e.canonical.href} — ${t(`rel_${e.canonical.relation.replace(/-/g, '_')}`)}` : null, 'canonical'),
       row(t('f_robots'), [e.robots.entries.map((x) => `${x.source}${x.agent !== '*' ? `/${x.agent}` : ''}: ${x.token}`).join(', ') || t('val_none_default')], 'robots'),
       row(t('f_lang'), e.lang, 'lang'),
-      row('H1', e.headings.outline.filter((h) => h.level === 1).map((h) => h.text || t('val_empty')).join(' | ') || null, 'h1'));
-  } else if (active === 'headings') {
+      row('H1', e.headings.outline.filter((h) => h.level === 1).map((h) => h.text || t('val_empty')).join(' | ') || null, 'h1'),
+      el('h3', {}, t('popup_schema_types')), schemaTypeList(scan.schema),
+      attention());
+  } else if (active === 'headers') {
     p.append(el('div', { class: 'chips' }, Object.entries(e.headings.counts).map(([k, v]) => el('span', { class: 'chip' }, `${k.toUpperCase()}: ${v}`))));
     p.append(el('ol', { class: 'outline' }, scan.headings.slice(0, 300).map((h) => el('li', { style: `margin-left:${(h.level - 1) * 12}px` }, el('span', { class: 'lvl' }, `H${h.level}`), ' ', h.text || el('em', { class: 'muted' }, t('val_empty')), h.hidden ? el('span', { class: 'tag' }, t('hidden')) : null))));
   } else if (active === 'images') {
@@ -67,9 +70,13 @@ function renderPanel() {
       el('p', { class: 'muted small' }, t('lk_unique_note')));
   } else if (active === 'social') {
     p.append(renderPreview(scan.social.preview), el('h3', {}, 'Open Graph'), kvTable(scan.social.og), el('h3', {}, 'Twitter / X'), kvTable(scan.social.twitter));
-  } else if (active === 'schema') {
-    p.append(schemaTypeList(scan.schema));
+  } else if (active === 'tools') {
+    p.append(el('p', { class: 'muted small' }, t('tools_note')),
+      el('ul', { class: 'tools' }, toolLinks(scan.url).map(([n, href]) => el('li', {}, el('a', { href, target: '_blank', rel: 'noopener noreferrer' }, n)))),
+      el('p', {}, el('button', { type: 'button', class: 'primary', onclick: () => openReport(null) }, t('btn_full_report'))));
   }
+  // Every tab ends with a link to the matching report section.
+  p.append(el('p', { class: 'p-details' }, el('a', { href: '#', onclick: (ev) => { ev.preventDefault(); openReport(active); } }, `${t('popup_details')} →`)));
 }
 
 async function overlaysSync() {
@@ -83,9 +90,9 @@ async function run() {
   $('panel').replaceChildren(el('p', { class: 'muted' }, t('scanning')));
   try {
     scan = await scanTab(tab.id, settings);
-    renderSummary(); renderAttention(); renderTabs(); renderPanel();
+    renderSummary(); renderTabs(); renderPanel();
   } catch (e) {
-    scan = null; renderSummary(); renderAttention();
+    scan = null; renderSummary();
     $('panel').replaceChildren(el('p', { class: 'error' }, errorText(e)));
   }
 }
@@ -107,7 +114,7 @@ async function run() {
     return;
   }
   $('rescan').addEventListener('click', run);
-  $('report').addEventListener('click', () => chrome.tabs.create({ url: chrome.runtime.getURL(`report.html?tab=${tab.id}`) }));
+  $('report').addEventListener('click', () => openReport(null));
   document.querySelectorAll('[data-overlay]').forEach((c) => c.addEventListener('change', async () => {
     try { await callInTab(tab.id, 'overlay', c.dataset.overlay, c.checked, settings.overlayColors); } catch (e) { c.checked = false; $('panel').prepend(el('p', { class: 'error' }, errorText(e))); }
   }));

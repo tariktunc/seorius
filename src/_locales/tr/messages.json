@@ -64,12 +64,6 @@
   "cnt_notrun": {
     "message": "çalışmadı"
   },
-  "tab_overview": {
-    "message": "Genel"
-  },
-  "tab_headings": {
-    "message": "Başlıklar"
-  },
   "tab_images": {
     "message": "Görseller"
   },
@@ -78,9 +72,6 @@
   },
   "tab_social": {
     "message": "Sosyal"
-  },
-  "tab_schema": {
-    "message": "Schema"
   },
   "sev_error": {
     "message": "hata"
@@ -1305,5 +1296,137 @@
   },
   "ratio_def_live": {
     "message": "görünen metin karakteri ÷ işlenmiş HTML karakteri (ham HTML alınamadı)"
+  },
+  "tab_summary": {
+    "message": "Özet"
+  },
+  "tab_headers": {
+    "message": "Başlıklar"
+  },
+  "tab_tools": {
+    "message": "Araçlar"
+  },
+  "popup_details": {
+    "message": "Rapordaki ayrıntılar"
+  },
+  "popup_schema_types": {
+    "message": "Schema türleri"
+  },
+  "opt_serp": {
+    "message": "Google arama sonuçları"
+  },
+  "opt_serp_enabled": {
+    "message": "Google arama sonuçlarında Seorius katmanını göster"
+  },
+  "opt_serp_numbers": {
+    "message": "Organik sonuçları numaralandır"
+  },
+  "opt_serp_ads": {
+    "message": "Reklamları işaretle"
+  },
+  "opt_serp_features": {
+    "message": "SERP özelliklerini etiketle"
+  },
+  "opt_serp_mydomain": {
+    "message": "Alan adımı vurgula"
+  },
+  "opt_serp_mydomain_ph": {
+    "message": "ornek.com"
+  },
+  "opt_serp_note": {
+    "message": "Yalnızca Google web arama sayfalarında çalışır. Sayfadaki sonuçları okur, hiçbir yere veri göndermez."
+  },
+  "serp_title": {
+    "message": "Seorius arama sonuçları paneli"
+  },
+  "serp_collapse": {
+    "message": "Gizle"
+  },
+  "serp_expand": {
+    "message": "Göster"
+  },
+  "serp_organic": {
+    "message": "Organik"
+  },
+  "serp_ads": {
+    "message": "Reklam"
+  },
+  "serp_ad_top": {
+    "message": "üst"
+  },
+  "serp_ad_bottom": {
+    "message": "alt"
+  },
+  "serp_ad_badge": {
+    "message": "Reklam #{n}"
+  },
+  "serp_pos_title": {
+    "message": "Organik sıra {n}"
+  },
+  "serp_my_domain": {
+    "message": "Alan adım"
+  },
+  "serp_features": {
+    "message": "SERP özellikleri"
+  },
+  "serp_none": {
+    "message": "bulunmadı"
+  },
+  "serp_toggle_numbers": {
+    "message": "Sıra numaraları"
+  },
+  "serp_toggle_ads": {
+    "message": "Reklam işaretleme"
+  },
+  "serp_toggle_features": {
+    "message": "Özellik etiketleri"
+  },
+  "serp_export": {
+    "message": "CSV indir"
+  },
+  "serp_aio_title": {
+    "message": "AI Overview kaynakları ({n})"
+  },
+  "serp_aio_export": {
+    "message": "Kaynaklar CSV"
+  },
+  "serp_locale": {
+    "message": "Şuradan ara"
+  },
+  "serp_country": {
+    "message": "Ülke"
+  },
+  "serp_language": {
+    "message": "Dil"
+  },
+  "serp_apply": {
+    "message": "Yeniden yükle"
+  },
+  "serp_privacy": {
+    "message": "Yalnızca bu sayfadan okunur. Hiçbir yere veri gönderilmez."
+  },
+  "serp_feat_featured_snippet": {
+    "message": "Öne çıkan snippet"
+  },
+  "serp_feat_paa": {
+    "message": "Diğer kullanıcılar şunu sordu"
+  },
+  "serp_feat_local_pack": {
+    "message": "Yerel paket (harita)"
+  },
+  "serp_feat_video": {
+    "message": "Video karuseli"
+  },
+  "serp_feat_images": {
+    "message": "Görsel paketi"
+  },
+  "serp_feat_top_stories": {
+    "message": "Öne çıkan haberler"
+  },
+  "serp_feat_sitelinks": {
+    "message": "Site bağlantıları"
+  },
+  "serp_feat_ai_overview": {
+    "message": "AI Overview"
   }
 }

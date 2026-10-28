@@ -24,23 +24,28 @@ Modelled on SEOquake's layout: one engine and several views.
 | Full report | `report.html` (own tab) | "Open full report" in popup | SEOquake |
 | Page overlay | injected on demand | toggle in popup (headings / links / images) | SEOquake bar, Sitechecker overlays |
 | Settings | `options.html` | extension options | SEOquake |
+| SERP overlay | `serp.js` + `serp.css` (content script) | automatically on Google web search result pages (43 Google country hosts, `/search` only) | SEOquake SERP module (behaviour only) |
 
-Not built: an always-on bar on every page, and a Google SERP overlay. Both need
-`<all_urls>` content scripts, and SEOquake's versions send every URL to Semrush by default.
+Not built: an always-on bar on every page. It needs `<all_urls>` content scripts, and SEOquake's
+version sends every URL to Semrush by default. The SERP overlay is limited to Google's `/search`
+paths and makes no network request.
 
 ## 2. Information architecture
 
-### Popup (summary, about 400 px wide)
+### Popup (summary, 600 px wide)
 
 1. **Header**: URL, HTTP status, an error / warning / notice count, and a button to open the full report.
-2. **Needs attention**: the top 5 failing or warning findings.
-3. Tabs:
-   - **Overview**: title, description (length plus status), canonical, robots, lang, H1.
-   - **Headings**: H1–H6 counts and the outline.
+2. Tabs (TR / EN: Özet / Summary, Başlıklar / Headers, Görseller / Images, Bağlantılar / Links,
+   Sosyal / Social, Araçlar / Tools). Each tab ends with a "Details in report" link that opens the
+   report at the matching section (`src/lib/tools.mjs` POPUP_TABS).
+   - **Summary**: title, description (length plus status), canonical, robots, lang, H1; detected
+     schema types (JSON-LD / microdata / RDFa, parse errors); the top 5 failing or warning findings.
+   - **Headers**: H1–H6 counts and the outline.
    - **Images**: total, missing alt, missing dimensions.
    - **Links**: internal / external, follow / nofollow / sponsored / ugc.
    - **Social**: OG and Twitter values, plus a share preview card.
-   - **Schema**: detected types and parse errors.
+   - **Tools**: the same outbound tool links as the report Tools section (opened only on click),
+     plus "Open full report".
 
 ### Full report (one tab, side navigation)
 
@@ -64,9 +69,34 @@ Not built: an always-on bar on every page, and a Google SERP overlay. Both need
 | Help | per-directive explanation for robots values and every audit check | 1 CLICK help pages, extended |
 | Export | PDF / JSON / CSV of the report | SEOquake "exportAuditPdf" |
 
+### SERP overlay (Google web search results)
+
+Runs on Google web search result pages only (`https://www.google.<cc>/search*`, list in
+`src/lib/serp.mjs` SERP_HOSTS). Vertical tabs are skipped (any `tbm=`, any `udm=` except 14 = Web).
+
+- **Organic numbering**: a position badge before each organic title; `start=` offset (page 2 starts
+  at 11); deduped by final URL; Google `/url?q=` links unwrapped locally (other redirect links are
+  left as shown, never resolved over the network).
+- **Ads**: sponsored blocks (links to Google's ad-click path or ad-services domain, text-ad markers,
+  the visible sponsored label) get an amber tint, border and an "Ad #n · top/bottom" badge. Own
+  counter; never part of organic numbering.
+- **Feature chips**: Featured snippet, People also ask, Local pack (map), Video carousel, Image pack,
+  Top stories, Sitelinks, AI Overview. Blocks inside these features are not numbered (the featured
+  snippet's source result is numbered, as it is an organic result).
+- **Floating panel** (bottom-right, collapsible, Seorius palette, text size setting, light / dark from
+  the page background): organic / ad counts, features list, toggles (numbers, ad highlight, feature
+  chips), CSV export (`type, position, title, url, domain, displayed_url, features`; UTF-8 BOM;
+  formula-injection guard; file "<query> - seorius-serp.csv"), AI Overview sources list + CSV, and a
+  country (`gl`) / language (`hl`) switcher that reloads the search.
+- **My domain** (Settings): matching results get an extra outline and a "My domain" tag.
+- Re-runs on SPA navigation and Google DOM changes (debounced); classification is structural (a
+  heading inside a link, `<cite>` displayed URL, ad-click links, expandable question rows, Google's
+  own custom elements), heading words are only a supporting signal. Any error leaves the page as
+  Google rendered it.
+
 ### Settings
 
-Language (TR / EN), overlay colours, keyword stop-word list and whitelist, which audit groups to
+Language (TR / EN), Google search results overlay (on / off, numbers, ads, feature chips, my domain), overlay colours, keyword stop-word list and whitelist, which audit groups to
 show, per-table column visibility, and import / export of settings.
 
 ### Behaviour
@@ -106,11 +136,15 @@ Full code-level comparison of both tools: [FEATURE-DIFF.md](./FEATURE-DIFF.md).
 | `activeTab` | read the current tab only after the user clicks |
 | `scripting` | inject the inspector into that tab |
 | `storage` | settings only |
+| `content_scripts` on `https://www.google.<cc>/search*` (43 hosts) | the SERP overlay; no other site, no `host_permissions` |
 
 - No `<all_urls>`, `tabs`, `webRequest` or `identity` permission.
 - No remote code, no analytics, no telemetry.
 - No data leaves the browser, except the re-fetch of the inspected page and any outbound tool link
-  the user clicks.
+  the user clicks. The SERP script makes no request at all (`npm run check` fails if its bundle
+  contains fetch / XMLHttpRequest / sendBeacon / WebSocket / EventSource).
+- Install prompt: Chrome shows that Seorius can read and change data on the Google search hosts,
+  because of the content script.
 
 ## 5. Explicitly excluded
 
@@ -119,7 +153,6 @@ Full code-level comparison of both tools: [FEATURE-DIFF.md](./FEATURE-DIFF.md).
 | Semrush rank / traffic / backlinks | third-party paid API; sends URLs to Semrush |
 | Pinterest pin count, Whois | third-party calls |
 | Always-on bar on every page | needs `<all_urls>` |
-| Google SERP overlay | needs content scripts on Google |
 | Favicons loaded from google.com/s2 | leaks the domains you visit to Google; icons are bundled locally instead |
 | Upsell / login screens | not applicable |
 

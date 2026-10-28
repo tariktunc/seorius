@@ -2,6 +2,7 @@ import { loadSettings, applyFontSize, saveSettings, mergeSettings, DEFAULT_SETTI
 
 const $ = (id) => document.getElementById(id);
 let s;
+const SERP_FLAGS = ['enabled', 'numbers', 'ads', 'features'];
 
 const COL_LABELS = {
   links: { url: 'URL', count: 'col_count', anchors: 'col_anchors', anchorType: 'col_anchor_type', rel: 'rel', type: 'col_type', status: 'col_status' },
@@ -13,6 +14,8 @@ function fill() {
   $('lang').value = s.lang;
   $('font-size').value = String(s.fontSize);
   for (const k of ['headings', 'links', 'images']) $(`c-${k}`).value = s.overlayColors[k];
+  for (const k of SERP_FLAGS) $(`serp-${k}`).checked = !!s.serp[k];
+  $('serp-mydomain').value = s.serp.myDomain;
   $('stopWords').value = s.stopWords;
   $('whitelist').value = s.whitelist;
   $('groups').replaceChildren(...['technical', 'content', 'mobile', 'social'].map((g) => el('label', {}, el('input', { type: 'checkbox', checked: s.auditGroups[g], onchange: (e) => { s.auditGroups[g] = e.target.checked; save(); } }), ' ', t(`grp_${g}`))));
@@ -36,6 +39,8 @@ async function relocalise() { await loadLocale(resolveLang(s)); applyI18n(); fil
   $('font-size').addEventListener('change', async (e) => { s.fontSize = Number(e.target.value); applyFontSize(s); await save(); });
   $('lang').addEventListener('change', async (e) => { s.lang = e.target.value; await save(); relocalise(); });
   for (const k of ['headings', 'links', 'images']) $(`c-${k}`).addEventListener('change', (e) => { s.overlayColors[k] = e.target.value; save(); });
+  for (const k of SERP_FLAGS) $(`serp-${k}`).addEventListener('change', (e) => { s.serp[k] = e.target.checked; save(); });
+  $('serp-mydomain').addEventListener('input', (e) => { s.serp.myDomain = e.target.value.trim().slice(0, 253); save(); });
   for (const k of ['stopWords', 'whitelist']) $(k).addEventListener('input', (e) => { s[k] = e.target.value.slice(0, 20000); save(); });
   $('export').addEventListener('click', () => download('seorius-settings.json', JSON.stringify(s, null, 2), 'application/json'));
   $('reset').addEventListener('click', async () => { s = structuredClone(DEFAULT_SETTINGS); await save(); relocalise(); });

@@ -67,6 +67,8 @@ table { border-collapse: collapse; width: 100%; }
 .outline { list-style: none; padding: 0; margin: 0; }
 .outline li { padding: 2px 0; }
 .p-foot { padding: 6px 10px 10px; border-top: 1px solid var(--line); }
+.p-panel .p-attention { padding: 0; }
+.p-details { margin: 10px 0 2px; text-align: right; font-weight: 600; }
 
 /* share card */
 .share-card { border: 1px solid var(--line); border-radius: 8px; overflow: hidden; max-width: 520px; margin: 8px 0; }
@@ -96,7 +98,7 @@ table { border-collapse: collapse; width: 100%; }
 .help dt { font-weight: 600; margin-top: 8px; }
 .help dd { margin: 2px 0 0 0; color: var(--muted); }
 .tools { columns: 2; }
-textarea { width: 100%; font: inherit; border: 1px solid var(--line); border-radius: 5px; padding: 6px; background: var(--bg); color: var(--fg); }
+textarea, input[type="text"] { width: 100%; font: inherit; border: 1px solid var(--line); border-radius: 5px; padding: 6px; background: var(--bg); color: var(--fg); }
 details.bad summary { color: var(--error); }
 
 /* options */

@@ -1,0 +1,150 @@
+<!doctype html>
+<!-- Hand-written model of a Google web results page (structure only, own markup, no copied Google
+     code). Used by test/serp.test.mjs and the overlay screenshot. Page 1, query "kahve makinesi". -->
+<html lang="en"><head><meta charset="utf-8"><title>kahve makinesi - Google Search</title>
+<style>
+body{font-family:arial,sans-serif;margin:0;background:#fff;color:#202124}
+#center_col{max-width:652px;margin-left:150px;padding:20px 0}
+.res{margin:0 0 28px}.res h3{font-size:20px;color:#1a0dab;margin:4px 0;font-weight:400}.res a{text-decoration:none}
+cite{color:#4d5156;font-style:normal;font-size:14px}.snip{color:#4d5156;font-size:14px;line-height:1.5}
+.sl td{padding:4px 18px 4px 0}.sl h3{font-size:16px}.lbl{font-weight:700;font-size:14px}
+.box{border:1px solid #dadce0;border-radius:8px;padding:12px;margin:0 0 28px}
+.row{border-bottom:1px solid #dadce0;padding:10px 0}.cards{display:flex;gap:10px;overflow:auto}.card{min-width:160px;border:1px solid #dadce0;border-radius:8px;padding:8px}
+#rhs{position:absolute;left:880px;top:20px;width:360px}
+</style></head>
+<body>
+<div id="main"><div id="rcnt">
+<div id="center_col">
+
+  <div id="tads">
+    <div class="ad" data-text-ad="1">
+      <span class="lbl">Sponsored</span>
+      <a href="https://www.googleadservices.com/pagead/aclk?sa=L&amp;ai=AAA&amp;adurl=https://shop-one.example/kahve">
+        <div role="heading" aria-level="3">Shop One Coffee Machines - Free Shipping</div>
+        <span data-dtld="shop-one.example">https://www.shop-one.example › kahve</span>
+      </a>
+      <div class="snip">Espresso and filter machines with two-year warranty. Order today, delivered tomorrow.</div>
+    </div>
+    <div class="ad">
+      <span class="lbl">Sponsored</span>
+      <a href="/aclk?sa=l&amp;ai=BBB&amp;adurl=https://shop-two.example/">
+        <div role="heading" aria-level="3">Shop Two - Coffee Machines on Sale</div>
+      </a>
+      <span><cite>shop-two.example</cite></span>
+      <div class="snip">Compare 120 coffee machines. Prices updated daily.</div>
+    </div>
+  </div>
+
+  <div class="aio">
+    <h2>AI Overview</h2>
+    <div class="snip">A coffee machine brews coffee by forcing hot water through ground beans. Common types are drip filter machines, espresso machines with a pump, capsule machines and bean-to-cup machines that grind on demand.
+      <a href="https://guide.example/coffee-types"><span>Coffee machine types</span></a>
+      <a href="https://www.wiki.example/wiki/Coffeemaker"><span>Coffeemaker</span></a>
+      <a href="https://guide.example/coffee-types"><span>Coffee machine types (again)</span></a>
+    </div>
+  </div>
+
+  <div id="search"><div id="rso">
+
+    <div class="box">
+      <block-component>
+        <h2 style="position:absolute;left:-9999px">Featured snippet from the web</h2>
+        <div class="snip">The best coffee machine for most homes is a drip filter machine: it is cheap, simple and makes several cups at once.</div>
+        <div class="res"><a href="https://alpha.example/best-coffee-machine"><h3>Best Coffee Machines of 2026 - Alpha</h3><br><cite>https://alpha.example › best-coffee-machine</cite></a></div>
+      </block-component>
+    </div>
+
+    <div class="res g">
+      <div><a href="https://www.bravo.example/"><h3>Bravo Home Appliances - Coffee Machines</h3><br><cite>https://www.bravo.example</cite></a></div>
+      <div class="snip">Bravo sells coffee machines, grinders and accessories with free returns for thirty days.</div>
+      <table class="sl"><tr>
+        <td><a href="https://www.bravo.example/espresso"><h3>Espresso</h3></a></td>
+        <td><a href="https://www.bravo.example/filter"><h3>Filter</h3></a></td>
+        <td><a href="https://www.bravo.example/capsule"><h3>Capsule</h3></a></td>
+      </tr></table>
+    </div>
+
+    <div class="box paa">
+      <h2>People also ask</h2>
+      <div class="row" aria-expanded="false" data-q="Which coffee machine is best?">Which coffee machine is best?</div>
+      <div class="row" aria-expanded="true" data-q="Is a capsule machine worth it?">Is a capsule machine worth it?
+        <div class="snip">Capsule machines are convenient but each cup costs more.
+          <div class="res"><a href="https://answers.example/capsule"><h3>Capsule machines explained</h3><cite>https://answers.example</cite></a></div>
+        </div>
+      </div>
+      <div class="row" aria-expanded="false" data-q="How long does a coffee machine last?">How long does a coffee machine last?</div>
+    </div>
+
+    <div class="res g">
+      <a href="/url?q=https://charlie.example/kahve-makinesi&amp;sa=U&amp;ved=xyz"><h3>Kahve Makinesi Fiyatları - Charlie</h3><br><cite>https://charlie.example › kahve-makinesi</cite></a>
+      <div class="snip">Charlie lists 300 coffee machine models with user reviews and price history.</div>
+    </div>
+
+    <div class="box local">
+      <h2>Places</h2>
+      <a href="https://www.google.com/maps/search/kahve+makinesi"><img alt="Map" width="600" height="160" src="data:image/gif;base64,R0lGODlhAQABAAAAACw="></a>
+      <div data-cid="111"><div role="heading" aria-level="3">Kahve Dükkanı Merkez</div><span>4.6 (210) · Coffee shop</span></div>
+      <div data-cid="222"><div role="heading" aria-level="3">Espresso Evi</div><span>4.4 (98) · Appliance store</span></div>
+      <div data-cid="333"><div role="heading" aria-level="3">Barista Store</div><span>4.8 (51) · Store</span></div>
+    </div>
+
+    <div class="box videos">
+      <h2>Videos</h2>
+      <g-scrolling-carousel><div class="cards">
+        <div class="card"><a href="https://www.youtube.com/watch?v=aaa"><h3>How to choose a coffee machine</h3></a><span>YouTube · Coffee Lab</span></div>
+        <div class="card"><a href="https://www.youtube.com/watch?v=bbb"><h3>Espresso machine review</h3></a><span>YouTube · Brew TV</span></div>
+        <div class="card"><a href="https://www.youtube.com/watch?v=ccc"><h3>Cleaning your machine</h3></a><span>YouTube · Home Tips</span></div>
+      </div></g-scrolling-carousel>
+    </div>
+
+    <div class="res g">
+      <a href="https://charlie.example/kahve-makinesi#reviews"><h3>Kahve Makinesi Yorumları - Charlie</h3><br><cite>https://charlie.example › kahve-makinesi</cite></a>
+      <div class="snip">The same page again, reached through a different link: must be counted once.</div>
+    </div>
+
+    <div class="box images">
+      <h2>Images</h2>
+      <div class="cards">
+        <a href="/search?q=kahve+makinesi&amp;tbm=isch&amp;img=1">image 1</a>
+        <a href="/search?q=kahve+makinesi&amp;tbm=isch&amp;img=2">image 2</a>
+        <a href="/search?q=kahve+makinesi&amp;udm=2&amp;img=3">image 3</a>
+        <a href="/search?q=kahve+makinesi&amp;udm=2&amp;img=4">image 4</a>
+      </div>
+    </div>
+
+    <div class="box news">
+      <h2>Top stories</h2>
+      <div class="cards">
+        <div class="card"><a href="https://news-one.example/coffee-prices"><div role="heading" aria-level="3">Coffee machine prices fall</div></a><span>News One · 2 hours ago</span></div>
+        <div class="card"><a href="https://news-two.example/espresso"><div role="heading" aria-level="3">Espresso trend in Türkiye</div></a><span>News Two · 1 day ago</span></div>
+        <div class="card"><a href="https://news-three.example/recall"><div role="heading" aria-level="3">Model recalled over fault</div></a><span>News Three · 3 days ago</span></div>
+      </div>
+    </div>
+
+    <div class="res g">
+      <a href="https://delta.example/guide"><h3>=Coffee machine buying guide, "2026"</h3><br><cite>https://delta.example › guide</cite></a>
+      <div class="snip">Delta explains pressure, boiler types and grinders in plain words for first-time buyers.</div>
+    </div>
+
+    <div class="res g">
+      <a href="https://shop.myshop.example/kahve-makineleri"><h3>Kahve Makineleri - MyShop</h3><br><cite>https://shop.myshop.example › kahve-makineleri</cite></a>
+      <div class="snip">MyShop coffee machines with installment payment and same-day delivery in İstanbul.</div>
+    </div>
+
+  </div></div>
+
+  <div id="bottomads">
+    <div class="ad">
+      <span class="lbl">Sponsored</span>
+      <a href="https://shop-three.example/" data-rw="https://www.googleadservices.com/pagead/aclk?sa=L&amp;ai=CCC">
+        <div role="heading" aria-level="3">Shop Three - Barista Grade Machines</div>
+      </a>
+      <span data-dtld="shop-three.example">https://shop-three.example</span>
+      <div class="snip">Professional machines for cafés and homes.</div>
+    </div>
+  </div>
+
+</div>
+<div id="rhs"><div class="box"><a href="https://kp.example/"><h3>Coffeemaker (knowledge panel)</h3></a><div class="snip">Side panel text that must never be numbered.</div></div></div>
+</div></div>
+</body></html>
