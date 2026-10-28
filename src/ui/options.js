@@ -1,4 +1,4 @@
-import { loadSettings, saveSettings, mergeSettings, DEFAULT_SETTINGS, resolveLang, loadLocale, applyI18n, t, el, download } from './common.js';
+import { loadSettings, applyFontSize, saveSettings, mergeSettings, DEFAULT_SETTINGS, resolveLang, loadLocale, applyI18n, t, el, download } from './common.js';
 
 const $ = (id) => document.getElementById(id);
 let s;
@@ -11,6 +11,7 @@ const lbl = (k) => (/^col_/.test(k) ? t(k) : k);
 
 function fill() {
   $('lang').value = s.lang;
+  $('font-size').value = String(s.fontSize);
   for (const k of ['headings', 'links', 'images']) $(`c-${k}`).value = s.overlayColors[k];
   $('stopWords').value = s.stopWords;
   $('whitelist').value = s.whitelist;
@@ -30,7 +31,9 @@ async function relocalise() { await loadLocale(resolveLang(s)); applyI18n(); fil
 
 (async function main() {
   s = await loadSettings();
+  applyFontSize(s);
   await relocalise();
+  $('font-size').addEventListener('change', async (e) => { s.fontSize = Number(e.target.value); applyFontSize(s); await save(); });
   $('lang').addEventListener('change', async (e) => { s.lang = e.target.value; await save(); relocalise(); });
   for (const k of ['headings', 'links', 'images']) $(`c-${k}`).addEventListener('change', (e) => { s.overlayColors[k] = e.target.value; save(); });
   for (const k of ['stopWords', 'whitelist']) $(k).addEventListener('input', (e) => { s[k] = e.target.value.slice(0, 20000); save(); });

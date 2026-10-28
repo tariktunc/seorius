@@ -9,14 +9,14 @@ function css(kind, color) {
   const a = ATTR[kind];
   if (kind === 'headings') {
     return `[${a}]{outline:2px solid ${color}!important;outline-offset:2px!important}
-[${a}]::before{content:attr(${a});display:inline-block;background:${color};color:#fff;font:600 11px/1.5 system-ui,sans-serif;padding:0 5px;margin-right:6px;border-radius:3px;vertical-align:middle;letter-spacing:0;text-transform:none}
+[${a}]::before{content:attr(${a});display:inline-block;background:${color};color:#fff;font:600 14px/1.5 system-ui,sans-serif;padding:0 5px;margin-right:6px;border-radius:3px;vertical-align:middle;letter-spacing:0;text-transform:none}
 [${a}][data-seorius-hidden]::before{content:attr(${a}) " (hidden)"}`;
   }
   if (kind === 'links') {
     return `[${a}~="nofollow"]{outline:2px dashed ${color}!important;outline-offset:1px!important}
 [${a}~="sponsored"],[${a}~="ugc"]{outline:2px dotted ${color}!important;outline-offset:1px!important}
 [${a}~="empty"]{outline:3px solid ${color}!important;outline-offset:1px!important;background:rgba(255,0,0,.12)!important}
-[${a}~="nofollow"]::after{content:"nofollow";font:600 10px/1.4 system-ui,sans-serif;background:${color};color:#fff;padding:0 3px;margin-left:3px;border-radius:3px}`;
+[${a}~="nofollow"]::after{content:"nofollow";font:600 14px/1.4 system-ui,sans-serif;background:${color};color:#fff;padding:0 3px;margin-left:3px;border-radius:3px}`;
   }
   return `img[${a}="missing"]{outline:3px solid ${color}!important;outline-offset:-3px!important}
 img[${a}="empty"]{outline:3px dashed ${color}!important;outline-offset:-3px!important}`;

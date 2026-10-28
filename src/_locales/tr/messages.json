@@ -913,6 +913,21 @@
   "opt_lang_auto": {
     "message": "Tarayıcı dili"
   },
+  "opt_font_size": {
+    "message": "Yazı boyutu"
+  },
+  "opt_fs_14": {
+    "message": "Küçük (14 px)"
+  },
+  "opt_fs_16": {
+    "message": "Orta (16 px, varsayılan)"
+  },
+  "opt_fs_18": {
+    "message": "Büyük (18 px)"
+  },
+  "opt_fs_20": {
+    "message": "Çok büyük (20 px)"
+  },
   "opt_overlay_colors": {
     "message": "İşaretleme renkleri"
   },

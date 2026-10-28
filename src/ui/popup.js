@@ -1,4 +1,4 @@
-import { loadSettings, resolveLang, loadLocale, applyI18n, t, el, sevBadge, findingText, checkName, isInspectable, scanTab, callInTab, watchTab, errorText, short } from './common.js';
+import { loadSettings, applyFontSize, resolveLang, loadLocale, applyI18n, t, el, sevBadge, findingText, checkName, isInspectable, scanTab, callInTab, watchTab, errorText, short } from './common.js';
 import { renderPreview, kvTable, schemaTypeList } from './views.js';
 
 let tab; let settings; let scan = null; let active = 'overview';
@@ -92,6 +92,7 @@ async function run() {
 
 (async function main() {
   settings = await loadSettings();
+  applyFontSize(settings);
   await loadLocale(resolveLang(settings));
   applyI18n();
   // ?tab=<id> renders the popup against a given tab (used by the smoke test, which cannot click

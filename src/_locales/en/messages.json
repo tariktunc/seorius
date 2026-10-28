@@ -913,6 +913,21 @@
   "opt_lang_auto": {
     "message": "Browser language"
   },
+  "opt_font_size": {
+    "message": "Text size"
+  },
+  "opt_fs_14": {
+    "message": "Small (14 px)"
+  },
+  "opt_fs_16": {
+    "message": "Medium (16 px, default)"
+  },
+  "opt_fs_18": {
+    "message": "Large (18 px)"
+  },
+  "opt_fs_20": {
+    "message": "Extra large (20 px)"
+  },
   "opt_overlay_colors": {
     "message": "Overlay colours"
   },

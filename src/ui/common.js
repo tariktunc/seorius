@@ -3,6 +3,7 @@
 
 export const DEFAULT_SETTINGS = {
   lang: 'auto',
+  fontSize: 16,
   overlayColors: { headings: '#7c3aed', links: '#dc2626', images: '#ea580c' },
   stopWords: '',
   whitelist: '',
@@ -23,6 +24,12 @@ const merge = (d, s) => {
 export async function loadSettings() {
   const { settings } = await chrome.storage.sync.get('settings');
   return merge(DEFAULT_SETTINGS, settings || {});
+}
+export const FONT_SIZES = [14, 16, 18, 20];
+/** Applies the user text size (px) to the page; never below 14px. */
+export function applyFontSize(s) {
+  const px = FONT_SIZES.includes(Number(s.fontSize)) ? Number(s.fontSize) : DEFAULT_SETTINGS.fontSize;
+  document.documentElement.style.setProperty('--fs', `${px}px`);
 }
 export async function saveSettings(s) { await chrome.storage.sync.set({ settings: s }); }
 export const mergeSettings = (s) => merge(DEFAULT_SETTINGS, s || {});

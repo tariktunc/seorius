@@ -1,4 +1,4 @@
-import { loadSettings, resolveLang, loadLocale, applyI18n, t, has, el, sevBadge, findingText, checkName, scanTab, storedScan, callInTab, watchTab, errorText, download, fmtBytes, short } from './common.js';
+import { loadSettings, applyFontSize, resolveLang, loadLocale, applyI18n, t, has, el, sevBadge, findingText, checkName, scanTab, storedScan, callInTab, watchTab, errorText, download, fmtBytes, short } from './common.js';
 import { renderPreview, kvTable, table } from './views.js';
 import { GROUPS } from '../lib/audit.mjs';
 import { compareMatrix } from '../lib/compare.mjs';
@@ -166,7 +166,7 @@ function sKeywords() {
   const uni = k.byLength[1] || [];
   if (uni.length) {
     const max = uni[0].count;
-    out.push(el('div', { class: 'cloud' }, uni.slice(0, 30).map((u) => el('span', { style: `font-size:${(0.8 + (u.count / max) * 1.2).toFixed(2)}em` }, u.phrase))));
+    out.push(el('div', { class: 'cloud' }, uni.slice(0, 30).map((u) => el('span', { style: `font-size:max(14px, ${(0.8 + (u.count / max) * 1.2).toFixed(2)}em)` }, u.phrase))));
   }
   for (const n of [1, 2, 3, 4]) {
     out.push(el('h3', {}, t('kw_n', { n })), table([
@@ -422,6 +422,7 @@ async function rescan() {
 
 (async function main() {
   settings = await loadSettings();
+  applyFontSize(settings);
   await loadLocale(resolveLang(settings));
   applyI18n();
   $('print').addEventListener('click', () => window.print());
