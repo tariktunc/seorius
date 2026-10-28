@@ -1,0 +1,18 @@
+{
+  "$comment": "Seorius-only thresholds (checks that page-inspect-core.mjs does not do). Same evidence classes as on-page-rules.json: MEASURED / LITERATURE / TREND / WEBFORGE DECISION. Nothing here is MEASURED, so every check that reads this file is advisory (notice at most), never an error.",
+  "version": 1,
+  "urlQuality": { "maxLength": 100, "maxQueryParams": 3, "maxQueryLength": 80, "maxPercentEscapes": 3, "maxPathSegments": 12, "maxSegmentLengthWithoutHyphen": 40 },
+  "internalLinks": { "min": 3, "max": 100 },
+  "images": { "oversizedBytes": 512000, "sizeCheckCap": 60, "oversizedRenderRatio": 2 },
+  "keywords": { "maxPhraseWords": 4, "minPhraseCount": 2, "topRows": 30, "densityNoticePercent": 5 },
+  "linkCheck": { "concurrency": 6, "cap": 300, "timeoutMs": 10000 },
+  "fetch": { "maxHtmlBytes": 10485760, "maxSitemapBytes": 10485760, "sitemapUrlCap": 50000, "sitemapChildCap": 5, "timeoutMs": 15000 },
+  "evidence": {
+    "urlQuality": { "evidence_class": "TREND", "note": "SEO-tool heuristics for long or parameter-heavy URLs; no Google limit. Notice only." },
+    "internalLinks": { "evidence_class": "TREND", "note": "Bands of fewer than 3 or more than 100 internal links are an SEO-tool heuristic; Google states no number. Notice only." },
+    "images.oversizedBytes": { "evidence_class": "TREND", "note": "500 KB is an SEO-tool heuristic. Notice only." },
+    "images.oversizedRenderRatio": { "evidence_class": "WEBFORGE DECISION", "note": "An image whose natural width is at least twice its rendered width is listed as served larger than shown." },
+    "keywords.densityNoticePercent": { "evidence_class": "TREND", "note": "No published Google figure; keyword stuffing is named in Google's spam policy without a number." },
+    "linkCheck.concurrency": { "evidence_class": "WEBFORGE DECISION", "note": "Six parallel requests at most, to stay polite to the inspected site." }
+  }
+}

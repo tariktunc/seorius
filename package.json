@@ -1,0 +1,16 @@
+{
+  "name": "seorius",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Seorius – On-Page SEO Inspector (Chrome extension, Manifest V3)",
+  "license": "MIT",
+  "type": "module",
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "test": "node --test \"test/*.test.mjs\"",
+    "check": "node scripts/check-dist.mjs"
+  },
+  "devDependencies": {
+    "esbuild": "^0.25.12"
+  }
+}

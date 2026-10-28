@@ -1,0 +1,1294 @@
+{
+  "appName": {
+    "message": "Seorius – On-Page SEO Inspector",
+    "description": "Extension name"
+  },
+  "appDesc": {
+    "message": "Inspect the on-page SEO of the current tab locally: meta tags, headings, links, images, schema, robots.txt and more.",
+    "description": "Store and manifest description (max 132 chars)"
+  },
+  "btn_rescan": {
+    "message": "Rescan"
+  },
+  "btn_full_report": {
+    "message": "Open full report"
+  },
+  "btn_settings": {
+    "message": "Settings"
+  },
+  "btn_print": {
+    "message": "Print / PDF"
+  },
+  "btn_check_links": {
+    "message": "Check links"
+  },
+  "btn_measure_images": {
+    "message": "Measure image sizes"
+  },
+  "btn_compare": {
+    "message": "Compare"
+  },
+  "overlay_title": {
+    "message": "Highlight on page:"
+  },
+  "overlay_headings": {
+    "message": "Headings"
+  },
+  "overlay_links": {
+    "message": "Links"
+  },
+  "overlay_images": {
+    "message": "Images"
+  },
+  "needs_attention": {
+    "message": "Needs attention"
+  },
+  "attention_none": {
+    "message": "No errors or warnings."
+  },
+  "scanning": {
+    "message": "Scanning…"
+  },
+  "scanned_at": {
+    "message": "Scanned {at}"
+  },
+  "cnt_errors": {
+    "message": "errors"
+  },
+  "cnt_warnings": {
+    "message": "warnings"
+  },
+  "cnt_notices": {
+    "message": "notices"
+  },
+  "cnt_notrun": {
+    "message": "not run"
+  },
+  "tab_overview": {
+    "message": "Overview"
+  },
+  "tab_headings": {
+    "message": "Headings"
+  },
+  "tab_images": {
+    "message": "Images"
+  },
+  "tab_links": {
+    "message": "Links"
+  },
+  "tab_social": {
+    "message": "Social"
+  },
+  "tab_schema": {
+    "message": "Schema"
+  },
+  "sev_error": {
+    "message": "error"
+  },
+  "sev_warning": {
+    "message": "warning"
+  },
+  "sev_notice": {
+    "message": "notice"
+  },
+  "sev_pass": {
+    "message": "pass"
+  },
+  "sev_not_run": {
+    "message": "not run"
+  },
+  "grp_technical": {
+    "message": "Technical"
+  },
+  "grp_content": {
+    "message": "Content"
+  },
+  "grp_mobile": {
+    "message": "Mobile"
+  },
+  "grp_social": {
+    "message": "Social"
+  },
+  "val_missing": {
+    "message": "missing"
+  },
+  "val_empty": {
+    "message": "empty"
+  },
+  "val_none": {
+    "message": "None found."
+  },
+  "val_none_default": {
+    "message": "none (default: index, follow)"
+  },
+  "val_unknown": {
+    "message": "unknown"
+  },
+  "yes": {
+    "message": "yes"
+  },
+  "no": {
+    "message": "no"
+  },
+  "hidden": {
+    "message": "hidden"
+  },
+  "high": {
+    "message": "high"
+  },
+  "chars": {
+    "message": "{n} chars"
+  },
+  "count_n": {
+    "message": "{n}×"
+  },
+  "duplicate": {
+    "message": "duplicate"
+  },
+  "truncated": {
+    "message": "truncated"
+  },
+  "level_skip": {
+    "message": "level skipped"
+  },
+  "err_no_access": {
+    "message": "Seorius cannot access this tab right now. Click the Seorius icon on the page again (access is granted per click and ends when the page navigates)."
+  },
+  "err_generic": {
+    "message": "Something went wrong:"
+  },
+  "err_not_inspectable": {
+    "message": "This page cannot be inspected. Seorius works on http and https pages only (not on browser pages or the Chrome Web Store)."
+  },
+  "err_no_tab": {
+    "message": "No tab given. Open the report from the Seorius popup."
+  },
+  "f_title": {
+    "message": "Title"
+  },
+  "f_description": {
+    "message": "Meta description"
+  },
+  "f_canonical": {
+    "message": "Canonical"
+  },
+  "f_robots": {
+    "message": "Meta robots"
+  },
+  "f_lang": {
+    "message": "Language (html lang)"
+  },
+  "f_keywords": {
+    "message": "Meta keywords"
+  },
+  "f_meta_language": {
+    "message": "Meta language tags"
+  },
+  "f_charset": {
+    "message": "Charset"
+  },
+  "f_doctype": {
+    "message": "Doctype"
+  },
+  "f_viewport": {
+    "message": "Viewport"
+  },
+  "f_author": {
+    "message": "Author"
+  },
+  "f_publisher": {
+    "message": "Publisher"
+  },
+  "f_xfn": {
+    "message": "rel values on links (XFN etc.)"
+  },
+  "f_icons": {
+    "message": "Favicon and touch icons"
+  },
+  "f_base": {
+    "message": "<base> URL"
+  },
+  "f_generator": {
+    "message": "Generator"
+  },
+  "f_url_quality": {
+    "message": "URL quality"
+  },
+  "f_http_status": {
+    "message": "HTTP status"
+  },
+  "f_redirected": {
+    "message": "Redirected"
+  },
+  "f_final_url": {
+    "message": "Final URL"
+  },
+  "f_html_decoded": {
+    "message": "HTML size (decoded)"
+  },
+  "f_html_compressed": {
+    "message": "HTML size (compressed)"
+  },
+  "f_text_ratio": {
+    "message": "Text / HTML ratio"
+  },
+  "f_media_queries": {
+    "message": "Media queries"
+  },
+  "url_metrics": {
+    "message": "{length} chars without scheme · {queryParams} query parameters ({queryLength} chars) · {percentEscapes} %-escapes · depth {pathSegments} · longest segment without hyphen {longestUnhyphenatedSegment} chars"
+  },
+  "mq_value": {
+    "message": "{count} @media rules in {readableSheets} readable stylesheets; {unreadableSheets} cross-origin stylesheets could not be read"
+  },
+  "rel_missing": {
+    "message": "missing"
+  },
+  "rel_self": {
+    "message": "self-referencing"
+  },
+  "rel_self_slash_variant": {
+    "message": "self (trailing-slash variant)"
+  },
+  "rel_other": {
+    "message": "points to another URL"
+  },
+  "rel_unknown": {
+    "message": "not judged"
+  },
+  "img_total": {
+    "message": "Images"
+  },
+  "img_alt_missing": {
+    "message": "No alt attribute"
+  },
+  "img_alt_empty": {
+    "message": "Empty alt (decorative)"
+  },
+  "img_no_dims": {
+    "message": "No width/height"
+  },
+  "img_oversized": {
+    "message": "Served at 2× or more of shown size"
+  },
+  "lk_internal": {
+    "message": "Internal"
+  },
+  "lk_subdomain": {
+    "message": "Same site, other host"
+  },
+  "lk_external": {
+    "message": "External"
+  },
+  "lk_other": {
+    "message": "Other (mailto, tel, #, javascript)"
+  },
+  "lk_follow": {
+    "message": "follow"
+  },
+  "lk_empty_anchor": {
+    "message": "Empty anchor"
+  },
+  "lk_unique_note": {
+    "message": "Internal / external counts are unique URLs; rel counts are link occurrences. www and the bare domain count as one site."
+  },
+  "preview_load_image": {
+    "message": "Load image (request to the image host)"
+  },
+  "preview_no_image": {
+    "message": "No og:image or twitter:image"
+  },
+  "preview_note": {
+    "message": "Built from og:* first, then twitter:*, then the title and meta description. Each network shows its own layout; this card is an approximation."
+  },
+  "schema_parse_error": {
+    "message": "Block {n} does not parse: {error}"
+  },
+  "schema_note": {
+    "message": "Detection only. Run the Rich Results Test or Schema Markup Validator (Tools) for property-level validation."
+  },
+  "sec_audit": {
+    "message": "Audit"
+  },
+  "sec_pageinfo": {
+    "message": "Page info"
+  },
+  "sec_head": {
+    "message": "Head elements"
+  },
+  "sec_headings": {
+    "message": "Headings"
+  },
+  "sec_images": {
+    "message": "Images"
+  },
+  "sec_links": {
+    "message": "Links"
+  },
+  "sec_keywords": {
+    "message": "Keywords"
+  },
+  "sec_social": {
+    "message": "Social"
+  },
+  "sec_schema": {
+    "message": "Structured data"
+  },
+  "sec_technical": {
+    "message": "Technical"
+  },
+  "sec_rawrendered": {
+    "message": "Raw vs rendered"
+  },
+  "sec_frames": {
+    "message": "Frames"
+  },
+  "sec_tracking": {
+    "message": "Tracking"
+  },
+  "sec_compare": {
+    "message": "Compare"
+  },
+  "sec_tools": {
+    "message": "Tools"
+  },
+  "sec_help": {
+    "message": "Help"
+  },
+  "sec_export": {
+    "message": "Export"
+  },
+  "audit_note": {
+    "message": "Statuses: error, warning, notice, pass, not run. Not run means the check could not be made; it is never counted as a pass. Length bands are advice, not Google rules."
+  },
+  "check_pass_note": {
+    "message": "Checked, nothing to report."
+  },
+  "engine_lang_note": {
+    "message": "Finding texts from the analysis engine are in English; check names and Seorius' own findings are translated."
+  },
+  "help_link": {
+    "message": "what is this?"
+  },
+  "head_note": {
+    "message": "Every direct child of <head> in the live DOM, in order. Repeated tags that should appear once are marked."
+  },
+  "col_tag": {
+    "message": "Tag"
+  },
+  "col_attributes": {
+    "message": "Attributes"
+  },
+  "col_text": {
+    "message": "Text"
+  },
+  "col_duplicate": {
+    "message": "Duplicate"
+  },
+  "col_dims_attr": {
+    "message": "width×height attr."
+  },
+  "col_natural": {
+    "message": "Natural size"
+  },
+  "col_rendered": {
+    "message": "Shown size"
+  },
+  "col_bytes": {
+    "message": "Bytes"
+  },
+  "col_format": {
+    "message": "Format"
+  },
+  "col_count": {
+    "message": "Count"
+  },
+  "col_anchors": {
+    "message": "Anchor texts"
+  },
+  "col_anchor_type": {
+    "message": "Anchor type"
+  },
+  "col_type": {
+    "message": "Type"
+  },
+  "col_status": {
+    "message": "Status"
+  },
+  "col_phrase": {
+    "message": "Phrase"
+  },
+  "col_density": {
+    "message": "Density"
+  },
+  "col_prominence": {
+    "message": "Prominence"
+  },
+  "col_header": {
+    "message": "Header"
+  },
+  "col_value": {
+    "message": "Value"
+  },
+  "col_agent": {
+    "message": "Crawler"
+  },
+  "col_group": {
+    "message": "Group used"
+  },
+  "col_verdict": {
+    "message": "This URL"
+  },
+  "col_rule": {
+    "message": "Deciding rule"
+  },
+  "col_field": {
+    "message": "Field"
+  },
+  "col_raw": {
+    "message": "Raw HTML"
+  },
+  "col_rendered_dom": {
+    "message": "Rendered DOM"
+  },
+  "col_state": {
+    "message": "State"
+  },
+  "col_origin": {
+    "message": "Origin"
+  },
+  "col_vendor": {
+    "message": "Tag"
+  },
+  "col_ids": {
+    "message": "IDs"
+  },
+  "col_matched_by": {
+    "message": "Found by"
+  },
+  "alt_missing": {
+    "message": "no alt"
+  },
+  "alt_empty": {
+    "message": "alt=\"\""
+  },
+  "served_larger": {
+    "message": "served larger"
+  },
+  "src_resource_timing": {
+    "message": "Resource Timing"
+  },
+  "src_content_length": {
+    "message": "Content-Length"
+  },
+  "src_data_url": {
+    "message": "data URL"
+  },
+  "reason_cross_origin_unreadable": {
+    "message": "not checked: other site does not allow reading the response"
+  },
+  "reason_network_error": {
+    "message": "network error"
+  },
+  "reason_no_content_length": {
+    "message": "no Content-Length header"
+  },
+  "reason_private_address": {
+    "message": "skipped: private address"
+  },
+  "reason_action_url": {
+    "message": "skipped: looks like an action (logout, delete, cart…)"
+  },
+  "reason_non_http": {
+    "message": "skipped: not http(s)"
+  },
+  "reason_invalid_url": {
+    "message": "invalid URL"
+  },
+  "reason_credentials_in_url": {
+    "message": "skipped: credentials in URL"
+  },
+  "reason_bot_challenge": {
+    "message": "bot challenge page"
+  },
+  "reason_http_401": {
+    "message": "login required (401)"
+  },
+  "reason_http_403": {
+    "message": "forbidden (403)"
+  },
+  "reason_http_429": {
+    "message": "rate limited (429)"
+  },
+  "reason_no_status": {
+    "message": "no status"
+  },
+  "flt_all": {
+    "message": "All"
+  },
+  "flt_missing_alt": {
+    "message": "No alt"
+  },
+  "flt_empty_alt": {
+    "message": "Empty alt"
+  },
+  "flt_oversized": {
+    "message": "Oversized"
+  },
+  "flt_no_dims": {
+    "message": "No width/height"
+  },
+  "flt_internal": {
+    "message": "Internal"
+  },
+  "flt_external": {
+    "message": "External"
+  },
+  "flt_nofollow": {
+    "message": "nofollow"
+  },
+  "flt_empty_anchor": {
+    "message": "Empty anchor"
+  },
+  "flt_problems": {
+    "message": "Check problems"
+  },
+  "images_note": {
+    "message": "Bytes come from the browser's Resource Timing when the image was loaded from the same site or allows timing; otherwise use “Measure image sizes” (a HEAD request per image, at most 60). “Unknown” is shown when no size could be read."
+  },
+  "progress": {
+    "message": "{done} / {total}…"
+  },
+  "at_text": {
+    "message": "text"
+  },
+  "at_image": {
+    "message": "image"
+  },
+  "at_svg": {
+    "message": "svg"
+  },
+  "at_media": {
+    "message": "media"
+  },
+  "at_label": {
+    "message": "aria-label/title"
+  },
+  "at_empty": {
+    "message": "empty"
+  },
+  "lt_internal": {
+    "message": "internal"
+  },
+  "lt_subdomain": {
+    "message": "same site, other host"
+  },
+  "lt_external": {
+    "message": "external"
+  },
+  "lt_placeholder": {
+    "message": "empty or #"
+  },
+  "lt_fragment": {
+    "message": "fragment"
+  },
+  "lt_mailto": {
+    "message": "mailto"
+  },
+  "lt_tel": {
+    "message": "tel"
+  },
+  "lt_javascript": {
+    "message": "javascript"
+  },
+  "lt_invalid": {
+    "message": "invalid"
+  },
+  "lt_other_scheme": {
+    "message": "other scheme"
+  },
+  "ls_ok": {
+    "message": "OK"
+  },
+  "ls_redirected": {
+    "message": "redirected"
+  },
+  "ls_broken": {
+    "message": "broken"
+  },
+  "ls_login_required": {
+    "message": "login required"
+  },
+  "ls_could_not_check": {
+    "message": "could not check"
+  },
+  "ls_not_checked": {
+    "message": "not checked"
+  },
+  "ls_skipped": {
+    "message": "skipped"
+  },
+  "links_note": {
+    "message": "Grouped by URL (fragment removed). The link check runs only when you start it."
+  },
+  "redirected_internal": {
+    "message": "Internal links that redirect: {n}"
+  },
+  "linkcheck_policy_title": {
+    "message": "How the link check works"
+  },
+  "linkcheck_policy": {
+    "message": "Runs only when you click. At most 6 requests at a time and 300 URLs. HEAD first, GET if HEAD is refused. No cookies or credentials are sent. URLs that look like actions (logout, delete, add to cart, tokens) and private network addresses are skipped. 401, 403, 429 and bot challenges are reported as “could not check”, never as broken. A redirect that ends on a login page is reported as “login required”. Links to other sites can only be read when that site allows it (CORS); otherwise they are “not checked”."
+  },
+  "kw_tokens": {
+    "message": "{n} words in the visible body text (engine word count: {words})."
+  },
+  "kw_note": {
+    "message": "Density = count × phrase length ÷ total words × 100. Prominence = 100 at the start of the text, 0 at the end. Turkish casing is used when html lang is tr. Stop words: built-in Turkish and English lists plus your list in Settings. Phrases must start and end on a non-stop word and appear at least twice."
+  },
+  "kw_n": {
+    "message": "{n}-word phrases"
+  },
+  "tech_surface_note": {
+    "message": "Status, headers and raw HTML come from a second request Seorius makes to this URL without cookies; it is not the request your browser made when it loaded the page."
+  },
+  "fetch_failed": {
+    "message": "Request failed: {error}"
+  },
+  "surface_refetch_body": {
+    "message": "re-fetch body"
+  },
+  "surface_content_length": {
+    "message": "Content-Length of the re-fetch"
+  },
+  "surface_navigation": {
+    "message": "Navigation Timing of the original page load"
+  },
+  "ratio_def": {
+    "message": "visible text characters of the raw HTML ÷ raw HTML characters"
+  },
+  "response_headers": {
+    "message": "Response headers (selected)"
+  },
+  "all_header_names": {
+    "message": "All {n} header names"
+  },
+  "mixed_content": {
+    "message": "Mixed content"
+  },
+  "mc_active": {
+    "message": "Active (blocked by browsers)"
+  },
+  "mc_passive": {
+    "message": "Passive"
+  },
+  "mc_notrun": {
+    "message": "Not checked: the page is not served over https."
+  },
+  "robots_no_rules": {
+    "message": "No rules read (robots.txt missing or not 2xx): everything is allowed."
+  },
+  "no_group": {
+    "message": "no group (allowed)"
+  },
+  "allowed": {
+    "message": "allowed"
+  },
+  "blocked": {
+    "message": "blocked"
+  },
+  "sitemap_lines": {
+    "message": "Sitemap: lines"
+  },
+  "robots_errors": {
+    "message": "Syntax problems"
+  },
+  "sitemap_not_found": {
+    "message": "No sitemap found. Tried: {tried}"
+  },
+  "sm_urls": {
+    "message": "URLs"
+  },
+  "sm_children": {
+    "message": "child sitemaps"
+  },
+  "sm_declared": {
+    "message": "Declared in robots.txt"
+  },
+  "sm_listed": {
+    "message": "This page is listed"
+  },
+  "sm_partial": {
+    "message": "checked {checked} of {total} child sitemaps"
+  },
+  "sm_crossorigin": {
+    "message": "Declared on another host (not checked)"
+  },
+  "raw_note": {
+    "message": "The same engine run on the raw HTML response and on the live DOM. A difference means JavaScript changed the field after load; crawlers that do not render see the raw value."
+  },
+  "raw_notrun": {
+    "message": "Not run: the raw HTML could not be fetched."
+  },
+  "fld_title": {
+    "message": "Title"
+  },
+  "fld_description": {
+    "message": "Meta description"
+  },
+  "fld_canonical": {
+    "message": "Canonical"
+  },
+  "fld_robots": {
+    "message": "Meta robots"
+  },
+  "fld_lang": {
+    "message": "html lang"
+  },
+  "fld_h1": {
+    "message": "H1 text"
+  },
+  "fld_h1Count": {
+    "message": "H1 count"
+  },
+  "fld_ogTitle": {
+    "message": "og:title"
+  },
+  "fld_ogDescription": {
+    "message": "og:description"
+  },
+  "fld_ogImage": {
+    "message": "og:image"
+  },
+  "fld_hreflangCount": {
+    "message": "hreflang links"
+  },
+  "fld_schemaTypes": {
+    "message": "JSON-LD types"
+  },
+  "fld_wordCount": {
+    "message": "Word count"
+  },
+  "fld_linkCount": {
+    "message": "Links"
+  },
+  "fld_imageCount": {
+    "message": "Images"
+  },
+  "rs_same": {
+    "message": "same"
+  },
+  "rs_different": {
+    "message": "different"
+  },
+  "rs_raw_only": {
+    "message": "only in raw HTML"
+  },
+  "rs_rendered_only": {
+    "message": "only after rendering"
+  },
+  "frames_note": {
+    "message": "Seorius inspects the top page only. Content inside frames is not part of this page's own HTML and is not analysed."
+  },
+  "frames_none": {
+    "message": "No iframes."
+  },
+  "not_inspected": {
+    "message": "not inspected"
+  },
+  "same_origin": {
+    "message": "same origin"
+  },
+  "cross_origin": {
+    "message": "other origin"
+  },
+  "tracking_note": {
+    "message": "Found by script src and inline init code. Tags loaded inside a tag manager container or only after cookie consent are not visible here."
+  },
+  "tracking_none": {
+    "message": "No known analytics or pixel tag found."
+  },
+  "cmp_placeholder": {
+    "message": "One URL per line (2 to 5)"
+  },
+  "cmp_note": {
+    "message": "Each URL is fetched from the inspected tab without cookies and analysed on its raw HTML. URLs on other sites work only if that site allows reading the response (CORS)."
+  },
+  "cmp_count": {
+    "message": "Enter 2 to 5 URLs."
+  },
+  "tools_note": {
+    "message": "These open third-party sites in a new tab and send them this page's URL. Nothing is sent until you click."
+  },
+  "help_robots_title": {
+    "message": "Robots directives"
+  },
+  "help_checks_title": {
+    "message": "Audit checks"
+  },
+  "help_severity_title": {
+    "message": "Statuses"
+  },
+  "help_sev_error": {
+    "message": "A defect that usually stops indexing, rendering or security from working as intended."
+  },
+  "help_sev_warning": {
+    "message": "Likely a problem; check whether it is intended."
+  },
+  "help_sev_notice": {
+    "message": "An observation or advice. Often fine; no fix may be needed."
+  },
+  "help_sev_pass": {
+    "message": "The check ran and found nothing to report."
+  },
+  "help_sev_not_run": {
+    "message": "The check could not be made (missing data, blocked request). It says nothing either way."
+  },
+  "dir_index": {
+    "message": "Allow indexing (the default; writing it changes nothing)."
+  },
+  "dir_noindex": {
+    "message": "Do not show this page in search results."
+  },
+  "dir_follow": {
+    "message": "Follow the links on the page (the default)."
+  },
+  "dir_nofollow": {
+    "message": "Do not follow the links on this page."
+  },
+  "dir_none": {
+    "message": "Same as noindex, nofollow."
+  },
+  "dir_all": {
+    "message": "Same as index, follow (the default)."
+  },
+  "dir_noarchive": {
+    "message": "Do not show a cached copy."
+  },
+  "dir_nosnippet": {
+    "message": "Do not show a text or video snippet."
+  },
+  "dir_max_snippet": {
+    "message": "Maximum snippet length in characters (0 = none, -1 = no limit)."
+  },
+  "dir_max_image_preview": {
+    "message": "Largest image preview: none, standard or large."
+  },
+  "dir_max_video_preview": {
+    "message": "Maximum video preview length in seconds (-1 = no limit)."
+  },
+  "dir_notranslate": {
+    "message": "Do not offer a translation of the page in results."
+  },
+  "dir_noimageindex": {
+    "message": "Do not index images on this page."
+  },
+  "dir_unavailable_after": {
+    "message": "Stop showing the page after the given date and time."
+  },
+  "dir_indexifembedded": {
+    "message": "Allow indexing of content embedded through an iframe even when the page itself is noindex."
+  },
+  "exp_json": {
+    "message": "Full report (JSON)"
+  },
+  "exp_links": {
+    "message": "Links (CSV)"
+  },
+  "exp_images": {
+    "message": "Images (CSV)"
+  },
+  "exp_keywords": {
+    "message": "Keywords (CSV)"
+  },
+  "export_note": {
+    "message": "PDF: use Print / PDF and choose “Save as PDF”. Files are created in your browser; nothing is uploaded."
+  },
+  "opt_title": {
+    "message": "Seorius settings"
+  },
+  "opt_language": {
+    "message": "Language"
+  },
+  "opt_lang_auto": {
+    "message": "Browser language"
+  },
+  "opt_overlay_colors": {
+    "message": "Overlay colours"
+  },
+  "opt_keywords": {
+    "message": "Keyword density"
+  },
+  "opt_stopwords": {
+    "message": "Extra stop words (one per line or comma separated)"
+  },
+  "opt_whitelist": {
+    "message": "Whitelist (words never treated as stop words)"
+  },
+  "opt_words_placeholder": {
+    "message": "word1, word2"
+  },
+  "opt_audit_groups": {
+    "message": "Audit groups shown"
+  },
+  "opt_columns": {
+    "message": "Table columns"
+  },
+  "opt_backup": {
+    "message": "Import / export"
+  },
+  "opt_export": {
+    "message": "Export settings"
+  },
+  "opt_import": {
+    "message": "Import settings"
+  },
+  "opt_reset": {
+    "message": "Reset to defaults"
+  },
+  "opt_import_error": {
+    "message": "Import failed:"
+  },
+  "opt_saved": {
+    "message": "Saved."
+  },
+  "opt_privacy": {
+    "message": "Privacy"
+  },
+  "opt_privacy_text": {
+    "message": "Seorius analyses pages inside your browser. It only runs on a tab after you click its icon. It sends no data to Blakfy or any third party. During a scan it only requests the site you are inspecting (the page itself, robots.txt and the sitemap). The link check and image size check run only when you start them and send HEAD/GET requests to the linked addresses, other sites included. No cookies are sent. Settings are stored in your browser's sync storage."
+  },
+  "opt_privacy_link": {
+    "message": "Privacy policy (blakfy.com)"
+  },
+  "check_http_status": {
+    "message": "HTTP status"
+  },
+  "check_https": {
+    "message": "HTTPS"
+  },
+  "check_robots": {
+    "message": "Meta robots / X-Robots-Tag"
+  },
+  "check_canonical": {
+    "message": "Canonical"
+  },
+  "check_consistency": {
+    "message": "Index signal consistency"
+  },
+  "check_robots_txt": {
+    "message": "robots.txt"
+  },
+  "check_sitemap": {
+    "message": "XML sitemap"
+  },
+  "check_charset": {
+    "message": "Charset"
+  },
+  "check_doctype": {
+    "message": "Doctype"
+  },
+  "check_hreflang": {
+    "message": "hreflang"
+  },
+  "check_structured_data": {
+    "message": "Structured data"
+  },
+  "check_mixed_content": {
+    "message": "Mixed content"
+  },
+  "check_hsts": {
+    "message": "HSTS"
+  },
+  "check_tracking": {
+    "message": "Tracking tags"
+  },
+  "check_frames": {
+    "message": "Frames"
+  },
+  "check_raw_rendered": {
+    "message": "Raw vs rendered"
+  },
+  "check_title": {
+    "message": "Title"
+  },
+  "check_description": {
+    "message": "Meta description"
+  },
+  "check_h1": {
+    "message": "H1"
+  },
+  "check_outline": {
+    "message": "Heading outline"
+  },
+  "check_lang": {
+    "message": "Page language"
+  },
+  "check_images": {
+    "message": "Image alt text"
+  },
+  "check_image_sizing": {
+    "message": "Image sizing"
+  },
+  "check_links": {
+    "message": "Link anchors"
+  },
+  "check_internal_links": {
+    "message": "Internal links"
+  },
+  "check_content": {
+    "message": "Content amount"
+  },
+  "check_keywords": {
+    "message": "Keyword density"
+  },
+  "check_meta_keywords": {
+    "message": "Meta keywords"
+  },
+  "check_url_quality": {
+    "message": "URL quality"
+  },
+  "check_favicon": {
+    "message": "Favicon"
+  },
+  "check_viewport": {
+    "message": "Viewport"
+  },
+  "check_media_queries": {
+    "message": "Responsive CSS"
+  },
+  "check_open_graph": {
+    "message": "Open Graph"
+  },
+  "check_twitter_card": {
+    "message": "Twitter / X card"
+  },
+  "check_other": {
+    "message": "Other"
+  },
+  "help_http_status": {
+    "message": "Status code of a second, cookie-less request to this URL. 4xx/5xx is an error; a redirect is a warning because links and canonicals should point at the final URL."
+  },
+  "help_https": {
+    "message": "The page should be served over https."
+  },
+  "help_robots": {
+    "message": "Robots directives from <meta name=robots|googlebot|bingbot> and the X-Robots-Tag header. noindex is a warning because some pages are meant to stay out of search."
+  },
+  "help_canonical": {
+    "message": "One absolute rel=canonical URL, normally pointing at the page itself."
+  },
+  "help_consistency": {
+    "message": "noindex together with a canonical to another URL, or a header that disagrees with the meta tag, sends mixed signals."
+  },
+  "help_robots_txt": {
+    "message": "robots.txt on this site, read by RFC 9309 rules (longest match wins, Allow wins ties, * and $ supported). Shows whether this URL is allowed for Googlebot, Bingbot, other crawlers and AI crawlers."
+  },
+  "help_sitemap": {
+    "message": "Sitemap from robots.txt Sitemap: lines, then /sitemap.xml and /sitemap_index.xml on this site. Shows type, URL count and whether this page is listed."
+  },
+  "help_charset": {
+    "message": "A charset declaration (utf-8 recommended) within the first 1024 bytes, matching the Content-Type header."
+  },
+  "help_doctype": {
+    "message": "<!doctype html> at the start, so the browser does not use quirks mode."
+  },
+  "help_hreflang": {
+    "message": "Language alternates: valid codes, absolute URLs, no duplicates, the page itself included. Return links need the other pages and are not checked here."
+  },
+  "help_structured_data": {
+    "message": "JSON-LD blocks must parse. Detection only; use the Rich Results Test for full validation."
+  },
+  "help_mixed_content": {
+    "message": "On an https page, http scripts, styles and frames are blocked by browsers (error); http images and media are passive (warning)."
+  },
+  "help_hsts": {
+    "message": "Strict-Transport-Security with max-age of at least one year (31536000 s)."
+  },
+  "help_tracking": {
+    "message": "Analytics and pixel tags found on the page (GA4, GTM, Meta, Yandex, Clarity, legacy Universal Analytics)."
+  },
+  "help_frames": {
+    "message": "Iframes are listed but not analysed; their content is not part of this page's HTML."
+  },
+  "help_raw_rendered": {
+    "message": "Compares head fields between the raw HTML and the rendered DOM. Differences mean JavaScript sets them."
+  },
+  "help_title": {
+    "message": "One non-empty <title>. The 30–60 character band is advice only; Google sets no length limit and cuts titles to fit the screen."
+  },
+  "help_description": {
+    "message": "One non-empty meta description. The 120–160 character band is advice only; Google may rewrite descriptions."
+  },
+  "help_h1": {
+    "message": "One non-empty H1 is our clarity rule. Google does not treat several H1s as a problem."
+  },
+  "help_outline": {
+    "message": "Skipped heading levels and empty headings. Order is not a ranking factor; it helps accessibility."
+  },
+  "help_lang": {
+    "message": "<html lang> with a well-formed language tag."
+  },
+  "help_images": {
+    "message": "Missing alt attributes. alt=\"\" is correct for decorative images and is only a notice."
+  },
+  "help_image_sizing": {
+    "message": "Images whose file is at least twice as wide as shown, or larger than 500 KB when the size is known."
+  },
+  "help_links": {
+    "message": "Links need an accessible name (text, image alt, aria-label or title). javascript: links cannot be crawled."
+  },
+  "help_internal_links": {
+    "message": "Fewer than 3 or more than 100 unique internal links, and nofollow on internal links. These bands are a tool heuristic, not a Google figure."
+  },
+  "help_content": {
+    "message": "Visible word count and text/HTML ratio. Google has no word-count target; this is information only."
+  },
+  "help_keywords": {
+    "message": "A word above 5% density on a page of 100+ words is noted. No published Google figure exists."
+  },
+  "help_meta_keywords": {
+    "message": "Google ignores the meta keywords tag. Shown for information."
+  },
+  "help_url_quality": {
+    "message": "Long URLs, many query parameters, %-escapes, deep paths or long unhyphenated segments. Heuristics only."
+  },
+  "help_favicon": {
+    "message": "A <link rel=icon>. Without one, browsers try /favicon.ico (not checked by Seorius)."
+  },
+  "help_viewport": {
+    "message": "<meta name=viewport> with width=device-width that does not block zoom (WCAG 1.4.4 needs 200%)."
+  },
+  "help_media_queries": {
+    "message": "Counts @media rules in stylesheets Seorius can read (same-origin). Cross-origin sheets cannot be read."
+  },
+  "help_open_graph": {
+    "message": "og:title, og:type, og:image and og:url (the four required Open Graph properties), with an absolute image URL."
+  },
+  "help_twitter_card": {
+    "message": "twitter:card sets the card type; other fields fall back to Open Graph."
+  },
+  "help_other": {
+    "message": "Other findings."
+  },
+  "f_status_notrun": {
+    "message": "The page could not be re-fetched ({error}), so status and headers are unknown."
+  },
+  "f_status_error": {
+    "message": "The page returns HTTP {status}."
+  },
+  "f_status_redirect": {
+    "message": "The page returns HTTP {status}."
+  },
+  "f_redirect_chain": {
+    "message": "Requesting {from} redirects to {to}."
+  },
+  "f_http_page": {
+    "message": "The page is served over http, not https."
+  },
+  "f_robots_notrun": {
+    "message": "robots.txt could not be read ({error})."
+  },
+  "f_robots_missing": {
+    "message": "No robots.txt (HTTP {status}): everything is allowed."
+  },
+  "f_robots_5xx": {
+    "message": "robots.txt returns HTTP {status}. Under RFC 9309 crawlers then assume everything is disallowed."
+  },
+  "f_robots_4xx": {
+    "message": "robots.txt returns HTTP {status}; crawlers treat that as no restrictions."
+  },
+  "f_robots_blocked_google": {
+    "message": "robots.txt blocks this URL for Googlebot ({rule})."
+  },
+  "f_robots_blocked_others": {
+    "message": "robots.txt blocks this URL for: {agents}."
+  },
+  "f_robots_syntax": {
+    "message": "robots.txt has {n} line(s) that could not be used."
+  },
+  "f_sitemap_notrun": {
+    "message": "Sitemap not checked ({error})."
+  },
+  "f_sitemap_none": {
+    "message": "No sitemap found on this site (tried {tried})."
+  },
+  "f_sitemap_undeclared": {
+    "message": "The sitemap is not declared in robots.txt."
+  },
+  "f_sitemap_not_listed": {
+    "message": "This page is not listed in the sitemap."
+  },
+  "f_sitemap_not_listed_partial": {
+    "message": "This page was not found in the {checked} of {total} child sitemaps that were checked."
+  },
+  "f_sitemap_listing_notrun": {
+    "message": "Could not read the child sitemaps, so listing was not checked."
+  },
+  "f_sitemap_crossorigin": {
+    "message": "{n} sitemap(s) declared on another host were not checked."
+  },
+  "f_frames": {
+    "message": "{n} iframe(s) on the page were not inspected."
+  },
+  "f_raw_notrun": {
+    "message": "Raw HTML was not available, so raw and rendered could not be compared."
+  },
+  "f_raw_diff": {
+    "message": "{n} field(s) differ between raw HTML and the rendered DOM: {fields}."
+  },
+  "f_hreflang_none": {
+    "message": "No hreflang links. Needed only when the page has language or region versions."
+  },
+  "f_url_long": {
+    "message": "The URL is {n} characters (heuristic: over {max})."
+  },
+  "f_url_params": {
+    "message": "The URL has {n} query parameters (heuristic: over {max})."
+  },
+  "f_url_query_long": {
+    "message": "The query string is {n} characters (heuristic: over {max})."
+  },
+  "f_url_escapes": {
+    "message": "The URL has {n} %-escapes (heuristic: over {max})."
+  },
+  "f_url_depth": {
+    "message": "The path is {n} levels deep (heuristic: over {max})."
+  },
+  "f_url_segment": {
+    "message": "A path segment without hyphens is {n} characters (heuristic: over {max})."
+  },
+  "f_internal_few": {
+    "message": "Only {n} unique internal link(s) (heuristic: at least {min})."
+  },
+  "f_internal_many": {
+    "message": "{n} unique internal links (heuristic: at most {max})."
+  },
+  "f_internal_nofollow": {
+    "message": "{n} internal URL(s) are linked with nofollow."
+  },
+  "f_img_render": {
+    "message": "{n} image(s) are served at {ratio}× or more of their shown width."
+  },
+  "f_img_bytes": {
+    "message": "{n} image(s) are {kb} KB or larger."
+  },
+  "f_meta_keywords": {
+    "message": "A meta keywords tag is present; Google ignores it."
+  },
+  "f_favicon_none": {
+    "message": "No <link rel=icon>; browsers will try /favicon.ico."
+  },
+  "f_mq_notrun": {
+    "message": "Stylesheets could not be read."
+  },
+  "f_mq_unreadable": {
+    "message": "No @media rules in readable stylesheets; {n} cross-origin stylesheet(s) could not be read."
+  },
+  "f_mq_none": {
+    "message": "No @media rules found in the page's stylesheets."
+  },
+  "ratio_def_live": {
+    "message": "visible text characters ÷ rendered HTML characters (raw HTML not available)"
+  }
+}

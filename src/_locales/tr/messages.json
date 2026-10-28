@@ -1,0 +1,1294 @@
+{
+  "appName": {
+    "message": "Seorius – Sayfa İçi SEO Analizi",
+    "description": "Extension name"
+  },
+  "appDesc": {
+    "message": "Açık sekmenin sayfa içi SEO'sunu tarayıcınızda inceleyin: meta etiketleri, başlıklar, bağlantılar, görseller, schema, robots.txt.",
+    "description": "Store and manifest description (max 132 chars)"
+  },
+  "btn_rescan": {
+    "message": "Yeniden tara"
+  },
+  "btn_full_report": {
+    "message": "Tam raporu aç"
+  },
+  "btn_settings": {
+    "message": "Ayarlar"
+  },
+  "btn_print": {
+    "message": "Yazdır / PDF"
+  },
+  "btn_check_links": {
+    "message": "Bağlantıları kontrol et"
+  },
+  "btn_measure_images": {
+    "message": "Görsel boyutlarını ölç"
+  },
+  "btn_compare": {
+    "message": "Karşılaştır"
+  },
+  "overlay_title": {
+    "message": "Sayfada işaretle:"
+  },
+  "overlay_headings": {
+    "message": "Başlıklar"
+  },
+  "overlay_links": {
+    "message": "Bağlantılar"
+  },
+  "overlay_images": {
+    "message": "Görseller"
+  },
+  "needs_attention": {
+    "message": "Dikkat gerekenler"
+  },
+  "attention_none": {
+    "message": "Hata veya uyarı yok."
+  },
+  "scanning": {
+    "message": "Taranıyor…"
+  },
+  "scanned_at": {
+    "message": "Tarama: {at}"
+  },
+  "cnt_errors": {
+    "message": "hata"
+  },
+  "cnt_warnings": {
+    "message": "uyarı"
+  },
+  "cnt_notices": {
+    "message": "not"
+  },
+  "cnt_notrun": {
+    "message": "çalışmadı"
+  },
+  "tab_overview": {
+    "message": "Genel"
+  },
+  "tab_headings": {
+    "message": "Başlıklar"
+  },
+  "tab_images": {
+    "message": "Görseller"
+  },
+  "tab_links": {
+    "message": "Bağlantılar"
+  },
+  "tab_social": {
+    "message": "Sosyal"
+  },
+  "tab_schema": {
+    "message": "Schema"
+  },
+  "sev_error": {
+    "message": "hata"
+  },
+  "sev_warning": {
+    "message": "uyarı"
+  },
+  "sev_notice": {
+    "message": "not"
+  },
+  "sev_pass": {
+    "message": "geçti"
+  },
+  "sev_not_run": {
+    "message": "çalışmadı"
+  },
+  "grp_technical": {
+    "message": "Teknik"
+  },
+  "grp_content": {
+    "message": "İçerik"
+  },
+  "grp_mobile": {
+    "message": "Mobil"
+  },
+  "grp_social": {
+    "message": "Sosyal"
+  },
+  "val_missing": {
+    "message": "yok"
+  },
+  "val_empty": {
+    "message": "boş"
+  },
+  "val_none": {
+    "message": "Bulunamadı."
+  },
+  "val_none_default": {
+    "message": "yok (varsayılan: index, follow)"
+  },
+  "val_unknown": {
+    "message": "bilinmiyor"
+  },
+  "yes": {
+    "message": "evet"
+  },
+  "no": {
+    "message": "hayır"
+  },
+  "hidden": {
+    "message": "gizli"
+  },
+  "high": {
+    "message": "yüksek"
+  },
+  "chars": {
+    "message": "{n} karakter"
+  },
+  "count_n": {
+    "message": "{n} adet"
+  },
+  "duplicate": {
+    "message": "tekrar"
+  },
+  "truncated": {
+    "message": "kesildi"
+  },
+  "level_skip": {
+    "message": "seviye atlandı"
+  },
+  "err_no_access": {
+    "message": "Seorius bu sekmeye şu an erişemiyor. Sayfadayken Seorius simgesine yeniden tıklayın (erişim her tıklamada verilir ve sayfa değişince biter)."
+  },
+  "err_generic": {
+    "message": "Bir sorun oluştu:"
+  },
+  "err_not_inspectable": {
+    "message": "Bu sayfa incelenemez. Seorius yalnızca http ve https sayfalarında çalışır (tarayıcı sayfalarında ve Chrome Web Mağazası'nda çalışmaz)."
+  },
+  "err_no_tab": {
+    "message": "Sekme bilgisi yok. Raporu Seorius penceresinden açın."
+  },
+  "f_title": {
+    "message": "Başlık (title)"
+  },
+  "f_description": {
+    "message": "Meta açıklama"
+  },
+  "f_canonical": {
+    "message": "Canonical"
+  },
+  "f_robots": {
+    "message": "Meta robots"
+  },
+  "f_lang": {
+    "message": "Dil (html lang)"
+  },
+  "f_keywords": {
+    "message": "Meta keywords"
+  },
+  "f_meta_language": {
+    "message": "Meta dil etiketleri"
+  },
+  "f_charset": {
+    "message": "Karakter seti"
+  },
+  "f_doctype": {
+    "message": "Doctype"
+  },
+  "f_viewport": {
+    "message": "Viewport"
+  },
+  "f_author": {
+    "message": "Yazar"
+  },
+  "f_publisher": {
+    "message": "Yayıncı"
+  },
+  "f_xfn": {
+    "message": "Bağlantılardaki rel değerleri (XFN vb.)"
+  },
+  "f_icons": {
+    "message": "Favicon ve dokunmatik simgeler"
+  },
+  "f_base": {
+    "message": "<base> adresi"
+  },
+  "f_generator": {
+    "message": "Generator"
+  },
+  "f_url_quality": {
+    "message": "URL kalitesi"
+  },
+  "f_http_status": {
+    "message": "HTTP durumu"
+  },
+  "f_redirected": {
+    "message": "Yönlendirildi"
+  },
+  "f_final_url": {
+    "message": "Son URL"
+  },
+  "f_html_decoded": {
+    "message": "HTML boyutu (açılmış)"
+  },
+  "f_html_compressed": {
+    "message": "HTML boyutu (sıkıştırılmış)"
+  },
+  "f_text_ratio": {
+    "message": "Metin / HTML oranı"
+  },
+  "f_media_queries": {
+    "message": "Medya sorguları"
+  },
+  "url_metrics": {
+    "message": "Şemasız {length} karakter · {queryParams} sorgu parametresi ({queryLength} karakter) · {percentEscapes} %-kodlama · derinlik {pathSegments} · tiresiz en uzun bölüm {longestUnhyphenatedSegment} karakter"
+  },
+  "mq_value": {
+    "message": "Okunabilen {readableSheets} stil dosyasında {count} @media kuralı; başka kaynaktan gelen {unreadableSheets} stil dosyası okunamadı"
+  },
+  "rel_missing": {
+    "message": "yok"
+  },
+  "rel_self": {
+    "message": "sayfanın kendisi"
+  },
+  "rel_self_slash_variant": {
+    "message": "sayfanın kendisi (sondaki / farkıyla)"
+  },
+  "rel_other": {
+    "message": "başka bir URL'yi gösteriyor"
+  },
+  "rel_unknown": {
+    "message": "değerlendirilmedi"
+  },
+  "img_total": {
+    "message": "Görsel"
+  },
+  "img_alt_missing": {
+    "message": "alt özniteliği yok"
+  },
+  "img_alt_empty": {
+    "message": "Boş alt (dekoratif)"
+  },
+  "img_no_dims": {
+    "message": "width/height yok"
+  },
+  "img_oversized": {
+    "message": "Gösterilenin 2 katı veya fazlası boyutta"
+  },
+  "lk_internal": {
+    "message": "İç"
+  },
+  "lk_subdomain": {
+    "message": "Aynı site, başka alt alan adı"
+  },
+  "lk_external": {
+    "message": "Dış"
+  },
+  "lk_other": {
+    "message": "Diğer (mailto, tel, #, javascript)"
+  },
+  "lk_follow": {
+    "message": "follow"
+  },
+  "lk_empty_anchor": {
+    "message": "Boş bağlantı metni"
+  },
+  "lk_unique_note": {
+    "message": "İç / dış sayıları benzersiz URL'dir; rel sayıları bağlantı adedidir. www ve çıplak alan adı aynı site sayılır."
+  },
+  "preview_load_image": {
+    "message": "Görseli yükle (görselin sunucusuna istek gider)"
+  },
+  "preview_no_image": {
+    "message": "og:image veya twitter:image yok"
+  },
+  "preview_note": {
+    "message": "Önce og:*, sonra twitter:*, sonra başlık ve meta açıklamadan oluşturulur. Her ağın kendi görünümü vardır; bu kart yaklaşık bir önizlemedir."
+  },
+  "schema_parse_error": {
+    "message": "{n}. blok ayrıştırılamıyor: {error}"
+  },
+  "schema_note": {
+    "message": "Yalnızca tespit. Özellik düzeyinde doğrulama için Araçlar'daki Rich Results Test veya Schema Markup Validator'ı kullanın."
+  },
+  "sec_audit": {
+    "message": "Denetim"
+  },
+  "sec_pageinfo": {
+    "message": "Sayfa bilgisi"
+  },
+  "sec_head": {
+    "message": "Head öğeleri"
+  },
+  "sec_headings": {
+    "message": "Başlıklar"
+  },
+  "sec_images": {
+    "message": "Görseller"
+  },
+  "sec_links": {
+    "message": "Bağlantılar"
+  },
+  "sec_keywords": {
+    "message": "Anahtar kelimeler"
+  },
+  "sec_social": {
+    "message": "Sosyal"
+  },
+  "sec_schema": {
+    "message": "Yapılandırılmış veri"
+  },
+  "sec_technical": {
+    "message": "Teknik"
+  },
+  "sec_rawrendered": {
+    "message": "Ham ve işlenmiş"
+  },
+  "sec_frames": {
+    "message": "Çerçeveler"
+  },
+  "sec_tracking": {
+    "message": "İzleme"
+  },
+  "sec_compare": {
+    "message": "Karşılaştır"
+  },
+  "sec_tools": {
+    "message": "Araçlar"
+  },
+  "sec_help": {
+    "message": "Yardım"
+  },
+  "sec_export": {
+    "message": "Dışa aktar"
+  },
+  "audit_note": {
+    "message": "Durumlar: hata, uyarı, not, geçti, çalışmadı. Çalışmadı, kontrolün yapılamadığı anlamına gelir; asla geçti sayılmaz. Uzunluk aralıkları öneridir, Google kuralı değildir."
+  },
+  "check_pass_note": {
+    "message": "Kontrol edildi, bildirilecek bir şey yok."
+  },
+  "engine_lang_note": {
+    "message": "Analiz motorundan gelen bulgu metinleri İngilizcedir; kontrol adları ve Seorius'un kendi bulguları çevrilmiştir."
+  },
+  "help_link": {
+    "message": "bu nedir?"
+  },
+  "head_note": {
+    "message": "Canlı DOM'da <head> içindeki her doğrudan öğe, sırasıyla. Bir kez olması gereken tekrarlı etiketler işaretlenir."
+  },
+  "col_tag": {
+    "message": "Etiket"
+  },
+  "col_attributes": {
+    "message": "Öznitelikler"
+  },
+  "col_text": {
+    "message": "Metin"
+  },
+  "col_duplicate": {
+    "message": "Tekrar"
+  },
+  "col_dims_attr": {
+    "message": "width×height özn."
+  },
+  "col_natural": {
+    "message": "Gerçek boyut"
+  },
+  "col_rendered": {
+    "message": "Gösterilen boyut"
+  },
+  "col_bytes": {
+    "message": "Bayt"
+  },
+  "col_format": {
+    "message": "Biçim"
+  },
+  "col_count": {
+    "message": "Adet"
+  },
+  "col_anchors": {
+    "message": "Bağlantı metinleri"
+  },
+  "col_anchor_type": {
+    "message": "Bağlantı türü"
+  },
+  "col_type": {
+    "message": "Tür"
+  },
+  "col_status": {
+    "message": "Durum"
+  },
+  "col_phrase": {
+    "message": "İfade"
+  },
+  "col_density": {
+    "message": "Yoğunluk"
+  },
+  "col_prominence": {
+    "message": "Öne çıkma"
+  },
+  "col_header": {
+    "message": "Başlık alanı"
+  },
+  "col_value": {
+    "message": "Değer"
+  },
+  "col_agent": {
+    "message": "Tarayıcı (bot)"
+  },
+  "col_group": {
+    "message": "Kullanılan grup"
+  },
+  "col_verdict": {
+    "message": "Bu URL"
+  },
+  "col_rule": {
+    "message": "Belirleyen kural"
+  },
+  "col_field": {
+    "message": "Alan"
+  },
+  "col_raw": {
+    "message": "Ham HTML"
+  },
+  "col_rendered_dom": {
+    "message": "İşlenmiş DOM"
+  },
+  "col_state": {
+    "message": "Durum"
+  },
+  "col_origin": {
+    "message": "Kaynak"
+  },
+  "col_vendor": {
+    "message": "Etiket"
+  },
+  "col_ids": {
+    "message": "Kimlikler"
+  },
+  "col_matched_by": {
+    "message": "Bulunduğu yer"
+  },
+  "alt_missing": {
+    "message": "alt yok"
+  },
+  "alt_empty": {
+    "message": "alt=\"\""
+  },
+  "served_larger": {
+    "message": "büyük sunuluyor"
+  },
+  "src_resource_timing": {
+    "message": "Resource Timing"
+  },
+  "src_content_length": {
+    "message": "Content-Length"
+  },
+  "src_data_url": {
+    "message": "data URL"
+  },
+  "reason_cross_origin_unreadable": {
+    "message": "kontrol edilmedi: diğer site yanıtın okunmasına izin vermiyor"
+  },
+  "reason_network_error": {
+    "message": "ağ hatası"
+  },
+  "reason_no_content_length": {
+    "message": "Content-Length başlığı yok"
+  },
+  "reason_private_address": {
+    "message": "atlandı: özel ağ adresi"
+  },
+  "reason_action_url": {
+    "message": "atlandı: işlem bağlantısına benziyor (çıkış, silme, sepet…)"
+  },
+  "reason_non_http": {
+    "message": "atlandı: http(s) değil"
+  },
+  "reason_invalid_url": {
+    "message": "geçersiz URL"
+  },
+  "reason_credentials_in_url": {
+    "message": "atlandı: URL içinde kimlik bilgisi var"
+  },
+  "reason_bot_challenge": {
+    "message": "bot doğrulama sayfası"
+  },
+  "reason_http_401": {
+    "message": "giriş gerekli (401)"
+  },
+  "reason_http_403": {
+    "message": "erişim yasak (403)"
+  },
+  "reason_http_429": {
+    "message": "istek sınırı (429)"
+  },
+  "reason_no_status": {
+    "message": "durum kodu yok"
+  },
+  "flt_all": {
+    "message": "Tümü"
+  },
+  "flt_missing_alt": {
+    "message": "alt yok"
+  },
+  "flt_empty_alt": {
+    "message": "Boş alt"
+  },
+  "flt_oversized": {
+    "message": "Büyük"
+  },
+  "flt_no_dims": {
+    "message": "width/height yok"
+  },
+  "flt_internal": {
+    "message": "İç"
+  },
+  "flt_external": {
+    "message": "Dış"
+  },
+  "flt_nofollow": {
+    "message": "nofollow"
+  },
+  "flt_empty_anchor": {
+    "message": "Boş bağlantı metni"
+  },
+  "flt_problems": {
+    "message": "Kontrol sorunları"
+  },
+  "images_note": {
+    "message": "Bayt değeri, görsel aynı siteden yüklendiyse veya zamanlama bilgisine izin veriyorsa tarayıcının Resource Timing verisinden gelir; aksi halde “Görsel boyutlarını ölç” kullanın (görsel başına bir HEAD isteği, en fazla 60). Boyut okunamazsa “bilinmiyor” gösterilir."
+  },
+  "progress": {
+    "message": "{done} / {total}…"
+  },
+  "at_text": {
+    "message": "metin"
+  },
+  "at_image": {
+    "message": "görsel"
+  },
+  "at_svg": {
+    "message": "svg"
+  },
+  "at_media": {
+    "message": "medya"
+  },
+  "at_label": {
+    "message": "aria-label/title"
+  },
+  "at_empty": {
+    "message": "boş"
+  },
+  "lt_internal": {
+    "message": "iç"
+  },
+  "lt_subdomain": {
+    "message": "aynı site, başka alt alan adı"
+  },
+  "lt_external": {
+    "message": "dış"
+  },
+  "lt_placeholder": {
+    "message": "boş veya #"
+  },
+  "lt_fragment": {
+    "message": "sayfa içi (#)"
+  },
+  "lt_mailto": {
+    "message": "mailto"
+  },
+  "lt_tel": {
+    "message": "tel"
+  },
+  "lt_javascript": {
+    "message": "javascript"
+  },
+  "lt_invalid": {
+    "message": "geçersiz"
+  },
+  "lt_other_scheme": {
+    "message": "diğer şema"
+  },
+  "ls_ok": {
+    "message": "Sorunsuz"
+  },
+  "ls_redirected": {
+    "message": "yönlendiriyor"
+  },
+  "ls_broken": {
+    "message": "kırık"
+  },
+  "ls_login_required": {
+    "message": "giriş gerekli"
+  },
+  "ls_could_not_check": {
+    "message": "kontrol edilemedi"
+  },
+  "ls_not_checked": {
+    "message": "kontrol edilmedi"
+  },
+  "ls_skipped": {
+    "message": "atlandı"
+  },
+  "links_note": {
+    "message": "URL'ye göre gruplanır (# kısmı çıkarılır). Bağlantı kontrolü yalnızca siz başlatınca çalışır."
+  },
+  "redirected_internal": {
+    "message": "Yönlendiren iç bağlantılar: {n}"
+  },
+  "linkcheck_policy_title": {
+    "message": "Bağlantı kontrolü nasıl çalışır"
+  },
+  "linkcheck_policy": {
+    "message": "Yalnızca siz tıklayınca çalışır. Aynı anda en fazla 6 istek ve en fazla 300 URL. Önce HEAD, reddedilirse GET. Çerez veya kimlik bilgisi gönderilmez. İşleme benzeyen URL'ler (çıkış, silme, sepete ekleme, token) ve özel ağ adresleri atlanır. 401, 403, 429 ve bot doğrulamaları “kontrol edilemedi” olarak gösterilir, asla kırık denmez. Giriş sayfasına giden yönlendirme “giriş gerekli” olarak gösterilir. Başka sitelere giden bağlantılar yalnızca o site izin verirse (CORS) okunabilir; aksi halde “kontrol edilmedi” olur."
+  },
+  "kw_tokens": {
+    "message": "Görünen gövde metninde {n} kelime (motorun kelime sayısı: {words})."
+  },
+  "kw_note": {
+    "message": "Yoğunluk = adet × ifade uzunluğu ÷ toplam kelime × 100. Öne çıkma = metnin başında 100, sonunda 0. html lang tr ise Türkçe büyük/küçük harf kuralı kullanılır. Etkisiz kelimeler: yerleşik Türkçe ve İngilizce listeler artı Ayarlar'daki listeniz. İfade etkisiz olmayan bir kelimeyle başlayıp bitmeli ve en az iki kez geçmelidir."
+  },
+  "kw_n": {
+    "message": "{n} kelimelik ifadeler"
+  },
+  "tech_surface_note": {
+    "message": "Durum, başlık alanları ve ham HTML, Seorius'un bu URL'ye çerezsiz yaptığı ikinci bir istekten gelir; tarayıcınızın sayfayı yüklerken yaptığı istek değildir."
+  },
+  "fetch_failed": {
+    "message": "İstek başarısız: {error}"
+  },
+  "surface_refetch_body": {
+    "message": "yeniden istenen gövde"
+  },
+  "surface_content_length": {
+    "message": "yeniden isteğin Content-Length değeri"
+  },
+  "surface_navigation": {
+    "message": "ilk yüklemenin Navigation Timing verisi"
+  },
+  "ratio_def": {
+    "message": "ham HTML'deki görünen metin karakteri ÷ ham HTML karakteri"
+  },
+  "response_headers": {
+    "message": "Yanıt başlıkları (seçilmiş)"
+  },
+  "all_header_names": {
+    "message": "Tüm {n} başlık adı"
+  },
+  "mixed_content": {
+    "message": "Karışık içerik"
+  },
+  "mc_active": {
+    "message": "Aktif (tarayıcılar engeller)"
+  },
+  "mc_passive": {
+    "message": "Pasif"
+  },
+  "mc_notrun": {
+    "message": "Kontrol edilmedi: sayfa https ile sunulmuyor."
+  },
+  "robots_no_rules": {
+    "message": "Kural okunmadı (robots.txt yok veya 2xx değil): her şeye izin var."
+  },
+  "no_group": {
+    "message": "grup yok (izinli)"
+  },
+  "allowed": {
+    "message": "izinli"
+  },
+  "blocked": {
+    "message": "engelli"
+  },
+  "sitemap_lines": {
+    "message": "Sitemap: satırları"
+  },
+  "robots_errors": {
+    "message": "Söz dizimi sorunları"
+  },
+  "sitemap_not_found": {
+    "message": "Site haritası bulunamadı. Denenenler: {tried}"
+  },
+  "sm_urls": {
+    "message": "URL"
+  },
+  "sm_children": {
+    "message": "alt site haritası"
+  },
+  "sm_declared": {
+    "message": "robots.txt içinde bildirilmiş"
+  },
+  "sm_listed": {
+    "message": "Bu sayfa listede"
+  },
+  "sm_partial": {
+    "message": "{total} alt site haritasından {checked} tanesi kontrol edildi"
+  },
+  "sm_crossorigin": {
+    "message": "Başka sunucuda bildirilmiş (kontrol edilmedi)"
+  },
+  "raw_note": {
+    "message": "Aynı motor ham HTML yanıtında ve canlı DOM'da çalıştırıldı. Fark, alanın yüklemeden sonra JavaScript ile değiştiğini gösterir; sayfayı işlemeyen botlar ham değeri görür."
+  },
+  "raw_notrun": {
+    "message": "Çalışmadı: ham HTML alınamadı."
+  },
+  "fld_title": {
+    "message": "Başlık"
+  },
+  "fld_description": {
+    "message": "Meta açıklama"
+  },
+  "fld_canonical": {
+    "message": "Canonical"
+  },
+  "fld_robots": {
+    "message": "Meta robots"
+  },
+  "fld_lang": {
+    "message": "html lang"
+  },
+  "fld_h1": {
+    "message": "H1 metni"
+  },
+  "fld_h1Count": {
+    "message": "H1 sayısı"
+  },
+  "fld_ogTitle": {
+    "message": "og:title"
+  },
+  "fld_ogDescription": {
+    "message": "og:description"
+  },
+  "fld_ogImage": {
+    "message": "og:image"
+  },
+  "fld_hreflangCount": {
+    "message": "hreflang bağlantıları"
+  },
+  "fld_schemaTypes": {
+    "message": "JSON-LD türleri"
+  },
+  "fld_wordCount": {
+    "message": "Kelime sayısı"
+  },
+  "fld_linkCount": {
+    "message": "Bağlantılar"
+  },
+  "fld_imageCount": {
+    "message": "Görseller"
+  },
+  "rs_same": {
+    "message": "aynı"
+  },
+  "rs_different": {
+    "message": "farklı"
+  },
+  "rs_raw_only": {
+    "message": "yalnızca ham HTML'de"
+  },
+  "rs_rendered_only": {
+    "message": "yalnızca işlendikten sonra"
+  },
+  "frames_note": {
+    "message": "Seorius yalnızca üst sayfayı inceler. Çerçevelerin içeriği bu sayfanın kendi HTML'inin parçası değildir ve analiz edilmez."
+  },
+  "frames_none": {
+    "message": "iframe yok."
+  },
+  "not_inspected": {
+    "message": "incelenmedi"
+  },
+  "same_origin": {
+    "message": "aynı kaynak"
+  },
+  "cross_origin": {
+    "message": "başka kaynak"
+  },
+  "tracking_note": {
+    "message": "Script src ve satır içi başlatma koduyla bulunur. Etiket yöneticisi içinden veya çerez onayından sonra yüklenen etiketler burada görünmez."
+  },
+  "tracking_none": {
+    "message": "Bilinen bir analiz veya piksel etiketi bulunamadı."
+  },
+  "cmp_placeholder": {
+    "message": "Her satıra bir URL (2 ile 5 arası)"
+  },
+  "cmp_note": {
+    "message": "Her URL, incelenen sekmeden çerezsiz istenir ve ham HTML'i üzerinden analiz edilir. Başka sitelerdeki URL'ler yalnızca o site yanıtın okunmasına izin verirse (CORS) çalışır."
+  },
+  "cmp_count": {
+    "message": "2 ile 5 arası URL girin."
+  },
+  "tools_note": {
+    "message": "Bunlar üçüncü taraf siteleri yeni sekmede açar ve bu sayfanın URL'sini onlara gönderir. Siz tıklamadan hiçbir şey gönderilmez."
+  },
+  "help_robots_title": {
+    "message": "Robots yönergeleri"
+  },
+  "help_checks_title": {
+    "message": "Denetim kontrolleri"
+  },
+  "help_severity_title": {
+    "message": "Durumlar"
+  },
+  "help_sev_error": {
+    "message": "Genellikle dizine eklenmeyi, görüntülemeyi veya güvenliği bozan bir kusur."
+  },
+  "help_sev_warning": {
+    "message": "Muhtemelen bir sorun; bilerek mi yapıldığını kontrol edin."
+  },
+  "help_sev_notice": {
+    "message": "Bir gözlem veya öneri. Çoğu zaman sorun değildir; düzeltme gerekmeyebilir."
+  },
+  "help_sev_pass": {
+    "message": "Kontrol çalıştı ve bildirilecek bir şey bulmadı."
+  },
+  "help_sev_not_run": {
+    "message": "Kontrol yapılamadı (veri yok, istek engellendi). Olumlu ya da olumsuz bir şey söylemez."
+  },
+  "dir_index": {
+    "message": "Dizine eklemeye izin ver (varsayılan; yazmak bir şey değiştirmez)."
+  },
+  "dir_noindex": {
+    "message": "Bu sayfayı arama sonuçlarında gösterme."
+  },
+  "dir_follow": {
+    "message": "Sayfadaki bağlantıları izle (varsayılan)."
+  },
+  "dir_nofollow": {
+    "message": "Bu sayfadaki bağlantıları izleme."
+  },
+  "dir_none": {
+    "message": "noindex, nofollow ile aynı."
+  },
+  "dir_all": {
+    "message": "index, follow ile aynı (varsayılan)."
+  },
+  "dir_noarchive": {
+    "message": "Önbellek kopyası gösterme."
+  },
+  "dir_nosnippet": {
+    "message": "Metin veya video özeti gösterme."
+  },
+  "dir_max_snippet": {
+    "message": "Karakter olarak en uzun özet (0 = hiç, -1 = sınırsız)."
+  },
+  "dir_max_image_preview": {
+    "message": "En büyük görsel önizleme: none, standard veya large."
+  },
+  "dir_max_video_preview": {
+    "message": "Saniye olarak en uzun video önizleme (-1 = sınırsız)."
+  },
+  "dir_notranslate": {
+    "message": "Sonuçlarda sayfanın çevirisini önerme."
+  },
+  "dir_noimageindex": {
+    "message": "Bu sayfadaki görselleri dizine ekleme."
+  },
+  "dir_unavailable_after": {
+    "message": "Belirtilen tarih ve saatten sonra sayfayı gösterme."
+  },
+  "dir_indexifembedded": {
+    "message": "Sayfa noindex olsa bile iframe ile gömülen içeriğin dizine eklenmesine izin ver."
+  },
+  "exp_json": {
+    "message": "Tam rapor (JSON)"
+  },
+  "exp_links": {
+    "message": "Bağlantılar (CSV)"
+  },
+  "exp_images": {
+    "message": "Görseller (CSV)"
+  },
+  "exp_keywords": {
+    "message": "Anahtar kelimeler (CSV)"
+  },
+  "export_note": {
+    "message": "PDF: Yazdır / PDF'yi seçip “PDF olarak kaydet”i kullanın. Dosyalar tarayıcınızda oluşturulur; hiçbir şey yüklenmez."
+  },
+  "opt_title": {
+    "message": "Seorius ayarları"
+  },
+  "opt_language": {
+    "message": "Dil"
+  },
+  "opt_lang_auto": {
+    "message": "Tarayıcı dili"
+  },
+  "opt_overlay_colors": {
+    "message": "İşaretleme renkleri"
+  },
+  "opt_keywords": {
+    "message": "Anahtar kelime yoğunluğu"
+  },
+  "opt_stopwords": {
+    "message": "Ek etkisiz kelimeler (her satıra bir tane veya virgülle)"
+  },
+  "opt_whitelist": {
+    "message": "Beyaz liste (asla etkisiz sayılmayacak kelimeler)"
+  },
+  "opt_words_placeholder": {
+    "message": "kelime1, kelime2"
+  },
+  "opt_audit_groups": {
+    "message": "Gösterilen denetim grupları"
+  },
+  "opt_columns": {
+    "message": "Tablo sütunları"
+  },
+  "opt_backup": {
+    "message": "İçe / dışa aktar"
+  },
+  "opt_export": {
+    "message": "Ayarları dışa aktar"
+  },
+  "opt_import": {
+    "message": "Ayarları içe aktar"
+  },
+  "opt_reset": {
+    "message": "Varsayılana dön"
+  },
+  "opt_import_error": {
+    "message": "İçe aktarma başarısız:"
+  },
+  "opt_saved": {
+    "message": "Kaydedildi."
+  },
+  "opt_privacy": {
+    "message": "Gizlilik"
+  },
+  "opt_privacy_text": {
+    "message": "Seorius sayfaları tarayıcınızın içinde analiz eder. Bir sekmede yalnızca simgesine tıkladıktan sonra çalışır. Blakfy sunucularına veya üçüncü taraflara veri göndermez. Tarama sırasında yalnızca incelediğiniz siteye istek atar (sayfanın kendisi, robots.txt ve site haritası). Bağlantı kontrolü ve görsel boyutu ölçümü yalnızca siz başlatınca çalışır ve bağlantı verilen adreslere (başka siteler dahil) HEAD/GET isteği gönderir. Çerez gönderilmez. Ayarlar tarayıcınızın senkron depolamasında tutulur."
+  },
+  "opt_privacy_link": {
+    "message": "Gizlilik politikası (blakfy.com)"
+  },
+  "check_http_status": {
+    "message": "HTTP durumu"
+  },
+  "check_https": {
+    "message": "HTTPS"
+  },
+  "check_robots": {
+    "message": "Meta robots / X-Robots-Tag"
+  },
+  "check_canonical": {
+    "message": "Canonical"
+  },
+  "check_consistency": {
+    "message": "Dizin sinyali tutarlılığı"
+  },
+  "check_robots_txt": {
+    "message": "robots.txt"
+  },
+  "check_sitemap": {
+    "message": "XML site haritası"
+  },
+  "check_charset": {
+    "message": "Karakter seti"
+  },
+  "check_doctype": {
+    "message": "Doctype"
+  },
+  "check_hreflang": {
+    "message": "hreflang"
+  },
+  "check_structured_data": {
+    "message": "Yapılandırılmış veri"
+  },
+  "check_mixed_content": {
+    "message": "Karışık içerik"
+  },
+  "check_hsts": {
+    "message": "HSTS"
+  },
+  "check_tracking": {
+    "message": "İzleme etiketleri"
+  },
+  "check_frames": {
+    "message": "Çerçeveler"
+  },
+  "check_raw_rendered": {
+    "message": "Ham ve işlenmiş"
+  },
+  "check_title": {
+    "message": "Başlık (title)"
+  },
+  "check_description": {
+    "message": "Meta açıklama"
+  },
+  "check_h1": {
+    "message": "H1"
+  },
+  "check_outline": {
+    "message": "Başlık yapısı"
+  },
+  "check_lang": {
+    "message": "Sayfa dili"
+  },
+  "check_images": {
+    "message": "Görsel alt metni"
+  },
+  "check_image_sizing": {
+    "message": "Görsel boyutu"
+  },
+  "check_links": {
+    "message": "Bağlantı metinleri"
+  },
+  "check_internal_links": {
+    "message": "İç bağlantılar"
+  },
+  "check_content": {
+    "message": "İçerik miktarı"
+  },
+  "check_keywords": {
+    "message": "Anahtar kelime yoğunluğu"
+  },
+  "check_meta_keywords": {
+    "message": "Meta keywords"
+  },
+  "check_url_quality": {
+    "message": "URL kalitesi"
+  },
+  "check_favicon": {
+    "message": "Favicon"
+  },
+  "check_viewport": {
+    "message": "Viewport"
+  },
+  "check_media_queries": {
+    "message": "Duyarlı CSS"
+  },
+  "check_open_graph": {
+    "message": "Open Graph"
+  },
+  "check_twitter_card": {
+    "message": "Twitter / X kartı"
+  },
+  "check_other": {
+    "message": "Diğer"
+  },
+  "help_http_status": {
+    "message": "Bu URL'ye yapılan ikinci, çerezsiz isteğin durum kodu. 4xx/5xx hatadır; yönlendirme uyarıdır çünkü bağlantılar ve canonical son URL'yi göstermelidir."
+  },
+  "help_https": {
+    "message": "Sayfa https ile sunulmalıdır."
+  },
+  "help_robots": {
+    "message": "<meta name=robots|googlebot|bingbot> ve X-Robots-Tag başlığındaki yönergeler. noindex uyarıdır çünkü bazı sayfaların aramada görünmemesi istenir."
+  },
+  "help_canonical": {
+    "message": "Mutlak tek bir rel=canonical URL'si; normalde sayfanın kendisini gösterir."
+  },
+  "help_consistency": {
+    "message": "noindex ile başka URL'ye canonical birlikte kullanılırsa veya başlık alanı meta etiketle çelişirse sinyaller karışır."
+  },
+  "help_robots_txt": {
+    "message": "Bu sitenin robots.txt dosyası, RFC 9309 kurallarıyla okunur (en uzun eşleşme kazanır, eşitlikte Allow kazanır, * ve $ desteklenir). Bu URL'nin Googlebot, Bingbot, diğer botlar ve yapay zekâ botları için izinli olup olmadığını gösterir."
+  },
+  "help_sitemap": {
+    "message": "robots.txt Sitemap: satırları, sonra bu sitedeki /sitemap.xml ve /sitemap_index.xml. Türü, URL sayısını ve bu sayfanın listede olup olmadığını gösterir."
+  },
+  "help_charset": {
+    "message": "İlk 1024 bayt içinde, Content-Type başlığıyla uyumlu bir karakter seti bildirimi (utf-8 önerilir)."
+  },
+  "help_doctype": {
+    "message": "Tarayıcının uyumluluk (quirks) moduna geçmemesi için başta <!doctype html>."
+  },
+  "help_hreflang": {
+    "message": "Dil alternatifleri: geçerli kodlar, mutlak URL'ler, tekrar yok, sayfanın kendisi dahil. Geri dönüş bağlantıları diğer sayfaları gerektirir ve burada kontrol edilmez."
+  },
+  "help_structured_data": {
+    "message": "JSON-LD blokları ayrıştırılabilmelidir. Yalnızca tespit; tam doğrulama için Rich Results Test kullanın."
+  },
+  "help_mixed_content": {
+    "message": "https bir sayfada http script, stil ve çerçeveler tarayıcılarca engellenir (hata); http görsel ve medya pasiftir (uyarı)."
+  },
+  "help_hsts": {
+    "message": "max-age en az bir yıl (31536000 sn) olan Strict-Transport-Security."
+  },
+  "help_tracking": {
+    "message": "Sayfada bulunan analiz ve piksel etiketleri (GA4, GTM, Meta, Yandex, Clarity, eski Universal Analytics)."
+  },
+  "help_frames": {
+    "message": "iframe'ler listelenir ama analiz edilmez; içerikleri bu sayfanın HTML'inin parçası değildir."
+  },
+  "help_raw_rendered": {
+    "message": "Head alanlarını ham HTML ile işlenmiş DOM arasında karşılaştırır. Fark, JavaScript'in bu alanları ayarladığını gösterir."
+  },
+  "help_title": {
+    "message": "Boş olmayan tek bir <title>. 30–60 karakter aralığı yalnızca öneridir; Google uzunluk sınırı koymaz ve başlığı ekrana sığacak kadar keser."
+  },
+  "help_description": {
+    "message": "Boş olmayan tek bir meta açıklama. 120–160 karakter aralığı yalnızca öneridir; Google açıklamayı yeniden yazabilir."
+  },
+  "help_h1": {
+    "message": "Boş olmayan tek H1 bizim anlaşılırlık kuralımızdır. Google birden fazla H1'i sorun saymaz."
+  },
+  "help_outline": {
+    "message": "Atlanan başlık seviyeleri ve boş başlıklar. Sıra bir sıralama faktörü değildir; erişilebilirliğe yardım eder."
+  },
+  "help_lang": {
+    "message": "Düzgün biçimli bir dil etiketiyle <html lang>."
+  },
+  "help_images": {
+    "message": "Eksik alt öznitelikleri. Dekoratif görseller için alt=\"\" doğrudur ve yalnızca not olarak gösterilir."
+  },
+  "help_image_sizing": {
+    "message": "Dosyası gösterildiğinin en az iki katı genişlikte olan veya boyutu biliniyorsa 500 KB'den büyük görseller."
+  },
+  "help_links": {
+    "message": "Bağlantıların erişilebilir bir adı olmalı (metin, görsel alt'ı, aria-label veya title). javascript: bağlantıları taranamaz."
+  },
+  "help_internal_links": {
+    "message": "3'ten az veya 100'den fazla benzersiz iç bağlantı ve iç bağlantılarda nofollow. Bu aralıklar araç sezgisidir, Google rakamı değildir."
+  },
+  "help_content": {
+    "message": "Görünen kelime sayısı ve metin/HTML oranı. Google'ın kelime sayısı hedefi yoktur; yalnızca bilgi amaçlıdır."
+  },
+  "help_keywords": {
+    "message": "100+ kelimelik bir sayfada %5'in üstünde yoğunluğa sahip kelime not edilir. Google'ın yayımladığı bir rakam yoktur."
+  },
+  "help_meta_keywords": {
+    "message": "Google meta keywords etiketini dikkate almaz. Bilgi için gösterilir."
+  },
+  "help_url_quality": {
+    "message": "Uzun URL'ler, çok sayıda sorgu parametresi, %-kodlamalar, derin yollar veya tiresiz uzun bölümler. Yalnızca sezgisel."
+  },
+  "help_favicon": {
+    "message": "Bir <link rel=icon>. Yoksa tarayıcılar /favicon.ico'yu dener (Seorius bunu kontrol etmez)."
+  },
+  "help_viewport": {
+    "message": "width=device-width içeren ve yakınlaştırmayı engellemeyen <meta name=viewport> (WCAG 1.4.4 %200 ister)."
+  },
+  "help_media_queries": {
+    "message": "Seorius'un okuyabildiği (aynı kaynaktan) stil dosyalarındaki @media kurallarını sayar. Başka kaynaktan gelen dosyalar okunamaz."
+  },
+  "help_open_graph": {
+    "message": "og:title, og:type, og:image ve og:url (Open Graph'ın dört zorunlu özelliği) ve mutlak bir görsel URL'si."
+  },
+  "help_twitter_card": {
+    "message": "twitter:card kart türünü belirler; diğer alanlar Open Graph'tan alınır."
+  },
+  "help_other": {
+    "message": "Diğer bulgular."
+  },
+  "f_status_notrun": {
+    "message": "Sayfa yeniden istenemedi ({error}); durum ve başlık alanları bilinmiyor."
+  },
+  "f_status_error": {
+    "message": "Sayfa HTTP {status} döndürüyor."
+  },
+  "f_status_redirect": {
+    "message": "Sayfa HTTP {status} döndürüyor."
+  },
+  "f_redirect_chain": {
+    "message": "{from} isteği {to} adresine yönlendiriyor."
+  },
+  "f_http_page": {
+    "message": "Sayfa https değil, http ile sunuluyor."
+  },
+  "f_robots_notrun": {
+    "message": "robots.txt okunamadı ({error})."
+  },
+  "f_robots_missing": {
+    "message": "robots.txt yok (HTTP {status}): her şeye izin var."
+  },
+  "f_robots_5xx": {
+    "message": "robots.txt HTTP {status} döndürüyor. RFC 9309'a göre botlar bu durumda her şeyin yasak olduğunu varsayar."
+  },
+  "f_robots_4xx": {
+    "message": "robots.txt HTTP {status} döndürüyor; botlar bunu kısıtlama yok olarak kabul eder."
+  },
+  "f_robots_blocked_google": {
+    "message": "robots.txt bu URL'yi Googlebot için engelliyor ({rule})."
+  },
+  "f_robots_blocked_others": {
+    "message": "robots.txt bu URL'yi şunlar için engelliyor: {agents}."
+  },
+  "f_robots_syntax": {
+    "message": "robots.txt içinde kullanılamayan {n} satır var."
+  },
+  "f_sitemap_notrun": {
+    "message": "Site haritası kontrol edilmedi ({error})."
+  },
+  "f_sitemap_none": {
+    "message": "Bu sitede site haritası bulunamadı (denenenler: {tried})."
+  },
+  "f_sitemap_undeclared": {
+    "message": "Site haritası robots.txt içinde bildirilmemiş."
+  },
+  "f_sitemap_not_listed": {
+    "message": "Bu sayfa site haritasında yok."
+  },
+  "f_sitemap_not_listed_partial": {
+    "message": "Bu sayfa, kontrol edilen {checked} / {total} alt site haritasında bulunamadı."
+  },
+  "f_sitemap_listing_notrun": {
+    "message": "Alt site haritaları okunamadı; sayfanın listede olup olmadığı kontrol edilmedi."
+  },
+  "f_sitemap_crossorigin": {
+    "message": "Başka sunucuda bildirilen {n} site haritası kontrol edilmedi."
+  },
+  "f_frames": {
+    "message": "Sayfadaki {n} iframe incelenmedi."
+  },
+  "f_raw_notrun": {
+    "message": "Ham HTML alınamadı; ham ve işlenmiş hâl karşılaştırılamadı."
+  },
+  "f_raw_diff": {
+    "message": "Ham HTML ile işlenmiş DOM arasında {n} alan farklı: {fields}."
+  },
+  "f_hreflang_none": {
+    "message": "hreflang bağlantısı yok. Yalnızca sayfanın dil veya bölge sürümleri varsa gerekir."
+  },
+  "f_url_long": {
+    "message": "URL {n} karakter (sezgisel sınır: {max} üstü)."
+  },
+  "f_url_params": {
+    "message": "URL'de {n} sorgu parametresi var (sezgisel sınır: {max} üstü)."
+  },
+  "f_url_query_long": {
+    "message": "Sorgu metni {n} karakter (sezgisel sınır: {max} üstü)."
+  },
+  "f_url_escapes": {
+    "message": "URL'de {n} %-kodlama var (sezgisel sınır: {max} üstü)."
+  },
+  "f_url_depth": {
+    "message": "Yol {n} seviye derin (sezgisel sınır: {max} üstü)."
+  },
+  "f_url_segment": {
+    "message": "Tiresiz bir yol bölümü {n} karakter (sezgisel sınır: {max} üstü)."
+  },
+  "f_internal_few": {
+    "message": "Yalnızca {n} benzersiz iç bağlantı (sezgisel: en az {min})."
+  },
+  "f_internal_many": {
+    "message": "{n} benzersiz iç bağlantı (sezgisel: en fazla {max})."
+  },
+  "f_internal_nofollow": {
+    "message": "{n} iç URL'ye nofollow ile bağlantı verilmiş."
+  },
+  "f_img_render": {
+    "message": "{n} görsel, gösterilen genişliğinin {ratio} katı veya daha büyük sunuluyor."
+  },
+  "f_img_bytes": {
+    "message": "{n} görsel {kb} KB veya daha büyük."
+  },
+  "f_meta_keywords": {
+    "message": "Meta keywords etiketi var; Google bunu dikkate almaz."
+  },
+  "f_favicon_none": {
+    "message": "<link rel=icon> yok; tarayıcılar /favicon.ico'yu deneyecek."
+  },
+  "f_mq_notrun": {
+    "message": "Stil dosyaları okunamadı."
+  },
+  "f_mq_unreadable": {
+    "message": "Okunabilen stil dosyalarında @media kuralı yok; başka kaynaktan gelen {n} stil dosyası okunamadı."
+  },
+  "f_mq_none": {
+    "message": "Sayfanın stil dosyalarında @media kuralı bulunamadı."
+  },
+  "ratio_def_live": {
+    "message": "görünen metin karakteri ÷ işlenmiş HTML karakteri (ham HTML alınamadı)"
+  }
+}

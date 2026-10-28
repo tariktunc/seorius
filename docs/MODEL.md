@@ -126,3 +126,11 @@ Full code-level comparison of both tools: [FEATURE-DIFF.md](./FEATURE-DIFF.md).
 ## 6. Later (not in v1)
 
 GSC / GA4 per-page data through our own backend, with no third party.
+
+## 7. Owner decisions (2026-10-28)
+
+| Topic | Decision |
+|---|---|
+| UI language | Turkish and English, switchable in Settings |
+| Privacy policy | hosted on blakfy.com, next to the existing legal texts |
+| Chrome Web Store account | info@blakfy.com |

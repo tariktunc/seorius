@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Seorius settings</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="options">
+  <header class="r-head"><div class="p-brand"><img src="icons/icon32.png" alt="" width="24" height="24"><strong data-i18n="opt_title">Settings</strong></div></header>
+  <main class="o-main">
+    <section>
+      <h2 data-i18n="opt_language">Language</h2>
+      <select id="lang">
+        <option value="auto" data-i18n="opt_lang_auto">Browser language</option>
+        <option value="en">English</option>
+        <option value="tr">Türkçe</option>
+      </select>
+    </section>
+    <section>
+      <h2 data-i18n="opt_overlay_colors">Overlay colours</h2>
+      <label><input type="color" id="c-headings"> <span data-i18n="overlay_headings">Headings</span></label>
+      <label><input type="color" id="c-links"> <span data-i18n="overlay_links">Links</span></label>
+      <label><input type="color" id="c-images"> <span data-i18n="overlay_images">Images</span></label>
+    </section>
+    <section>
+      <h2 data-i18n="opt_keywords">Keyword density</h2>
+      <label class="block"><span data-i18n="opt_stopwords">Extra stop words</span><textarea id="stopWords" rows="4" data-i18n-placeholder="opt_words_placeholder"></textarea></label>
+      <label class="block"><span data-i18n="opt_whitelist">Whitelist</span><textarea id="whitelist" rows="3" data-i18n-placeholder="opt_words_placeholder"></textarea></label>
+    </section>
+    <section>
+      <h2 data-i18n="opt_audit_groups">Audit groups shown</h2>
+      <div id="groups"></div>
+    </section>
+    <section>
+      <h2 data-i18n="opt_columns">Table columns</h2>
+      <div id="columns"></div>
+    </section>
+    <section>
+      <h2 data-i18n="opt_backup">Import / export</h2>
+      <div class="toolbar">
+        <button type="button" id="export" data-i18n="opt_export">Export settings</button>
+        <label class="button"><span data-i18n="opt_import">Import settings</span><input type="file" id="import" accept="application/json" hidden></label>
+        <button type="button" id="reset" data-i18n="opt_reset">Reset to defaults</button>
+      </div>
+    </section>
+    <section>
+      <h2 data-i18n="opt_privacy">Privacy</h2>
+      <p data-i18n="opt_privacy_text"></p>
+      <p><a href="https://blakfy.com/" target="_blank" rel="noopener noreferrer" data-i18n="opt_privacy_link">Privacy policy</a></p>
+    </section>
+    <p id="saved" class="muted" role="status"></p>
+  </main>
+  <script src="options.js"></script>
+</body>
+</html>
