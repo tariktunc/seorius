@@ -28,7 +28,9 @@ Modelled on SEOquake's layout: one engine and several views.
 
 Not built: an always-on bar on every page. It needs `<all_urls>` content scripts, and SEOquake's
 version sends every URL to Semrush by default. The SERP overlay is limited to Google's `/search`
-paths and makes no network request.
+paths and makes no network request. The full report can ask, on a click, for one optional
+permission set (§4) to show the redirect chain and to check other sites without CORS; it is never
+requested at install.
 
 ## 2. Information architecture
 
@@ -51,16 +53,16 @@ paths and makes no network request.
 
 | Section | Content | Origin |
 |---|---|---|
-| Audit | every check grouped Technical / Content / Mobile / Social, each with an error, warning, notice or pass status | SEOquake "On-Page SEO Audit" |
+| Audit | every check grouped Technical / Content / Mobile / Social, each with an error, warning, notice or pass status; every finding and fix hint in the UI language (TR / EN), engine findings included | SEOquake "On-Page SEO Audit" |
 | Page info | title, description, keywords, robots, X-Robots-Tag, canonical, lang, charset, doctype, viewport, author / publisher, XFN rel, meta language tags (content-language, name=language), favicon + touch icons, URL quality (length, query params, escapes, depth) | 1 CLICK "Basic" + SEOquake "Page Info" |
 | Head dump | every `<head>` element listed raw, to find unknown or duplicated tags | 1 CLICK |
 | Headings | full H1–H6 tree with text | 1 CLICK "Headers" + SEOquake "Heading Structure" |
 | Images | table of src, alt, title, dimensions, byte size, format distribution, rendered vs natural size, filters (missing alt, oversized) | both + rendered-vs-natural new |
-| Links | table grouped by URL (occurrence count, anchor variants, anchor type: text / image / empty), rel, type, filters internal / external / nofollow / empty anchor, internal-link health bands, redirected targets; broken-link check on demand (safety policy in §3) | 1 CLICK "Links" + SEOquake "Links Report" |
+| Links | table grouped by URL (occurrence count, anchor variants, anchor type: text / image / empty), rel, type, filters internal / external / nofollow / empty anchor, internal-link health bands, redirected targets; broken-link check on demand (safety policy in §3; links to other sites are checked from the extension once the optional cross-site access in §4 is granted) | 1 CLICK "Links" + SEOquake "Links Report" |
 | Keywords | keyword density (1 / 2 / 3 / 4-word), prominence column, word count, keyword cloud, TR + EN stop words with a user whitelist, Turkish-correct casing | SEOquake "Keyword Density" (it is English-only; Turkish handling is new) |
 | Social | OG and Twitter tables plus share previews | 1 CLICK "Social" + SEOquake |
 | Schema | JSON-LD / microdata / RDFa types, raw view, parse errors | both (RDFa: SEOquake) |
-| Technical | HTTP status, redirect chain + final URL, response header names and selected values, HSTS, mixed content, HTML size (compressed and decoded, surface stated), text/HTML ratio, media-query count, robots.txt verdict per agent, sitemap parse (type, URL count, is this page listed) | SEOquake "Technical", extended |
+| Technical | HTTP status, redirected yes / no + final URL, redirect chain hop by hop (each URL + status code; on a button, needs the optional permission in §4; at most 10 hops, loops flagged; refused = "not run" note), response header names and selected values, HSTS, mixed content, HTML size (compressed and decoded, surface stated), text/HTML ratio, media-query count, robots.txt verdict per agent, sitemap parse (type, URL count, is this page listed); sitemaps declared on another host are read on a button (optional permission, at most 3) | SEOquake "Technical", extended |
 | Raw vs rendered | head fields compared between the raw HTML response and the live DOM | **new (Seorius)** |
 | Frames | iframes listed as "not inspected" findings | new (neither tool reports them) |
 | Tracking | GA4 / gtag / GTM / Meta pixel / Yandex / Clarity detected by script src AND inline signature | 1 CLICK (GA / DoubleClick, inline only), extended |
@@ -111,9 +113,14 @@ show, per-table column visibility, and import / export of settings.
   environment-agnostic and takes a `document`. Here it runs on the real page `document`.
 - Thresholds come from `on-page-rules.json`. Each one carries an evidence class. Length bands are
   advisory only (warn / notice), never an error.
-- Raw HTML comes from a re-fetch of the current URL inside the extension. That re-fetch is the only
-  network call, and it goes only to the site being inspected. Response headers come from the same
-  re-fetch.
+- Raw HTML comes from a re-fetch of the current URL inside the extension. During the scan, network
+  calls go only to the site being inspected (that re-fetch, `/robots.txt`, same-origin sitemaps).
+  Response headers come from the same re-fetch. Everything else (link check, image sizes, redirect
+  chain, sitemaps on other hosts) runs only when the user starts it.
+- Findings are translated. The vendored engine carries one local patch: every finding has a message
+  code (`msgKey` = `e_<code>`, `params`, `fixKey`) next to its English `message` / `fix_hint`, which
+  stay as the fallback and in the JSON export. Texts live in `src/_locales/{en,tr}/messages.json`;
+  `test/engine-i18n.test.mjs` fails when the engine emits a code without both texts.
 - Severity model: **error / warning / notice / pass / not-run**. "Not-run" is never shown as a pass.
 - Internal vs external is decided by comparing origins, with www and apex treated as one site.
   1 CLICK matches the host as a substring; SEOquake treats www vs apex as external.
@@ -125,7 +132,11 @@ show, per-table column visibility, and import / export of settings.
   - reports 401 / 403 / 429 and bot challenges as "could not check", never as broken;
   - uses HEAD first, then GET if HEAD is refused (our own choice; SEOquake's fallback was not
     determined);
-  - limits concurrency (SEOquake uses 6) and never sends credentials.
+  - limits concurrency (SEOquake uses 6) and never sends credentials;
+  - path: same-origin URLs are probed from the page. URLs on other sites are probed from the report
+    page when the optional cross-site access is granted (readable without the target's CORS
+    headers); otherwise from the page in CORS mode, where an unreadable answer is "not checked".
+    Both paths run the same code (`src/lib/probe.mjs`).
 
 Full code-level comparison of both tools: [FEATURE-DIFF.md](./FEATURE-DIFF.md).
 
@@ -137,11 +148,18 @@ Full code-level comparison of both tools: [FEATURE-DIFF.md](./FEATURE-DIFF.md).
 | `scripting` | inject the inspector into that tab |
 | `storage` | settings only |
 | `content_scripts` on `https://www.google.<cc>/search*` (43 hosts) | the SERP overlay; no other site, no `host_permissions` |
+| optional: `webRequest` + `http://*/*`, `https://*/*` (`optional_permissions`, `optional_host_permissions`) | NOT granted at install. Requested once, on a click in the report ("Show redirect chain", "Allow access to other sites" or "Check sitemaps on other hosts"; one prompt covers all three). Used to watch the hops of the report's own re-fetch of the inspected URL, and to read link / image / sitemap answers from other sites without relying on their CORS headers. Revocable in `chrome://extensions`; refused = the earlier behaviour plus a "not run" note. |
 
-- No `<all_urls>`, `tabs`, `webRequest` or `identity` permission.
+- Install-time: no `<all_urls>`, `tabs`, `webRequest` or `identity` permission and no
+  `host_permissions`. The optional set above is the only cross-site access, and only after the user
+  grants it.
+- The `webRequest` listener exists only during one re-fetch, keeps only requests started by the
+  extension itself (initiator = the extension's origin), and is removed afterwards. It does not
+  see or record the user's browsing.
 - No remote code, no analytics, no telemetry.
-- No data leaves the browser, except the re-fetch of the inspected page and any outbound tool link
-  the user clicks. The SERP script makes no request at all (`npm run check` fails if its bundle
+- No data leaves the browser. The only requests go to the inspected site and, when the user starts
+  a check, to that page's linked / embedded URLs and declared sitemaps (no cookies), plus any
+  outbound tool link the user clicks. The SERP script makes no request at all (`npm run check` fails if its bundle
   contains fetch / XMLHttpRequest / sendBeacon / WebSocket / EventSource).
 - Install prompt: Chrome shows that Seorius can read and change data on the Google search hosts,
   because of the content script.

@@ -355,9 +355,6 @@
   "check_pass_note": {
     "message": "Checked, nothing to report."
   },
-  "engine_lang_note": {
-    "message": "Finding texts from the analysis engine are in English; check names and Seorius' own findings are translated."
-  },
   "help_link": {
     "message": "what is this?"
   },
@@ -629,7 +626,7 @@
     "message": "How the link check works"
   },
   "linkcheck_policy": {
-    "message": "Runs only when you click. At most 6 requests at a time and 300 URLs. HEAD first, GET if HEAD is refused. No cookies or credentials are sent. URLs that look like actions (logout, delete, add to cart, tokens) and private network addresses are skipped. 401, 403, 429 and bot challenges are reported as “could not check”, never as broken. A redirect that ends on a login page is reported as “login required”. Links to other sites can only be read when that site allows it (CORS); otherwise they are “not checked”."
+    "message": "Runs only when you click. At most 6 requests at a time and 300 URLs. HEAD first, GET if HEAD is refused. No cookies or credentials are sent. URLs that look like actions (logout, delete, add to cart, tokens) and private network addresses are skipped. 401, 403, 429 and bot challenges are reported as “could not check”, never as broken. A redirect that ends on a login page is reported as “login required”. Links to other sites are checked from the extension when access to other sites is allowed; without that permission they can only be read when that site allows it (CORS), otherwise they are “not checked”."
   },
   "kw_tokens": {
     "message": "{n} words in the visible body text (engine word count: {words})."
@@ -713,7 +710,7 @@
     "message": "checked {checked} of {total} child sitemaps"
   },
   "sm_crossorigin": {
-    "message": "Declared on another host (not checked)"
+    "message": "Declared on another host"
   },
   "raw_note": {
     "message": "The same engine run on the raw HTML response and on the live DOM. A difference means JavaScript changed the field after load; crawlers that do not render see the raw value."
@@ -1232,7 +1229,7 @@
     "message": "Could not read the child sitemaps, so listing was not checked."
   },
   "f_sitemap_crossorigin": {
-    "message": "{n} sitemap(s) declared on another host were not checked."
+    "message": "{n} sitemap(s) declared on another host were not checked (start the check in Technical)."
   },
   "f_frames": {
     "message": "{n} iframe(s) on the page were not inspected."
@@ -1428,5 +1425,398 @@
   },
   "serp_feat_ai_overview": {
     "message": "AI Overview"
+  },
+  "e_title_missing": {
+    "message": "No <title> element."
+  },
+  "e_title_missing_fix": {
+    "message": "Add a unique, service-led <title>."
+  },
+  "e_title_empty": {
+    "message": "Empty <title>."
+  },
+  "e_title_empty_fix": {
+    "message": "Add a unique, service-led <title>."
+  },
+  "e_title_multiple": {
+    "message": "{n} <title> elements; only the first is used."
+  },
+  "e_title_multiple_fix": {
+    "message": "Keep one <title>."
+  },
+  "e_title_short": {
+    "message": "Title is {n} chars (band {min}-{max}, advisory; Google sets no minimum)."
+  },
+  "e_title_short_fix": {
+    "message": "Lengthen with the service and benefit."
+  },
+  "e_title_long": {
+    "message": "Title is {n} chars (band {min}-{max}); Google may shorten it on narrow devices."
+  },
+  "e_title_long_fix": {
+    "message": "Trim, putting the key words first."
+  },
+  "e_desc_missing": {
+    "message": "No meta description."
+  },
+  "e_desc_missing_fix": {
+    "message": "Write a unique summary; Google may still rewrite it."
+  },
+  "e_desc_empty": {
+    "message": "Empty meta description."
+  },
+  "e_desc_empty_fix": {
+    "message": "Write a unique summary; Google may still rewrite it."
+  },
+  "e_desc_multiple": {
+    "message": "{n} meta description tags."
+  },
+  "e_desc_multiple_fix": {
+    "message": "Keep one."
+  },
+  "e_desc_short": {
+    "message": "Description is {n} chars (band {min}-{max}, advisory)."
+  },
+  "e_desc_long": {
+    "message": "Description is {n} chars (band {min}-{max}); the tail may be cut."
+  },
+  "e_robots_noindex_meta": {
+    "message": "Page is noindex via meta robots."
+  },
+  "e_robots_noindex_meta_fix": {
+    "message": "Intended only for pages that must stay out of search."
+  },
+  "e_robots_noindex_header": {
+    "message": "Page is noindex via the X-Robots-Tag header."
+  },
+  "e_robots_noindex_header_fix": {
+    "message": "Intended only for pages that must stay out of search."
+  },
+  "e_robots_noindex_both": {
+    "message": "Page is noindex via meta robots and the X-Robots-Tag header."
+  },
+  "e_robots_noindex_both_fix": {
+    "message": "Intended only for pages that must stay out of search."
+  },
+  "e_robots_nofollow": {
+    "message": "Page-level nofollow: links on this page pass no signals."
+  },
+  "e_robots_xrt_notrun": {
+    "message": "X-Robots-Tag not checked: no response headers supplied."
+  },
+  "e_canonical_missing": {
+    "message": "No rel=canonical link."
+  },
+  "e_canonical_missing_fix": {
+    "message": "Add a self-referencing absolute canonical."
+  },
+  "e_canonical_multiple": {
+    "message": "{n} canonical links; conflicting declarations are ignored by Google."
+  },
+  "e_canonical_multiple_fix": {
+    "message": "Keep exactly one."
+  },
+  "e_canonical_empty": {
+    "message": "Canonical link has an empty href."
+  },
+  "e_canonical_relative": {
+    "message": "Canonical \"{href}\" is relative."
+  },
+  "e_canonical_relative_fix": {
+    "message": "Use an absolute URL."
+  },
+  "e_canonical_other": {
+    "message": "Canonical points to another URL ({url}); this page asks not to be the indexed version."
+  },
+  "e_canonical_slash": {
+    "message": "Canonical equals the page URL except for a trailing slash."
+  },
+  "e_canonical_notrun": {
+    "message": "Canonical self-reference not judged: page URL not supplied."
+  },
+  "e_canonical_http": {
+    "message": "Canonical uses http on an https page."
+  },
+  "e_consistency_noindex_canonical": {
+    "message": "noindex combined with a canonical to a different URL: contradictory signals."
+  },
+  "e_consistency_noindex_canonical_fix": {
+    "message": "Pick one: noindex, or canonical to the preferred URL."
+  },
+  "e_consistency_noindex_self": {
+    "message": "noindex with a self canonical: the canonical has no effect."
+  },
+  "e_consistency_header_only": {
+    "message": "X-Robots-Tag says noindex but the meta robots tag does not: the header wins and is easy to overlook."
+  },
+  "e_consistency_header_only_fix": {
+    "message": "Align header and meta."
+  },
+  "e_lang_missing": {
+    "message": "No <html lang>."
+  },
+  "e_lang_missing_fix": {
+    "message": "Set the page language (e.g. lang=\"tr\")."
+  },
+  "e_lang_malformed": {
+    "message": "<html lang=\"{lang}\"> is not a well-formed language tag."
+  },
+  "e_viewport_missing": {
+    "message": "No meta viewport."
+  },
+  "e_viewport_missing_fix": {
+    "message": "Add <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">."
+  },
+  "e_viewport_width": {
+    "message": "Viewport width is \"{width}\", not device-width."
+  },
+  "e_viewport_width_unset": {
+    "message": "Viewport width is not set (expected device-width)."
+  },
+  "e_viewport_zoom": {
+    "message": "Viewport blocks zoom ({content}); WCAG 1.4.4 needs 200% resize."
+  },
+  "e_viewport_zoom_fix": {
+    "message": "Remove user-scalable=no / maximum-scale below 2."
+  },
+  "e_charset_missing": {
+    "message": "No charset declared in meta or Content-Type."
+  },
+  "e_charset_missing_fix": {
+    "message": "Add <meta charset=\"utf-8\"> early in <head>."
+  },
+  "e_charset_not_utf8": {
+    "message": "Charset is \"{charset}\", not utf-8."
+  },
+  "e_charset_mismatch": {
+    "message": "Meta charset ({meta}) and Content-Type charset ({header}) differ."
+  },
+  "e_charset_late": {
+    "message": "Charset meta starts after byte {bytes} (HTML requires the first {bytes})."
+  },
+  "e_doctype_missing": {
+    "message": "No <!doctype html> (browser falls into quirks mode)."
+  },
+  "e_doctype_missing_fix": {
+    "message": "Add <!doctype html> as the first line."
+  },
+  "e_doctype_notrun": {
+    "message": "Doctype not checked: no source and no doc.doctype."
+  },
+  "e_hreflang_malformed": {
+    "message": "Malformed hreflang value(s): {values}."
+  },
+  "e_hreflang_relative": {
+    "message": "{n} hreflang href(s) not absolute."
+  },
+  "e_hreflang_duplicate": {
+    "message": "Duplicate hreflang value(s): {values}."
+  },
+  "e_hreflang_no_default": {
+    "message": "No x-default hreflang."
+  },
+  "e_hreflang_no_self": {
+    "message": "hreflang set does not include the page itself."
+  },
+  "e_hreflang_notrun": {
+    "message": "hreflang self-reference not judged: page URL not supplied."
+  },
+  "e_h1_missing": {
+    "message": "No H1."
+  },
+  "e_h1_missing_fix": {
+    "message": "Add one H1 stating the page topic."
+  },
+  "e_h1_multiple": {
+    "message": "{n} H1 elements. Google tolerates this; our page-anatomy rule is one H1 (clarity, not ranking)."
+  },
+  "e_h1_multiple_fix": {
+    "message": "Keep one H1."
+  },
+  "e_h1_empty": {
+    "message": "An H1 is empty."
+  },
+  "e_outline_skip": {
+    "message": "Heading level skipped ({skips}). Google says heading order is not a ranking factor; it helps accessibility."
+  },
+  "e_outline_empty": {
+    "message": "{n} empty heading(s)."
+  },
+  "e_images_alt_missing": {
+    "message": "{n}/{total} image(s) have no alt attribute."
+  },
+  "e_images_alt_missing_fix": {
+    "message": "Add descriptive alt, or alt=\"\" for decorative images."
+  },
+  "e_images_alt_empty": {
+    "message": "{n} image(s) have empty alt (fine only if decorative)."
+  },
+  "e_images_no_dims": {
+    "message": "{n}/{total} image(s) lack width/height (layout-shift risk)."
+  },
+  "e_links_empty_anchor": {
+    "message": "{n} link(s) with no text, image alt or aria-label."
+  },
+  "e_links_empty_anchor_fix": {
+    "message": "Give every link an accessible name."
+  },
+  "e_links_javascript": {
+    "message": "{n} javascript: link(s) are not crawlable."
+  },
+  "e_links_placeholder": {
+    "message": "{n} link(s) with empty or \"#\" href."
+  },
+  "e_links_notrun": {
+    "message": "Internal/external split not reliable: page URL not supplied (absolute links all counted external)."
+  },
+  "e_og_missing": {
+    "message": "Open Graph missing: {fields}."
+  },
+  "e_og_missing_fix": {
+    "message": "Add the four required OG properties."
+  },
+  "e_og_image_relative": {
+    "message": "og:image is not an absolute URL."
+  },
+  "e_og_url_differs": {
+    "message": "og:url ({url}) differs from the canonical."
+  },
+  "e_twitter_missing": {
+    "message": "Twitter/X card missing: {fields} (X falls back to OG for the other fields)."
+  },
+  "e_sd_parse_error": {
+    "message": "{n} JSON-LD block(s) fail to parse: {errors}"
+  },
+  "e_sd_parse_error_fix": {
+    "message": "Fix the JSON syntax, then re-test the page in Google's Rich Results Test."
+  },
+  "e_sd_http_context": {
+    "message": "@context uses http://schema.org; https is preferred."
+  },
+  "e_sd_none": {
+    "message": "No JSON-LD or microdata found in this document."
+  },
+  "e_tracking_ua": {
+    "message": "Legacy Universal Analytics tag present; it no longer processes data."
+  },
+  "e_tracking_ua_fix": {
+    "message": "Remove or migrate to GA4."
+  },
+  "e_tracking_none": {
+    "message": "No analytics/pixel tag found by script src or inline init (tags loaded inside a GTM container or after consent are invisible here)."
+  },
+  "e_content_thin": {
+    "message": "{n} words of visible text (WebForge floor {min}; Google has no word-count target)."
+  },
+  "e_content_ratio_notrun": {
+    "message": "Text/HTML ratio not computed: no source string or outerHTML."
+  },
+  "e_content_ratio_low": {
+    "message": "Text/HTML ratio {ratio}% (< {min}%; an SEO-tool heuristic, not a Google signal)."
+  },
+  "e_keywords_density": {
+    "message": "Keyword density above {max}%: {words} (heuristic; no published Google figure)."
+  },
+  "e_mixed_active": {
+    "message": "{n} active http:// subresource(s) on an https page (blocked by browsers): {urls}"
+  },
+  "e_mixed_active_fix": {
+    "message": "Serve every subresource over https."
+  },
+  "e_mixed_passive": {
+    "message": "{n} passive http:// resource(s) on an https page: {urls}"
+  },
+  "e_mixed_passive_fix": {
+    "message": "Serve media over https."
+  },
+  "e_mixed_http_page": {
+    "message": "Mixed content not applicable: page is served over http (itself a defect)."
+  },
+  "e_mixed_notrun": {
+    "message": "Mixed content not checked: page URL not supplied."
+  },
+  "e_hsts_notrun": {
+    "message": "HSTS not checked: no response headers supplied."
+  },
+  "e_hsts_http_page": {
+    "message": "Page is served over http; HSTS only applies to https responses."
+  },
+  "e_hsts_missing": {
+    "message": "No Strict-Transport-Security header."
+  },
+  "e_hsts_missing_fix": {
+    "message": "Send max-age=31536000; includeSubDomains."
+  },
+  "e_hsts_short": {
+    "message": "HSTS max-age {maxAge} is below {min} (1 year)."
+  },
+  "e_hsts_no_maxage": {
+    "message": "HSTS max-age is missing (should be at least {min}, 1 year)."
+  },
+  "e_hsts_no_subdomains": {
+    "message": "HSTS lacks includeSubDomains (needed for preload eligibility)."
+  },
+  "rc_title": {
+    "message": "Redirect chain"
+  },
+  "btn_redirect_chain": {
+    "message": "Show redirect chain"
+  },
+  "rc_note": {
+    "message": "Re-requests the page from the extension (no cookies) and records every hop the browser follows. Needs the optional \"access to other sites\" permission; Chrome asks once."
+  },
+  "rc_summary": {
+    "message": "{n} redirect(s) before the final response."
+  },
+  "rc_loop": {
+    "message": "Redirect loop: a URL repeats in the chain."
+  },
+  "rc_truncated": {
+    "message": "Stopped after {n} hops; the chain is longer."
+  },
+  "rc_incomplete": {
+    "message": "The chain did not reach a final response (timeout)."
+  },
+  "rc_error": {
+    "message": "error"
+  },
+  "rc_notrun_refused": {
+    "message": "Not run: access to other sites was not granted. The \"Redirected\" row above still shows the final URL."
+  },
+  "rc_notrun_no_permission": {
+    "message": "Not run: access to other sites was not granted."
+  },
+  "rc_notrun_api_unavailable": {
+    "message": "Not run: the browser did not provide the webRequest API to this page. Close and reopen the report, then try again."
+  },
+  "rc_notrun_not_observed": {
+    "message": "Not run: the browser did not report the request, so no hops could be recorded."
+  },
+  "xsite_on": {
+    "message": "Access to other sites is on: links and images on other sites are checked from the extension, without depending on their CORS headers. No cookies are sent."
+  },
+  "xsite_off": {
+    "message": "Links and images on other sites can only be read when those sites allow it (CORS); otherwise they show as \"not checked\"."
+  },
+  "btn_allow_xsite": {
+    "message": "Allow access to other sites"
+  },
+  "xo_sm_note": {
+    "message": "Sitemaps declared in robots.txt on another host are read only when you start this check (optional \"access to other sites\" permission)."
+  },
+  "btn_check_xo_sitemaps": {
+    "message": "Check sitemaps on other hosts"
+  },
+  "xo_sm_cap": {
+    "message": "At most {n} are checked."
+  },
+  "reason_not_a_sitemap": {
+    "message": "not a sitemap"
+  },
+  "reason_gzip": {
+    "message": "gzip file, not read"
+  },
+  "f_sitemap_xo_not_listed": {
+    "message": "The page is not listed in the {n} sitemap(s) on other hosts that were read."
   }
 }

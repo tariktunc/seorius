@@ -61,9 +61,15 @@ export function applyI18n(root = document) {
 export const SEV_ORDER = ['error', 'warning', 'notice', 'not-run', 'pass'];
 export function sevBadge(sev) { return el('span', { class: `sev sev-${sev}` }, t(`sev_${sev.replace('-', '_')}`)); }
 
+// Engine and Seorius findings both carry msgKey + params; the English message / fix_hint stay as
+// the fallback (and in the JSON export).
 export function findingText(f) {
-  if (f.msgKey) return t(f.msgKey, f.params || {});
+  if (f.msgKey && has(f.msgKey)) return t(f.msgKey, f.params || {});
   return f.message || '';
+}
+export function fixText(f) {
+  if (f.fixKey && has(f.fixKey)) return t(f.fixKey, f.params || {});
+  return f.fix_hint || '';
 }
 
 export function checkName(key) { return t(`check_${key.replace(/-/g, '_')}`); }

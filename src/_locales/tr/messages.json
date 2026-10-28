@@ -355,9 +355,6 @@
   "check_pass_note": {
     "message": "Kontrol edildi, bildirilecek bir şey yok."
   },
-  "engine_lang_note": {
-    "message": "Analiz motorundan gelen bulgu metinleri İngilizcedir; kontrol adları ve Seorius'un kendi bulguları çevrilmiştir."
-  },
   "help_link": {
     "message": "bu nedir?"
   },
@@ -629,7 +626,7 @@
     "message": "Bağlantı kontrolü nasıl çalışır"
   },
   "linkcheck_policy": {
-    "message": "Yalnızca siz tıklayınca çalışır. Aynı anda en fazla 6 istek ve en fazla 300 URL. Önce HEAD, reddedilirse GET. Çerez veya kimlik bilgisi gönderilmez. İşleme benzeyen URL'ler (çıkış, silme, sepete ekleme, token) ve özel ağ adresleri atlanır. 401, 403, 429 ve bot doğrulamaları “kontrol edilemedi” olarak gösterilir, asla kırık denmez. Giriş sayfasına giden yönlendirme “giriş gerekli” olarak gösterilir. Başka sitelere giden bağlantılar yalnızca o site izin verirse (CORS) okunabilir; aksi halde “kontrol edilmedi” olur."
+    "message": "Yalnızca siz tıklayınca çalışır. Aynı anda en fazla 6 istek ve en fazla 300 URL. Önce HEAD, reddedilirse GET. Çerez veya kimlik bilgisi gönderilmez. İşleme benzeyen URL'ler (çıkış, silme, sepete ekleme, token) ve özel ağ adresleri atlanır. 401, 403, 429 ve bot doğrulamaları “kontrol edilemedi” olarak gösterilir, asla kırık denmez. Giriş sayfasına giden yönlendirme “giriş gerekli” olarak gösterilir. Diğer sitelere erişim izni verildiyse başka sitelere giden bağlantılar eklentiden kontrol edilir; bu izin yoksa yalnızca o site izin verirse (CORS) okunabilir, aksi halde “kontrol edilmedi” olur."
   },
   "kw_tokens": {
     "message": "Görünen gövde metninde {n} kelime (motorun kelime sayısı: {words})."
@@ -713,7 +710,7 @@
     "message": "{total} alt site haritasından {checked} tanesi kontrol edildi"
   },
   "sm_crossorigin": {
-    "message": "Başka sunucuda bildirilmiş (kontrol edilmedi)"
+    "message": "Başka sunucuda bildirilmiş"
   },
   "raw_note": {
     "message": "Aynı motor ham HTML yanıtında ve canlı DOM'da çalıştırıldı. Fark, alanın yüklemeden sonra JavaScript ile değiştiğini gösterir; sayfayı işlemeyen botlar ham değeri görür."
@@ -1232,7 +1229,7 @@
     "message": "Alt site haritaları okunamadı; sayfanın listede olup olmadığı kontrol edilmedi."
   },
   "f_sitemap_crossorigin": {
-    "message": "Başka sunucuda bildirilen {n} site haritası kontrol edilmedi."
+    "message": "Başka sunucuda bildirilen {n} site haritası kontrol edilmedi (kontrolü Teknik bölümünden başlatın)."
   },
   "f_frames": {
     "message": "Sayfadaki {n} iframe incelenmedi."
@@ -1428,5 +1425,398 @@
   },
   "serp_feat_ai_overview": {
     "message": "AI Overview"
+  },
+  "e_title_missing": {
+    "message": "<title> öğesi yok."
+  },
+  "e_title_missing_fix": {
+    "message": "Hizmeti öne çıkaran, benzersiz bir <title> ekleyin."
+  },
+  "e_title_empty": {
+    "message": "<title> boş."
+  },
+  "e_title_empty_fix": {
+    "message": "Hizmeti öne çıkaran, benzersiz bir <title> ekleyin."
+  },
+  "e_title_multiple": {
+    "message": "{n} adet <title> öğesi var; yalnızca ilki kullanılır."
+  },
+  "e_title_multiple_fix": {
+    "message": "Tek bir <title> bırakın."
+  },
+  "e_title_short": {
+    "message": "Başlık {n} karakter (önerilen aralık {min}-{max}; Google bir alt sınır koymaz)."
+  },
+  "e_title_short_fix": {
+    "message": "Hizmeti ve sağladığı faydayı ekleyerek uzatın."
+  },
+  "e_title_long": {
+    "message": "Başlık {n} karakter (önerilen aralık {min}-{max}); Google dar ekranlarda kısaltabilir."
+  },
+  "e_title_long_fix": {
+    "message": "Kısaltın, önemli kelimeleri başa alın."
+  },
+  "e_desc_missing": {
+    "message": "Meta açıklama yok."
+  },
+  "e_desc_missing_fix": {
+    "message": "Sayfaya özgü bir özet yazın; Google yine de yeniden yazabilir."
+  },
+  "e_desc_empty": {
+    "message": "Meta açıklama boş."
+  },
+  "e_desc_empty_fix": {
+    "message": "Sayfaya özgü bir özet yazın; Google yine de yeniden yazabilir."
+  },
+  "e_desc_multiple": {
+    "message": "{n} adet meta açıklama etiketi var."
+  },
+  "e_desc_multiple_fix": {
+    "message": "Yalnızca birini bırakın."
+  },
+  "e_desc_short": {
+    "message": "Açıklama {n} karakter (önerilen aralık {min}-{max})."
+  },
+  "e_desc_long": {
+    "message": "Açıklama {n} karakter (önerilen aralık {min}-{max}); sonu kesilebilir."
+  },
+  "e_robots_noindex_meta": {
+    "message": "Sayfa meta robots etiketiyle noindex."
+  },
+  "e_robots_noindex_meta_fix": {
+    "message": "Yalnızca arama sonuçlarında görünmemesi gereken sayfalar için uygundur."
+  },
+  "e_robots_noindex_header": {
+    "message": "Sayfa X-Robots-Tag yanıt başlığıyla noindex."
+  },
+  "e_robots_noindex_header_fix": {
+    "message": "Yalnızca arama sonuçlarında görünmemesi gereken sayfalar için uygundur."
+  },
+  "e_robots_noindex_both": {
+    "message": "Sayfa hem meta robots etiketiyle hem X-Robots-Tag yanıt başlığıyla noindex."
+  },
+  "e_robots_noindex_both_fix": {
+    "message": "Yalnızca arama sonuçlarında görünmemesi gereken sayfalar için uygundur."
+  },
+  "e_robots_nofollow": {
+    "message": "Sayfa düzeyinde nofollow: bu sayfadaki bağlantılar sinyal aktarmaz."
+  },
+  "e_robots_xrt_notrun": {
+    "message": "X-Robots-Tag kontrol edilmedi: yanıt başlıkları alınamadı."
+  },
+  "e_canonical_missing": {
+    "message": "rel=canonical bağlantısı yok."
+  },
+  "e_canonical_missing_fix": {
+    "message": "Sayfanın kendisini gösteren mutlak bir canonical ekleyin."
+  },
+  "e_canonical_multiple": {
+    "message": "{n} adet canonical bağlantısı var; Google çelişen bildirimleri yok sayar."
+  },
+  "e_canonical_multiple_fix": {
+    "message": "Yalnızca bir tane bırakın."
+  },
+  "e_canonical_empty": {
+    "message": "Canonical bağlantısının href değeri boş."
+  },
+  "e_canonical_relative": {
+    "message": "Canonical \"{href}\" göreli bir adres."
+  },
+  "e_canonical_relative_fix": {
+    "message": "Mutlak bir URL kullanın."
+  },
+  "e_canonical_other": {
+    "message": "Canonical başka bir URL'yi gösteriyor ({url}); bu sayfa dizine eklenen sürüm olmamayı istiyor."
+  },
+  "e_canonical_slash": {
+    "message": "Canonical, sondaki eğik çizgi dışında sayfa URL'siyle aynı."
+  },
+  "e_canonical_notrun": {
+    "message": "Canonical'ın sayfanın kendisini gösterip göstermediği değerlendirilmedi: sayfa URL'si yok."
+  },
+  "e_canonical_http": {
+    "message": "https sayfada canonical http kullanıyor."
+  },
+  "e_consistency_noindex_canonical": {
+    "message": "noindex ile başka bir URL'yi gösteren canonical birlikte kullanılmış: çelişen sinyaller."
+  },
+  "e_consistency_noindex_canonical_fix": {
+    "message": "Birini seçin: noindex ya da tercih edilen URL'ye canonical."
+  },
+  "e_consistency_noindex_self": {
+    "message": "Kendini gösteren canonical ile noindex birlikte: canonical'ın etkisi yok."
+  },
+  "e_consistency_header_only": {
+    "message": "X-Robots-Tag noindex diyor ama meta robots etiketi demiyor: yanıt başlığı geçerli olur ve kolayca gözden kaçar."
+  },
+  "e_consistency_header_only_fix": {
+    "message": "Yanıt başlığını ve meta etiketini uyumlu hale getirin."
+  },
+  "e_lang_missing": {
+    "message": "<html lang> yok."
+  },
+  "e_lang_missing_fix": {
+    "message": "Sayfa dilini belirtin (ör. lang=\"tr\")."
+  },
+  "e_lang_malformed": {
+    "message": "<html lang=\"{lang}\"> geçerli biçimde bir dil etiketi değil."
+  },
+  "e_viewport_missing": {
+    "message": "Meta viewport yok."
+  },
+  "e_viewport_missing_fix": {
+    "message": "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\"> ekleyin."
+  },
+  "e_viewport_width": {
+    "message": "Viewport genişliği \"{width}\", device-width değil."
+  },
+  "e_viewport_width_unset": {
+    "message": "Viewport genişliği belirtilmemiş (device-width bekleniyor)."
+  },
+  "e_viewport_zoom": {
+    "message": "Viewport yakınlaştırmayı engelliyor ({content}); WCAG 1.4.4 yüzde 200 büyütmeyi şart koşar."
+  },
+  "e_viewport_zoom_fix": {
+    "message": "user-scalable=no ve 2'den küçük maximum-scale değerini kaldırın."
+  },
+  "e_charset_missing": {
+    "message": "Meta etiketinde veya Content-Type başlığında karakter kümesi belirtilmemiş."
+  },
+  "e_charset_missing_fix": {
+    "message": "<head> içinde en başa yakın <meta charset=\"utf-8\"> ekleyin."
+  },
+  "e_charset_not_utf8": {
+    "message": "Karakter kümesi \"{charset}\", utf-8 değil."
+  },
+  "e_charset_mismatch": {
+    "message": "Meta karakter kümesi ({meta}) ile Content-Type karakter kümesi ({header}) farklı."
+  },
+  "e_charset_late": {
+    "message": "Charset meta etiketi {bytes}. bayttan sonra başlıyor (HTML ilk {bytes} bayt içinde olmasını ister)."
+  },
+  "e_doctype_missing": {
+    "message": "<!doctype html> yok (tarayıcı uyumluluk moduna, \"quirks mode\"a geçer)."
+  },
+  "e_doctype_missing_fix": {
+    "message": "İlk satıra <!doctype html> ekleyin."
+  },
+  "e_doctype_notrun": {
+    "message": "Doctype kontrol edilmedi: kaynak HTML ve doctype bilgisi yok."
+  },
+  "e_hreflang_malformed": {
+    "message": "Hatalı biçimde hreflang değeri: {values}."
+  },
+  "e_hreflang_relative": {
+    "message": "{n} hreflang adresi mutlak değil."
+  },
+  "e_hreflang_duplicate": {
+    "message": "Yinelenen hreflang değeri: {values}."
+  },
+  "e_hreflang_no_default": {
+    "message": "x-default hreflang yok."
+  },
+  "e_hreflang_no_self": {
+    "message": "hreflang kümesi sayfanın kendisini içermiyor."
+  },
+  "e_hreflang_notrun": {
+    "message": "hreflang kümesinin sayfanın kendisini içerip içermediği değerlendirilmedi: sayfa URL'si yok."
+  },
+  "e_h1_missing": {
+    "message": "H1 yok."
+  },
+  "e_h1_missing_fix": {
+    "message": "Sayfanın konusunu söyleyen bir H1 ekleyin."
+  },
+  "e_h1_multiple": {
+    "message": "{n} adet H1 var. Google bunu sorun etmez; bizim sayfa yapısı kuralımız tek H1 (sıralama için değil, anlaşılırlık için)."
+  },
+  "e_h1_multiple_fix": {
+    "message": "Tek bir H1 bırakın."
+  },
+  "e_h1_empty": {
+    "message": "Bir H1 boş."
+  },
+  "e_outline_skip": {
+    "message": "Başlık düzeyi atlanmış ({skips}). Google başlık sırasının sıralama etkeni olmadığını söyler; erişilebilirliğe yardımı olur."
+  },
+  "e_outline_empty": {
+    "message": "{n} boş başlık var."
+  },
+  "e_images_alt_missing": {
+    "message": "{n}/{total} görselde alt özniteliği yok."
+  },
+  "e_images_alt_missing_fix": {
+    "message": "Açıklayıcı bir alt ekleyin; süs amaçlı görsellerde alt=\"\" kullanın."
+  },
+  "e_images_alt_empty": {
+    "message": "{n} görselin alt değeri boş (yalnızca süs amaçlıysa uygundur)."
+  },
+  "e_images_no_dims": {
+    "message": "{n}/{total} görselde width/height yok (sayfa kayması riski)."
+  },
+  "e_links_empty_anchor": {
+    "message": "{n} bağlantıda metin, görsel alt değeri veya aria-label yok."
+  },
+  "e_links_empty_anchor_fix": {
+    "message": "Her bağlantıya erişilebilir bir ad verin."
+  },
+  "e_links_javascript": {
+    "message": "{n} javascript: bağlantısı taranamaz."
+  },
+  "e_links_placeholder": {
+    "message": "{n} bağlantının href değeri boş veya \"#\"."
+  },
+  "e_links_notrun": {
+    "message": "İç/dış bağlantı ayrımı güvenilir değil: sayfa URL'si yok (tüm mutlak bağlantılar dış sayıldı)."
+  },
+  "e_og_missing": {
+    "message": "Eksik Open Graph alanları: {fields}."
+  },
+  "e_og_missing_fix": {
+    "message": "Zorunlu dört OG özelliğini ekleyin."
+  },
+  "e_og_image_relative": {
+    "message": "og:image mutlak bir URL değil."
+  },
+  "e_og_url_differs": {
+    "message": "og:url ({url}) canonical ile aynı değil."
+  },
+  "e_twitter_missing": {
+    "message": "Eksik Twitter/X kart alanları: {fields} (X diğer alanlarda OG değerlerini kullanır)."
+  },
+  "e_sd_parse_error": {
+    "message": "{n} JSON-LD bloğu ayrıştırılamıyor: {errors}"
+  },
+  "e_sd_parse_error_fix": {
+    "message": "JSON söz dizimini düzeltin, sonra sayfayı Google Zengin Sonuçlar Testi ile yeniden deneyin."
+  },
+  "e_sd_http_context": {
+    "message": "@context http://schema.org kullanıyor; https tercih edilir."
+  },
+  "e_sd_none": {
+    "message": "Bu belgede JSON-LD veya microdata bulunamadı."
+  },
+  "e_tracking_ua": {
+    "message": "Eski Universal Analytics etiketi var; artık veri işlemiyor."
+  },
+  "e_tracking_ua_fix": {
+    "message": "Kaldırın veya GA4'e geçin."
+  },
+  "e_tracking_none": {
+    "message": "Script adresinde veya satır içi kodda analiz/piksel etiketi bulunamadı (GTM kapsayıcısı içinden ya da onaydan sonra yüklenen etiketler burada görünmez)."
+  },
+  "e_content_thin": {
+    "message": "Görünür metin {n} kelime (WebForge alt sınırı {min}; Google'ın bir kelime sayısı hedefi yok)."
+  },
+  "e_content_ratio_notrun": {
+    "message": "Metin/HTML oranı hesaplanmadı: kaynak HTML veya outerHTML yok."
+  },
+  "e_content_ratio_low": {
+    "message": "Metin/HTML oranı %{ratio} (< %{min}; SEO araçlarının kullandığı bir ölçüt, Google sinyali değil)."
+  },
+  "e_keywords_density": {
+    "message": "Anahtar kelime yoğunluğu %{max} üzerinde: {words} (yaklaşık bir ölçüt; Google'ın yayımladığı bir değer yok)."
+  },
+  "e_mixed_active": {
+    "message": "https sayfada {n} etkin http:// alt kaynak var (tarayıcılar engeller): {urls}"
+  },
+  "e_mixed_active_fix": {
+    "message": "Tüm alt kaynakları https üzerinden sunun."
+  },
+  "e_mixed_passive": {
+    "message": "https sayfada {n} pasif http:// kaynak var: {urls}"
+  },
+  "e_mixed_passive_fix": {
+    "message": "Medya dosyalarını https üzerinden sunun."
+  },
+  "e_mixed_http_page": {
+    "message": "Karışık içerik kontrolü uygulanmadı: sayfa http üzerinden sunuluyor (bu başlı başına bir sorun)."
+  },
+  "e_mixed_notrun": {
+    "message": "Karışık içerik kontrol edilmedi: sayfa URL'si yok."
+  },
+  "e_hsts_notrun": {
+    "message": "HSTS kontrol edilmedi: yanıt başlıkları alınamadı."
+  },
+  "e_hsts_http_page": {
+    "message": "Sayfa http üzerinden sunuluyor; HSTS yalnızca https yanıtlarında geçerlidir."
+  },
+  "e_hsts_missing": {
+    "message": "Strict-Transport-Security başlığı yok."
+  },
+  "e_hsts_missing_fix": {
+    "message": "max-age=31536000; includeSubDomains gönderin."
+  },
+  "e_hsts_short": {
+    "message": "HSTS max-age {maxAge}, {min} değerinin (1 yıl) altında."
+  },
+  "e_hsts_no_maxage": {
+    "message": "HSTS max-age yok (en az {min}, yani 1 yıl olmalı)."
+  },
+  "e_hsts_no_subdomains": {
+    "message": "HSTS'de includeSubDomains yok (preload listesine girmek için gerekli)."
+  },
+  "rc_title": {
+    "message": "Yönlendirme zinciri"
+  },
+  "btn_redirect_chain": {
+    "message": "Yönlendirme zincirini göster"
+  },
+  "rc_note": {
+    "message": "Sayfayı eklentiden yeniden ister (çerez gönderilmez) ve tarayıcının izlediği her adımı kaydeder. İsteğe bağlı \"diğer sitelere erişim\" iznini gerektirir; Chrome bunu bir kez sorar."
+  },
+  "rc_summary": {
+    "message": "Son yanıttan önce {n} yönlendirme."
+  },
+  "rc_loop": {
+    "message": "Yönlendirme döngüsü: zincirde aynı URL tekrar ediyor."
+  },
+  "rc_truncated": {
+    "message": "{n} adımdan sonra durduruldu; zincir daha uzun."
+  },
+  "rc_incomplete": {
+    "message": "Zincir son yanıta ulaşmadı (zaman aşımı)."
+  },
+  "rc_error": {
+    "message": "hata"
+  },
+  "rc_notrun_refused": {
+    "message": "Çalışmadı: diğer sitelere erişim izni verilmedi. Yukarıdaki \"Yönlendirildi\" satırı son URL'yi yine gösterir."
+  },
+  "rc_notrun_no_permission": {
+    "message": "Çalışmadı: diğer sitelere erişim izni verilmedi."
+  },
+  "rc_notrun_api_unavailable": {
+    "message": "Çalışmadı: tarayıcı bu sayfaya webRequest API'sini sağlamadı. Raporu kapatıp yeniden açın ve tekrar deneyin."
+  },
+  "rc_notrun_not_observed": {
+    "message": "Çalışmadı: tarayıcı isteği bildirmedi, bu yüzden adımlar kaydedilemedi."
+  },
+  "xsite_on": {
+    "message": "Diğer sitelere erişim açık: başka sitelerdeki bağlantılar ve görseller, o sitelerin CORS başlıklarına bağlı kalmadan eklentiden kontrol edilir. Çerez gönderilmez."
+  },
+  "xsite_off": {
+    "message": "Başka sitelerdeki bağlantılar ve görseller yalnızca o siteler izin verirse (CORS) okunabilir; aksi halde \"kontrol edilmedi\" görünür."
+  },
+  "btn_allow_xsite": {
+    "message": "Diğer sitelere erişime izin ver"
+  },
+  "xo_sm_note": {
+    "message": "robots.txt içinde başka sunucuda bildirilen site haritaları yalnızca bu kontrolü siz başlatınca okunur (isteğe bağlı \"diğer sitelere erişim\" izni)."
+  },
+  "btn_check_xo_sitemaps": {
+    "message": "Başka sunuculardaki site haritalarını kontrol et"
+  },
+  "xo_sm_cap": {
+    "message": "En fazla {n} tanesi kontrol edilir."
+  },
+  "reason_not_a_sitemap": {
+    "message": "site haritası değil"
+  },
+  "reason_gzip": {
+    "message": "gzip dosyası, okunmadı"
+  },
+  "f_sitemap_xo_not_listed": {
+    "message": "Sayfa, başka sunucularda okunan {n} site haritasında listelenmiyor."
   }
 }

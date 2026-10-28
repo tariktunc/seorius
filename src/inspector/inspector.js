@@ -4,8 +4,9 @@
 //
 // Network: every request goes from the page context to the inspected page's OWN origin
 // (page re-fetch, /robots.txt, same-origin sitemaps), except the user-started link / image-size
-// checks, which may also try cross-origin URLs in CORS mode; when the response is not readable
-// they are reported as "not checked". Credentials are never sent.
+// checks. Without the optional host permission those also try cross-origin URLs from here in CORS
+// mode (unreadable = "not checked"); with it, the report page probes cross-origin URLs itself and
+// only same-origin URLs come here. Credentials are never sent.
 
 import { inspectDocument, normalizeHeaders } from '../engine/page-inspect-core.mjs';
 import RULES from '../engine/on-page-rules.json';
@@ -13,7 +14,8 @@ import SRULES from '../engine/seorius-rules.json';
 import { parseRobots, verdicts } from '../lib/robots.mjs';
 import { parseSitemap, isListed } from '../lib/sitemap.mjs';
 import { headDump, pageInfo, headings, images, linkDescriptors, iframes, mediaQueries, visibleText, sharePreview } from '../lib/collect.mjs';
-import { groupLinks, linkSummary, skipReason, interpretProbe } from '../lib/links.mjs';
+import { groupLinks, linkSummary } from '../lib/links.mjs';
+import { checkLinksWith, measureImagesWith } from '../lib/probe.mjs';
 import { tokenize, keywordTable, parseWordList } from '../lib/keywords.mjs';
 import { readJsonLd, readMicrodata, readRdfa } from '../lib/schema.mjs';
 import { rawVsRendered } from '../lib/compare.mjs';
@@ -199,54 +201,11 @@ async function scan(settings = {}) {
   return s;
 }
 
-// ---- on-demand probes (link check, image sizes) ----
+// ---- on-demand probes (link check, image sizes): policy in ../lib/probe.mjs + ../lib/links.mjs ----
 
-async function probe(url, method = 'HEAD') {
-  const crossOrigin = (() => { try { return new URL(url).origin !== location.origin; } catch { return true; } })();
-  const once = async (m) => {
-    const { res, ctl } = await timedFetch(url, { method: m, mode: 'cors' }, SRULES.linkCheck.timeoutMs);
-    const h = (n) => res.headers.get(n);
-    const r = { status: res.status, redirected: res.redirected, finalUrl: res.url, challenge: h('cf-mitigated') === 'challenge', contentLength: h('content-length') ? Number(h('content-length')) : null, contentType: h('content-type'), crossOrigin };
-    if (m === 'GET') try { ctl.abort(); } catch { /* ignore */ }
-    return r;
-  };
-  try {
-    let r = await once(method);
-    if (method === 'HEAD' && (r.status === 405 || r.status === 501)) r = await once('GET');
-    return r;
-  } catch (e) {
-    if (method === 'HEAD' && !crossOrigin) { try { return await once('GET'); } catch { /* fall through */ } }
-    return { error: String(e && e.message || e), crossOrigin };
-  }
-}
-
-async function pool(items, n, fn) {
-  const out = new Array(items.length); let i = 0;
-  await Promise.all(Array.from({ length: Math.min(n, items.length) }, async () => { while (i < items.length) { const k = i++; out[k] = await fn(items[k]); } }));
-  return out;
-}
-
-async function checkLinks(urls) {
-  const pageUrl = stripHash(location.href);
-  return pool(urls, SRULES.linkCheck.concurrency, async (u) => {
-    const skip = skipReason(u, pageUrl);
-    if (skip) return { url: u, status: 'skipped', reason: skip };
-    const p = await probe(u, 'HEAD');
-    return { url: u, ...interpretProbe(p, u) };
-  });
-}
-
-async function measureImages(urls) {
-  const pageUrl = stripHash(location.href);
-  return pool(urls, SRULES.linkCheck.concurrency, async (u) => {
-    if (/^data:/i.test(u)) return { url: u, bytes: Math.round((u.length - u.indexOf(',') - 1) * 0.75), source: 'data-url' };
-    const skip = skipReason(u, pageUrl);
-    if (skip) return { url: u, bytes: null, source: null, reason: skip };
-    const p = await probe(u, 'HEAD');
-    if (p.error) return { url: u, bytes: null, source: null, reason: p.crossOrigin ? 'cross-origin-unreadable' : 'network-error' };
-    return { url: u, bytes: p.contentLength, source: p.contentLength !== null ? 'content-length' : null, contentType: p.contentType, http: p.status, reason: p.contentLength === null ? 'no-content-length' : null };
-  });
-}
+const probeOpts = () => ({ fetchImpl: (u, i) => fetch(u, i), pageUrl: stripHash(location.href), timeoutMs: SRULES.linkCheck.timeoutMs, concurrency: SRULES.linkCheck.concurrency, corsBound: true });
+const checkLinks = (urls) => checkLinksWith(urls, probeOpts());
+const measureImages = (urls) => measureImagesWith(urls, probeOpts());
 
 async function fetchAndInspect(url) {
   let target;

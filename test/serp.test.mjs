@@ -97,6 +97,9 @@ test('manifest content script = SERP_MATCHES only, Google /search paths, no host
   const m = JSON.parse(read('../src/manifest.json'));
   assert.deepEqual(m.permissions, ['activeTab', 'scripting', 'storage']);
   assert.ok(!('host_permissions' in m) && !('web_accessible_resources' in m) && !('background' in m));
+  // Runtime-only, requested from the report page on a click (redirect chain / cross-site checks).
+  assert.deepEqual(m.optional_permissions, ['webRequest']);
+  assert.deepEqual(m.optional_host_permissions, ['http://*/*', 'https://*/*']);
   assert.equal(m.content_scripts.length, 1);
   assert.deepEqual(m.content_scripts[0].matches, SERP_MATCHES);
   assert.deepEqual(m.content_scripts[0].js, ['serp.js']);

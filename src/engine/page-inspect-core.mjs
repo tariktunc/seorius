@@ -1,5 +1,9 @@
-// Vendored (copied verbatim, only import paths changed) from WebForge:
-//   site-builder/seo-uzman/health/page-inspect-core.mjs (2026-10-28). Do not edit here; re-copy instead.
+// Vendored from WebForge site-builder/seo-uzman/health/page-inspect-core.mjs (2026-10-28), import paths
+// changed, plus ONE Seorius patch: every add() call carries a message code + params, emitted as
+// msgKey (e_<code>) / params / fixKey (e_<code>_fix) next to the English message, so the UI can
+// translate findings without parsing sentences. Keys live in src/_locales/*/messages.json.
+// When re-copying from WebForge, re-apply this patch (or upstream it); test/engine-i18n.test.mjs
+// fails if a code has no locale entry.
 /**
  * page-inspect-core — environment-agnostic single-page on-page inspection engine
  * (seo-uzman, 2026-10-28). The ONE analysis core: the CLI (health/page-inspect.mjs) and the future
@@ -107,7 +111,11 @@ export function inspectDocument(doc, opts = {}) {
   const hasHeaders = Object.keys(headers).length > 0;
   const page = url || 'document';
   const findings = [];
-  const add = (key, severity, message, fix_hint = null) => findings.push(makeFinding({ id: stableId('HEALTH', `PI ${key}`), severity, page, message, fix_hint }));
+  // msg = 'code' or ['code', params]: a stable message key for translated UIs (Seorius patch, see header).
+  const add = (key, severity, msg, message, fix_hint = null) => {
+    const [code, params] = Array.isArray(msg) ? msg : [msg, {}];
+    findings.push({ ...makeFinding({ id: stableId('HEALTH', `PI ${key}`), severity, page, message, fix_hint }), msgKey: `e_${code}`, params, fixKey: fix_hint ? `e_${code}_fix` : null });
+  };
   const isHttps = url ? /^https:/i.test(url) : null;
   const root = doc.documentElement;
   const out = { url, surface, headersSupplied: hasHeaders };
@@ -118,11 +126,11 @@ export function inspectDocument(doc, opts = {}) {
   const titleText = titles.length ? squash(titles[0].textContent) : null;
   const T = rules.title;
   out.title = { text: titleText, length: titleText === null ? 0 : cpLen(titleText), count: titles.length };
-  if (!titles.length || !titleText) add('title', 'fail', titles.length ? 'Empty <title>.' : 'No <title> element.', 'Add a unique, service-led <title>.');
+  if (!titles.length || !titleText) add('title', 'fail', titles.length ? 'title_empty' : 'title_missing', titles.length ? 'Empty <title>.' : 'No <title> element.', 'Add a unique, service-led <title>.');
   else {
-    if (titles.length > 1) add('title', 'warn', `${titles.length} <title> elements; only the first is used.`, 'Keep one <title>.');
-    if (out.title.length < T.min) add('title', 'warn', `Title is ${out.title.length} chars (band ${T.min}-${T.max}, advisory; Google sets no minimum).`, 'Lengthen with the service and benefit.');
-    else if (out.title.length > T.max) add('title', 'info', `Title is ${out.title.length} chars (band ${T.min}-${T.max}); Google may shorten it on narrow devices.`, 'Trim, putting the key words first.');
+    if (titles.length > 1) add('title', 'warn', ['title_multiple', { n: titles.length }], `${titles.length} <title> elements; only the first is used.`, 'Keep one <title>.');
+    if (out.title.length < T.min) add('title', 'warn', ['title_short', { n: out.title.length, min: T.min, max: T.max }], `Title is ${out.title.length} chars (band ${T.min}-${T.max}, advisory; Google sets no minimum).`, 'Lengthen with the service and benefit.');
+    else if (out.title.length > T.max) add('title', 'info', ['title_long', { n: out.title.length, min: T.min, max: T.max }], `Title is ${out.title.length} chars (band ${T.min}-${T.max}); Google may shorten it on narrow devices.`, 'Trim, putting the key words first.');
   }
 
   // ---- meta description ----
@@ -132,11 +140,11 @@ export function inspectDocument(doc, opts = {}) {
   const descText = descEls.length ? squash(attr(descEls[0], 'content') || '') : null;
   const D = rules.metaDescription;
   out.metaDescription = { text: descText, length: descText === null ? 0 : cpLen(descText), count: descEls.length };
-  if (!descEls.length || !descText) add('description', 'warn', descEls.length ? 'Empty meta description.' : 'No meta description.', 'Write a unique summary; Google may still rewrite it.');
+  if (!descEls.length || !descText) add('description', 'warn', descEls.length ? 'desc_empty' : 'desc_missing', descEls.length ? 'Empty meta description.' : 'No meta description.', 'Write a unique summary; Google may still rewrite it.');
   else {
-    if (descEls.length > 1) add('description', 'warn', `${descEls.length} meta description tags.`, 'Keep one.');
-    if (out.metaDescription.length < D.min) add('description', 'info', `Description is ${out.metaDescription.length} chars (band ${D.min}-${D.max}, advisory).`);
-    else if (out.metaDescription.length > D.max) add('description', 'info', `Description is ${out.metaDescription.length} chars (band ${D.min}-${D.max}); the tail may be cut.`);
+    if (descEls.length > 1) add('description', 'warn', ['desc_multiple', { n: descEls.length }], `${descEls.length} meta description tags.`, 'Keep one.');
+    if (out.metaDescription.length < D.min) add('description', 'info', ['desc_short', { n: out.metaDescription.length, min: D.min, max: D.max }], `Description is ${out.metaDescription.length} chars (band ${D.min}-${D.max}, advisory).`);
+    else if (out.metaDescription.length > D.max) add('description', 'info', ['desc_long', { n: out.metaDescription.length, min: D.min, max: D.max }], `Description is ${out.metaDescription.length} chars (band ${D.min}-${D.max}); the tail may be cut.`);
   }
 
   // ---- robots (meta + X-Robots-Tag) ----
@@ -154,9 +162,9 @@ export function inspectDocument(doc, opts = {}) {
   const headerNoindex = robotsEntries.some((e) => e.source === 'header' && isNo(e, 'noindex'));
   const nofollowAll = robotsEntries.some((e) => isNo(e, 'nofollow'));
   out.robots = { entries: robotsEntries, noindex: metaNoindex || headerNoindex, noindexVia: [metaNoindex && 'meta', headerNoindex && 'header'].filter(Boolean), nofollow: nofollowAll, xRobotsTag: xrt || null };
-  if (out.robots.noindex) add('robots', 'warn', `Page is noindex via ${out.robots.noindexVia.join(' + ')}.`, 'Intended only for pages that must stay out of search.');
-  if (nofollowAll) add('robots', 'info', 'Page-level nofollow: links on this page pass no signals.');
-  if (!hasHeaders) add('robots', 'not-run', 'X-Robots-Tag not checked: no response headers supplied.');
+  if (out.robots.noindex) add('robots', 'warn', `robots_noindex_${metaNoindex && headerNoindex ? 'both' : metaNoindex ? 'meta' : 'header'}`, `Page is noindex via ${out.robots.noindexVia.join(' + ')}.`, 'Intended only for pages that must stay out of search.');
+  if (nofollowAll) add('robots', 'info', 'robots_nofollow', 'Page-level nofollow: links on this page pass no signals.');
+  if (!hasHeaders) add('robots', 'not-run', 'robots_xrt_notrun', 'X-Robots-Tag not checked: no response headers supplied.');
 
   // ---- canonical ----
   const canonEls = all(doc, 'link').filter((l) => relTokens(l).includes('canonical'));
@@ -173,27 +181,27 @@ export function inspectDocument(doc, opts = {}) {
     else relation = 'other';
   }
   out.canonical = { href: rawCanon, resolved, count: canonEls.length, absolute, relation, headerCanonical: linkHdr ? linkHdr[1] : null };
-  if (!canonEls.length) add('canonical', 'warn', 'No rel=canonical link.', 'Add a self-referencing absolute canonical.');
+  if (!canonEls.length) add('canonical', 'warn', 'canonical_missing', 'No rel=canonical link.', 'Add a self-referencing absolute canonical.');
   else {
-    if (canonEls.length > 1) add('canonical', 'fail', `${canonEls.length} canonical links; conflicting declarations are ignored by Google.`, 'Keep exactly one.');
-    if (!rawCanon) add('canonical', 'fail', 'Canonical link has an empty href.');
-    else if (!absolute) add('canonical', 'warn', `Canonical "${rawCanon}" is relative.`, 'Use an absolute URL.');
-    if (relation === 'other') add('canonical', 'info', `Canonical points to another URL (${resolved}); this page asks not to be the indexed version.`);
-    if (relation === 'self-slash-variant') add('canonical', 'info', 'Canonical equals the page URL except for a trailing slash.');
-    if (relation === 'unknown' && rawCanon) add('canonical', 'not-run', 'Canonical self-reference not judged: page URL not supplied.');
-    if (isHttps && resolved && /^http:/i.test(resolved)) add('canonical', 'warn', 'Canonical uses http on an https page.');
+    if (canonEls.length > 1) add('canonical', 'fail', ['canonical_multiple', { n: canonEls.length }], `${canonEls.length} canonical links; conflicting declarations are ignored by Google.`, 'Keep exactly one.');
+    if (!rawCanon) add('canonical', 'fail', 'canonical_empty', 'Canonical link has an empty href.');
+    else if (!absolute) add('canonical', 'warn', ['canonical_relative', { href: rawCanon }], `Canonical "${rawCanon}" is relative.`, 'Use an absolute URL.');
+    if (relation === 'other') add('canonical', 'info', ['canonical_other', { url: resolved }], `Canonical points to another URL (${resolved}); this page asks not to be the indexed version.`);
+    if (relation === 'self-slash-variant') add('canonical', 'info', 'canonical_slash', 'Canonical equals the page URL except for a trailing slash.');
+    if (relation === 'unknown' && rawCanon) add('canonical', 'not-run', 'canonical_notrun', 'Canonical self-reference not judged: page URL not supplied.');
+    if (isHttps && resolved && /^http:/i.test(resolved)) add('canonical', 'warn', 'canonical_http', 'Canonical uses http on an https page.');
   }
 
   // ---- noindex vs canonical vs robots consistency ----
-  if (out.robots.noindex && relation === 'other') add('consistency', 'warn', 'noindex combined with a canonical to a different URL: contradictory signals.', 'Pick one: noindex, or canonical to the preferred URL.');
-  else if (out.robots.noindex && (relation === 'self' || relation === 'self-slash-variant')) add('consistency', 'info', 'noindex with a self canonical: the canonical has no effect.');
-  if (headerNoindex && !metaNoindex) add('consistency', 'warn', 'X-Robots-Tag says noindex but the meta robots tag does not: the header wins and is easy to overlook.', 'Align header and meta.');
+  if (out.robots.noindex && relation === 'other') add('consistency', 'warn', 'consistency_noindex_canonical', 'noindex combined with a canonical to a different URL: contradictory signals.', 'Pick one: noindex, or canonical to the preferred URL.');
+  else if (out.robots.noindex && (relation === 'self' || relation === 'self-slash-variant')) add('consistency', 'info', 'consistency_noindex_self', 'noindex with a self canonical: the canonical has no effect.');
+  if (headerNoindex && !metaNoindex) add('consistency', 'warn', 'consistency_header_only', 'X-Robots-Tag says noindex but the meta robots tag does not: the header wins and is easy to overlook.', 'Align header and meta.');
 
   // ---- lang ----
   const lang = (attr(root, 'lang') || '').trim() || null;
   out.lang = lang;
-  if (!lang) add('lang', 'warn', 'No <html lang>.', 'Set the page language (e.g. lang="tr").');
-  else if (!/^[a-z]{2,3}(-[A-Za-z0-9]{2,8})*$/.test(lang)) add('lang', 'warn', `<html lang="${lang}"> is not a well-formed language tag.`);
+  if (!lang) add('lang', 'warn', 'lang_missing', 'No <html lang>.', 'Set the page language (e.g. lang="tr").');
+  else if (!/^[a-z]{2,3}(-[A-Za-z0-9]{2,8})*$/.test(lang)) add('lang', 'warn', ['lang_malformed', { lang }], `<html lang="${lang}"> is not a well-formed language tag.`);
 
   // ---- viewport ----
   const vpEl = metaByName('viewport')[0];
@@ -201,11 +209,11 @@ export function inspectDocument(doc, opts = {}) {
   const vp = {};
   if (vpContent) for (const kv of vpContent.split(/[,;]/)) { const [k, v] = kv.split('='); if (k && v !== undefined) vp[k.trim().toLowerCase()] = v.trim().toLowerCase(); }
   out.viewport = vpContent;
-  if (!vpEl) add('viewport', 'fail', 'No meta viewport.', 'Add <meta name="viewport" content="width=device-width, initial-scale=1">.');
+  if (!vpEl) add('viewport', 'fail', 'viewport_missing', 'No meta viewport.', 'Add <meta name="viewport" content="width=device-width, initial-scale=1">.');
   else {
-    if (vp.width !== 'device-width') add('viewport', 'warn', `Viewport width is "${vp.width ?? 'unset'}", not device-width.`);
+    if (vp.width !== 'device-width') add('viewport', 'warn', vp.width === undefined ? 'viewport_width_unset' : ['viewport_width', { width: vp.width }], `Viewport width is "${vp.width ?? 'unset'}", not device-width.`);
     const maxScale = parseFloat(vp['maximum-scale']);
-    if (['no', '0'].includes(vp['user-scalable']) || (Number.isFinite(maxScale) && maxScale < rules.viewport.minMaximumScale)) add('viewport', 'warn', `Viewport blocks zoom (${vpContent}); WCAG 1.4.4 needs 200% resize.`, 'Remove user-scalable=no / maximum-scale below 2.');
+    if (['no', '0'].includes(vp['user-scalable']) || (Number.isFinite(maxScale) && maxScale < rules.viewport.minMaximumScale)) add('viewport', 'warn', ['viewport_zoom', { content: vpContent }], `Viewport blocks zoom (${vpContent}); WCAG 1.4.4 needs 200% resize.`, 'Remove user-scalable=no / maximum-scale below 2.');
   }
 
   // ---- charset ----
@@ -214,14 +222,14 @@ export function inspectDocument(doc, opts = {}) {
   if (charsetMeta) cs = (attr(charsetMeta, 'charset') || (/charset=([^;\s]+)/i.exec(attr(charsetMeta, 'content') || '') || [])[1] || '').toLowerCase() || null;
   const hdrCs = (/charset=([^;\s]+)/i.exec(headers['content-type'] || '') || [])[1]?.toLowerCase().replace(/"/g, '') || null;
   out.charset = { meta: cs, header: hdrCs };
-  if (!cs && !hdrCs) add('charset', 'warn', 'No charset declared in meta or Content-Type.', 'Add <meta charset="utf-8"> early in <head>.');
+  if (!cs && !hdrCs) add('charset', 'warn', 'charset_missing', 'No charset declared in meta or Content-Type.', 'Add <meta charset="utf-8"> early in <head>.');
   else {
-    if ((cs || hdrCs) !== 'utf-8') add('charset', 'warn', `Charset is "${cs || hdrCs}", not utf-8.`);
-    if (cs && hdrCs && cs !== hdrCs) add('charset', 'warn', `Meta charset (${cs}) and Content-Type charset (${hdrCs}) differ.`);
+    if ((cs || hdrCs) !== 'utf-8') add('charset', 'warn', ['charset_not_utf8', { charset: cs || hdrCs }], `Charset is "${cs || hdrCs}", not utf-8.`);
+    if (cs && hdrCs && cs !== hdrCs) add('charset', 'warn', ['charset_mismatch', { meta: cs, header: hdrCs }], `Meta charset (${cs}) and Content-Type charset (${hdrCs}) differ.`);
   }
   if (cs && rawHtml) {
     const idx = rawHtml.search(/<meta[^>]+charset/i);
-    if (idx > 0 && new TextEncoder().encode(rawHtml.slice(0, idx)).length > rules.charset.maxByteOffset) add('charset', 'warn', `Charset meta starts after byte ${rules.charset.maxByteOffset} (HTML requires the first ${rules.charset.maxByteOffset}).`);
+    if (idx > 0 && new TextEncoder().encode(rawHtml.slice(0, idx)).length > rules.charset.maxByteOffset) add('charset', 'warn', ['charset_late', { bytes: rules.charset.maxByteOffset }], `Charset meta starts after byte ${rules.charset.maxByteOffset} (HTML requires the first ${rules.charset.maxByteOffset}).`);
   }
 
   // ---- doctype ----
@@ -230,24 +238,24 @@ export function inspectDocument(doc, opts = {}) {
   else if (doc.doctype) doctype = String(doc.doctype.name).toLowerCase() === 'html' ? 'html5' : 'missing-or-legacy';
   else if (doc.compatMode) doctype = doc.compatMode === 'CSS1Compat' ? 'html5' : 'missing-or-legacy';
   out.doctype = doctype;
-  if (doctype === 'missing-or-legacy') add('doctype', 'warn', 'No <!doctype html> (browser falls into quirks mode).', 'Add <!doctype html> as the first line.');
-  else if (doctype === 'unknown') add('doctype', 'not-run', 'Doctype not checked: no source and no doc.doctype.');
+  if (doctype === 'missing-or-legacy') add('doctype', 'warn', 'doctype_missing', 'No <!doctype html> (browser falls into quirks mode).', 'Add <!doctype html> as the first line.');
+  else if (doctype === 'unknown') add('doctype', 'not-run', 'doctype_notrun', 'Doctype not checked: no source and no doc.doctype.');
 
   // ---- hreflang ----
   const hreflang = all(doc, 'link').filter((l) => relTokens(l).includes('alternate') && attr(l, 'hreflang')).map((l) => ({ hreflang: attr(l, 'hreflang').trim(), href: (attr(l, 'href') || '').trim() }));
   out.hreflang = hreflang;
   if (hreflang.length) {
     const bad = hreflang.filter((h) => h.hreflang.toLowerCase() !== 'x-default' && !/^[a-z]{2,3}(-[A-Za-z0-9]{2,8})*$/.test(h.hreflang));
-    if (bad.length) add('hreflang', 'warn', `Malformed hreflang value(s): ${bad.map((b) => b.hreflang).join(', ')}.`);
+    if (bad.length) add('hreflang', 'warn', ['hreflang_malformed', { values: bad.map((b) => b.hreflang).join(', ') }], `Malformed hreflang value(s): ${bad.map((b) => b.hreflang).join(', ')}.`);
     const rel = hreflang.filter((h) => !/^https?:\/\//i.test(h.href));
-    if (rel.length) add('hreflang', 'warn', `${rel.length} hreflang href(s) not absolute.`);
+    if (rel.length) add('hreflang', 'warn', ['hreflang_relative', { n: rel.length }], `${rel.length} hreflang href(s) not absolute.`);
     const seen = new Set(); const dup = [];
     for (const h of hreflang) { const k = h.hreflang.toLowerCase(); if (seen.has(k)) dup.push(k); seen.add(k); }
-    if (dup.length) add('hreflang', 'warn', `Duplicate hreflang value(s): ${[...new Set(dup)].join(', ')}.`);
-    if (!seen.has('x-default')) add('hreflang', 'info', 'No x-default hreflang.');
+    if (dup.length) add('hreflang', 'warn', ['hreflang_duplicate', { values: [...new Set(dup)].join(', ') }], `Duplicate hreflang value(s): ${[...new Set(dup)].join(', ')}.`);
+    if (!seen.has('x-default')) add('hreflang', 'info', 'hreflang_no_default', 'No x-default hreflang.');
     if (url) {
-      if (!hreflang.some((h) => normUrl(h.href, { stripSlash: true }) === normUrl(url, { stripSlash: true }))) add('hreflang', 'warn', 'hreflang set does not include the page itself.');
-    } else add('hreflang', 'not-run', 'hreflang self-reference not judged: page URL not supplied.');
+      if (!hreflang.some((h) => normUrl(h.href, { stripSlash: true }) === normUrl(url, { stripSlash: true }))) add('hreflang', 'warn', 'hreflang_no_self', 'hreflang set does not include the page itself.');
+    } else add('hreflang', 'not-run', 'hreflang_notrun', 'hreflang self-reference not judged: page URL not supplied.');
   }
 
   // ---- headings ----
@@ -255,14 +263,14 @@ export function inspectDocument(doc, opts = {}) {
   const h1s = heads.filter((h) => h.level === 1);
   out.h1Count = h1s.length;
   out.headings = { outline: heads, counts: [1, 2, 3, 4, 5, 6].reduce((a, l) => ({ ...a, [`h${l}`]: heads.filter((h) => h.level === l).length }), {}) };
-  if (h1s.length === 0) add('h1', 'warn', 'No H1.', 'Add one H1 stating the page topic.');
-  else if (h1s.length > rules.headings.maxH1) add('h1', 'warn', `${h1s.length} H1 elements. Google tolerates this; our page-anatomy rule is one H1 (clarity, not ranking).`, 'Keep one H1.');
-  if (h1s.some((h) => !h.text)) add('h1', 'warn', 'An H1 is empty.');
+  if (h1s.length === 0) add('h1', 'warn', 'h1_missing', 'No H1.', 'Add one H1 stating the page topic.');
+  else if (h1s.length > rules.headings.maxH1) add('h1', 'warn', ['h1_multiple', { n: h1s.length }], `${h1s.length} H1 elements. Google tolerates this; our page-anatomy rule is one H1 (clarity, not ranking).`, 'Keep one H1.');
+  if (h1s.some((h) => !h.text)) add('h1', 'warn', 'h1_empty', 'An H1 is empty.');
   const skips = [];
   heads.forEach((h, i) => { if (i && h.level - heads[i - 1].level > 1) skips.push(`h${heads[i - 1].level}->h${h.level}`); });
-  if (skips.length) add('outline', 'info', `Heading level skipped (${skips.slice(0, 5).join(', ')}). Google says heading order is not a ranking factor; it helps accessibility.`);
+  if (skips.length) add('outline', 'info', ['outline_skip', { skips: skips.slice(0, 5).join(', ') }], `Heading level skipped (${skips.slice(0, 5).join(', ')}). Google says heading order is not a ranking factor; it helps accessibility.`);
   const emptyH = heads.filter((h) => h.level > 1 && !h.text).length;
-  if (emptyH) add('outline', 'warn', `${emptyH} empty heading(s).`);
+  if (emptyH) add('outline', 'warn', ['outline_empty', { n: emptyH }], `${emptyH} empty heading(s).`);
 
   // ---- images ----
   const imgEls = all(doc, 'img');
@@ -277,9 +285,9 @@ export function inspectDocument(doc, opts = {}) {
     if (rules.images.requireDimensions && (!attr(el, 'width') || !attr(el, 'height'))) { img.missingDimensions++; if (imgIssues.length < 25) imgIssues.push({ src, issue: 'dimensions-missing' }); }
   });
   out.images = { ...img, issues: imgIssues };
-  if (img.altMissing) add('images', 'warn', `${img.altMissing}/${img.total} image(s) have no alt attribute.`, 'Add descriptive alt, or alt="" for decorative images.');
-  if (img.altEmpty) add('images', 'info', `${img.altEmpty} image(s) have empty alt (fine only if decorative).`);
-  if (img.missingDimensions) add('images', 'info', `${img.missingDimensions}/${img.total} image(s) lack width/height (layout-shift risk).`);
+  if (img.altMissing) add('images', 'warn', ['images_alt_missing', { n: img.altMissing, total: img.total }], `${img.altMissing}/${img.total} image(s) have no alt attribute.`, 'Add descriptive alt, or alt="" for decorative images.');
+  if (img.altEmpty) add('images', 'info', ['images_alt_empty', { n: img.altEmpty }], `${img.altEmpty} image(s) have empty alt (fine only if decorative).`);
+  if (img.missingDimensions) add('images', 'info', ['images_no_dims', { n: img.missingDimensions, total: img.total }], `${img.missingDimensions}/${img.total} image(s) lack width/height (layout-shift risk).`);
 
   // ---- links ----
   const myHost = url ? hostOf(url) : null;
@@ -306,10 +314,10 @@ export function inspectDocument(doc, opts = {}) {
     if (internal) lk.internal++; else { lk.external++; if (rel.includes('nofollow') && nofollowExternal.length < 20) nofollowExternal.push(href); }
   }
   out.links = { ...lk, emptyAnchorHrefs: emptyList, nofollowExternal, hostKnown: !!myHost };
-  if (lk.emptyAnchors) add('links', 'warn', `${lk.emptyAnchors} link(s) with no text, image alt or aria-label.`, 'Give every link an accessible name.');
-  if (lk.javascript) add('links', 'warn', `${lk.javascript} javascript: link(s) are not crawlable.`);
-  if (lk.placeholderHref) add('links', 'info', `${lk.placeholderHref} link(s) with empty or "#" href.`);
-  if (!myHost && lk.total) add('links', 'not-run', 'Internal/external split not reliable: page URL not supplied (absolute links all counted external).');
+  if (lk.emptyAnchors) add('links', 'warn', ['links_empty_anchor', { n: lk.emptyAnchors }], `${lk.emptyAnchors} link(s) with no text, image alt or aria-label.`, 'Give every link an accessible name.');
+  if (lk.javascript) add('links', 'warn', ['links_javascript', { n: lk.javascript }], `${lk.javascript} javascript: link(s) are not crawlable.`);
+  if (lk.placeholderHref) add('links', 'info', ['links_placeholder', { n: lk.placeholderHref }], `${lk.placeholderHref} link(s) with empty or "#" href.`);
+  if (!myHost && lk.total) add('links', 'not-run', 'links_notrun', 'Internal/external split not reliable: page URL not supplied (absolute links all counted external).');
 
   // ---- Open Graph + Twitter ----
   const og = {}; const tw = {};
@@ -323,12 +331,12 @@ export function inspectDocument(doc, opts = {}) {
   }
   out.openGraph = og; out.twitterCard = tw;
   const ogMissing = rules.openGraph.required.filter((k) => !og[k] || !String(og[k]).trim());
-  if (ogMissing.length) add('open-graph', 'warn', `Open Graph missing: ${ogMissing.join(', ')}.`, 'Add the four required OG properties.');
+  if (ogMissing.length) add('open-graph', 'warn', ['og_missing', { fields: ogMissing.join(', ') }], `Open Graph missing: ${ogMissing.join(', ')}.`, 'Add the four required OG properties.');
   const ogImg = [].concat(og['og:image'] || []);
-  if (ogImg.some((u) => !/^https?:\/\//i.test(u))) add('open-graph', 'warn', 'og:image is not an absolute URL.');
-  if (og['og:url'] && resolved && normUrl(String(og['og:url']), { stripSlash: true }) !== normUrl(resolved, { stripSlash: true })) add('open-graph', 'info', `og:url (${og['og:url']}) differs from the canonical.`);
+  if (ogImg.some((u) => !/^https?:\/\//i.test(u))) add('open-graph', 'warn', 'og_image_relative', 'og:image is not an absolute URL.');
+  if (og['og:url'] && resolved && normUrl(String(og['og:url']), { stripSlash: true }) !== normUrl(resolved, { stripSlash: true })) add('open-graph', 'info', ['og_url_differs', { url: og['og:url'] }], `og:url (${og['og:url']}) differs from the canonical.`);
   const twMissing = rules.twitterCard.required.filter((k) => !tw[k]);
-  if (twMissing.length) add('twitter-card', 'info', `Twitter/X card missing: ${twMissing.join(', ')} (X falls back to OG for the other fields).`);
+  if (twMissing.length) add('twitter-card', 'info', ['twitter_missing', { fields: twMissing.join(', ') }], `Twitter/X card missing: ${twMissing.join(', ')} (X falls back to OG for the other fields).`);
 
   // ---- structured data ----
   const ldScripts = all(doc, 'script').filter((s) => /ld\+json/i.test(attr(s, 'type') || ''));
@@ -344,9 +352,9 @@ export function inspectDocument(doc, opts = {}) {
   for (const el of all(doc, '*')) { const it = attr(el, 'itemtype'); if (it) it.split(/\s+/).forEach((t) => microTypes.add(t.split('/').pop())); }
   out.schemaTypes = [...typeSet];
   out.structuredData = { jsonLdBlocks: ldScripts.length, jsonLdTypes: [...typeSet], jsonLdErrors: ldErrors, microdataTypes: [...microTypes], note: 'RDFa not scanned' };
-  if (ldErrors.length) add('structured-data', 'fail', `${ldErrors.length} JSON-LD block(s) fail to parse: ${ldErrors.map((e) => e.error).join(' | ')}`, 'Fix the JSON syntax; run schema/schema-validate.mjs for rule checks.');
-  if (httpContext.length) add('structured-data', 'info', '@context uses http://schema.org; https is preferred.');
-  if (!ldScripts.length && !microTypes.size) add('structured-data', 'info', 'No JSON-LD or microdata found in this document.');
+  if (ldErrors.length) add('structured-data', 'fail', ['sd_parse_error', { n: ldErrors.length, errors: ldErrors.map((e) => e.error).join(' | ') }], `${ldErrors.length} JSON-LD block(s) fail to parse: ${ldErrors.map((e) => e.error).join(' | ')}`, 'Fix the JSON syntax; run schema/schema-validate.mjs for rule checks.');
+  if (httpContext.length) add('structured-data', 'info', 'sd_http_context', '@context uses http://schema.org; https is preferred.');
+  if (!ldScripts.length && !microTypes.size) add('structured-data', 'info', 'sd_none', 'No JSON-LD or microdata found in this document.');
 
   // ---- tracking tags ----
   const srcs = [...all(doc, 'script'), ...all(doc, 'iframe'), ...all(doc, 'img')].map((e) => attr(e, 'src') || '').filter(Boolean);
@@ -362,8 +370,8 @@ export function inspectDocument(doc, opts = {}) {
     tracking.push({ id: t.id, label: t.label, matchedBy: [bySrc.length && 'src', byInline && 'inline'].filter(Boolean), ids: [...ids].slice(0, 5) });
   }
   out.tracking = tracking;
-  if (tracking.some((t) => t.id === 'ua-legacy')) add('tracking', 'warn', 'Legacy Universal Analytics tag present; it no longer processes data.', 'Remove or migrate to GA4.');
-  if (!tracking.length) add('tracking', 'info', 'No analytics/pixel tag found by script src or inline init (tags loaded inside a GTM container or after consent are invisible here).');
+  if (tracking.some((t) => t.id === 'ua-legacy')) add('tracking', 'warn', 'tracking_ua', 'Legacy Universal Analytics tag present; it no longer processes data.', 'Remove or migrate to GA4.');
+  if (!tracking.length) add('tracking', 'info', 'tracking_none', 'No analytics/pixel tag found by script src or inline init (tags loaded inside a GTM container or after consent are invisible here).');
 
   // ---- text, ratio, words, keywords ----
   const body = doc.body || root;
@@ -374,9 +382,9 @@ export function inspectDocument(doc, opts = {}) {
   const C = rules.content;
   const ratio = htmlLen ? Math.round((text.length / htmlLen) * 1000) / 10 : null;
   out.content = { wordCount: words.length, textChars: text.length, htmlChars: htmlLen, textHtmlRatioPercent: ratio };
-  if (words.length < C.thinContentWords) add('content', 'info', `${words.length} words of visible text (WebForge floor ${C.thinContentWords}; Google has no word-count target).`);
-  if (ratio === null) add('content', 'not-run', 'Text/HTML ratio not computed: no source string or outerHTML.');
-  else if (ratio < C.minTextHtmlRatioPercent) add('content', 'info', `Text/HTML ratio ${ratio}% (< ${C.minTextHtmlRatioPercent}%; an SEO-tool heuristic, not a Google signal).`);
+  if (words.length < C.thinContentWords) add('content', 'info', ['content_thin', { n: words.length, min: C.thinContentWords }], `${words.length} words of visible text (WebForge floor ${C.thinContentWords}; Google has no word-count target).`);
+  if (ratio === null) add('content', 'not-run', 'content_ratio_notrun', 'Text/HTML ratio not computed: no source string or outerHTML.');
+  else if (ratio < C.minTextHtmlRatioPercent) add('content', 'info', ['content_ratio_low', { ratio, min: C.minTextHtmlRatioPercent }], `Text/HTML ratio ${ratio}% (< ${C.minTextHtmlRatioPercent}%; an SEO-tool heuristic, not a Google signal).`);
 
   const turkish = !!lang && /^tr\b/i.test(lang);
   const lower = (s) => (turkish ? s.replace(/İ/g, 'i').replace(/I/g, 'ı') : s).toLowerCase();
@@ -394,7 +402,7 @@ export function inspectDocument(doc, opts = {}) {
   const bigrams = [...bi].filter(([, n]) => n >= 2).sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0])).slice(0, 5).map(([phrase, count]) => ({ phrase, count }));
   out.keywords = { totalTokens: toks.length, unigrams, bigrams, stopWordSource: 'aio/_aio-lib.mjs STOPWORDS (~70 tr+en words; a fuller Turkish list exists unexported in content/content-ngram-audit.mjs)', language: lang };
   const stuffed = unigrams.filter((u) => u.densityPercent > C.keywordDensityMaxPercent && toks.length >= 100);
-  if (stuffed.length) add('keywords', 'info', `Keyword density above ${C.keywordDensityMaxPercent}%: ${stuffed.map((u) => `${u.word} ${u.densityPercent}%`).join(', ')} (heuristic; no published Google figure).`);
+  if (stuffed.length) add('keywords', 'info', ['keywords_density', { max: C.keywordDensityMaxPercent, words: stuffed.map((u) => `${u.word} ${u.densityPercent}%`).join(', ') }], `Keyword density above ${C.keywordDensityMaxPercent}%: ${stuffed.map((u) => `${u.word} ${u.densityPercent}%`).join(', ')} (heuristic; no published Google figure).`);
 
   // ---- mixed content ----
   if (isHttps === true) {
@@ -404,24 +412,24 @@ export function inspectDocument(doc, opts = {}) {
     all(doc, 'link').filter((l) => relTokens(l).includes('stylesheet')).forEach((l) => { const v = attr(l, 'href'); if (v && /^http:\/\//i.test(v.trim())) active.push(v.trim()); });
     chk('img', 'src', passive); chk('audio', 'src', passive); chk('video', 'src', passive); chk('source', 'src', passive); chk('form', 'action', active);
     out.mixedContent = { active, passive };
-    if (active.length) add('mixed-content', 'fail', `${active.length} active http:// subresource(s) on an https page (blocked by browsers): ${active.slice(0, 3).join(', ')}`, 'Serve every subresource over https.');
-    if (passive.length) add('mixed-content', 'warn', `${passive.length} passive http:// resource(s) on an https page: ${passive.slice(0, 3).join(', ')}`, 'Serve media over https.');
+    if (active.length) add('mixed-content', 'fail', ['mixed_active', { n: active.length, urls: active.slice(0, 3).join(', ') }], `${active.length} active http:// subresource(s) on an https page (blocked by browsers): ${active.slice(0, 3).join(', ')}`, 'Serve every subresource over https.');
+    if (passive.length) add('mixed-content', 'warn', ['mixed_passive', { n: passive.length, urls: passive.slice(0, 3).join(', ') }], `${passive.length} passive http:// resource(s) on an https page: ${passive.slice(0, 3).join(', ')}`, 'Serve media over https.');
   } else {
     out.mixedContent = null;
-    add('mixed-content', 'not-run', isHttps === false ? 'Mixed content not applicable: page is served over http (itself a defect).' : 'Mixed content not checked: page URL not supplied.');
+    add('mixed-content', 'not-run', isHttps === false ? 'mixed_http_page' : 'mixed_notrun', isHttps === false ? 'Mixed content not applicable: page is served over http (itself a defect).' : 'Mixed content not checked: page URL not supplied.');
   }
 
   // ---- HSTS ----
   const hsts = headers['strict-transport-security'] || null;
   out.hsts = null;
-  if (!hasHeaders) add('hsts', 'not-run', 'HSTS not checked: no response headers supplied.');
-  else if (isHttps === false) add('hsts', 'warn', 'Page is served over http; HSTS only applies to https responses.');
-  else if (!hsts) add('hsts', 'warn', 'No Strict-Transport-Security header.', 'Send max-age=31536000; includeSubDomains.');
+  if (!hasHeaders) add('hsts', 'not-run', 'hsts_notrun', 'HSTS not checked: no response headers supplied.');
+  else if (isHttps === false) add('hsts', 'warn', 'hsts_http_page', 'Page is served over http; HSTS only applies to https responses.');
+  else if (!hsts) add('hsts', 'warn', 'hsts_missing', 'No Strict-Transport-Security header.', 'Send max-age=31536000; includeSubDomains.');
   else {
     const maxAge = parseInt((/max-age=(\d+)/i.exec(hsts) || [])[1], 10);
     out.hsts = { raw: hsts, maxAge: Number.isFinite(maxAge) ? maxAge : null, includeSubDomains: /includesubdomains/i.test(hsts), preload: /\bpreload\b/i.test(hsts) };
-    if (!Number.isFinite(maxAge) || maxAge < rules.hsts.minMaxAgeSeconds) add('hsts', 'warn', `HSTS max-age ${Number.isFinite(maxAge) ? maxAge : 'missing'} is below ${rules.hsts.minMaxAgeSeconds} (1 year).`);
-    if (!out.hsts.includeSubDomains) add('hsts', 'info', 'HSTS lacks includeSubDomains (needed for preload eligibility).');
+    if (!Number.isFinite(maxAge) || maxAge < rules.hsts.minMaxAgeSeconds) add('hsts', 'warn', Number.isFinite(maxAge) ? ['hsts_short', { maxAge, min: rules.hsts.minMaxAgeSeconds }] : ['hsts_no_maxage', { min: rules.hsts.minMaxAgeSeconds }], `HSTS max-age ${Number.isFinite(maxAge) ? maxAge : 'missing'} is below ${rules.hsts.minMaxAgeSeconds} (1 year).`);
+    if (!out.hsts.includeSubDomains) add('hsts', 'info', 'hsts_no_subdomains', 'HSTS lacks includeSubDomains (needed for preload eligibility).');
   }
 
   const summary = { fail: 0, warn: 0, info: 0, 'not-run': 0 };

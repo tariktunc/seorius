@@ -8,9 +8,11 @@
   "scripts": {
     "build": "node scripts/build.mjs",
     "test": "node --test \"test/*.test.mjs\"",
-    "check": "node scripts/check-dist.mjs"
+    "check": "node scripts/check-dist.mjs",
+    "test:e2e": "node --test \"test/e2e/*.e2e.mjs\""
   },
   "devDependencies": {
-    "esbuild": "^0.25.12"
+    "esbuild": "^0.25.12",
+    "playwright": "^1.61.0"
   }
 }

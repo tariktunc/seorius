@@ -24,10 +24,10 @@ export const GROUPS = ['technical', 'content', 'mobile', 'social'];
 
 const ID_TO_KEY = Object.fromEntries(Object.entries(RULE_IDS.HEALTH).map(([raw, id]) => [id, raw.replace(/^PI /, '')]));
 
-/** Normalise an engine finding or a Seorius finding to {check, severity, message|msgKey, params, fix_hint}. */
+/** Normalise an engine finding or a Seorius finding to {check, severity, message, msgKey, params, fix_hint, fixKey}. */
 export function normaliseFinding(f) {
   const check = f.check || ID_TO_KEY[f.id] || 'other';
-  return { id: f.id, check, severity: SEVERITY_MAP[f.severity] || f.severity, message: f.message || null, msgKey: f.msgKey || null, params: f.params || null, fix_hint: f.fix_hint || null, source: f.msgKey ? 'seorius' : 'engine' };
+  return { id: f.id, check, severity: SEVERITY_MAP[f.severity] || f.severity, message: f.message || null, msgKey: f.msgKey || null, params: f.params || null, fix_hint: f.fix_hint || null, fixKey: f.fixKey || null, source: String(f.id || '').startsWith('SEORIUS-') ? 'seorius' : 'engine' };
 }
 
 export function buildAudit(engineFindings, extraFindings) {

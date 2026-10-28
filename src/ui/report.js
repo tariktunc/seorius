@@ -1,6 +1,9 @@
-import { loadSettings, applyFontSize, resolveLang, loadLocale, applyI18n, t, has, el, sevBadge, findingText, checkName, scanTab, storedScan, callInTab, watchTab, errorText, download, fmtBytes, short } from './common.js';
+import { loadSettings, applyFontSize, resolveLang, loadLocale, applyI18n, t, has, el, sevBadge, findingText, fixText, checkName, scanTab, storedScan, callInTab, watchTab, errorText, download, fmtBytes, short } from './common.js';
 import { renderPreview, kvTable, table } from './views.js';
-import { GROUPS } from '../lib/audit.mjs';
+import { GROUPS, buildAudit } from '../lib/audit.mjs';
+import { extraFindings } from '../lib/extras.mjs';
+import { splitProbeTargets, checkLinksWith, measureImagesWith, checkSitemapsWith } from '../lib/probe.mjs';
+import { initHostAccess, hasHostAccess, requestHostAccess, extensionFetch, traceRedirects } from './hostaccess.js';
 import { compareMatrix } from '../lib/compare.mjs';
 import { toCsv, fileStamp } from '../lib/csv.mjs';
 import { AGENTS } from '../lib/robots.mjs';
@@ -12,7 +15,7 @@ const tabId = Number(new URLSearchParams(location.search).get('tab'));
 let settings; let scan = null;
 const linkStatus = new Map(); // url -> result
 const imageBytes = new Map(); // url -> result
-const ui = { linkFilter: 'all', imageFilter: 'all', compare: null, linkProgress: null, imageProgress: null };
+const ui = { linkFilter: 'all', imageFilter: 'all', compare: null, linkProgress: null, imageProgress: null, redirect: null, xoSitemaps: null };
 
 const SECTIONS = ['audit', 'pageinfo', 'head', 'headings', 'images', 'links', 'keywords', 'social', 'schema', 'technical', 'rawrendered', 'frames', 'tracking', 'compare', 'tools', 'help', 'export'];
 
@@ -21,6 +24,12 @@ function section(id, ...content) {
 }
 const kvRows = (pairs) => el('table', { class: 'kv' }, el('tbody', {}, pairs.map(([k, v]) => el('tr', {}, el('th', {}, k), el('td', {}, v === null || v === undefined || v === '' || (Array.isArray(v) && !v.length) ? el('em', { class: 'muted' }, t('val_missing')) : Array.isArray(v) ? v.join(' | ') : v)))));
 const yesNo = (b) => (b === null || b === undefined ? t('val_unknown') : b ? t('yes') : t('no'));
+
+/** Cross-site access line for the link / image sections: state + the one grant button. */
+function xsiteNote() {
+  if (hasHostAccess()) return el('p', { class: 'muted small' }, t('xsite_on'));
+  return el('p', { class: 'muted small' }, t('xsite_off'), ' ', el('button', { type: 'button', onclick: () => { requestHostAccess(); } }, t('btn_allow_xsite')));
+}
 
 // ---------- sections ----------
 
@@ -32,9 +41,8 @@ function sAudit() {
     const checks = scan.audit.checks.filter((c) => c.group === g);
     wrap.append(el('h3', {}, t(`grp_${g}`)), el('ul', { class: 'checks' }, checks.map((c) => el('li', { class: `check st-${c.status}` },
       el('div', { class: 'check-head' }, sevBadge(c.status), ' ', el('strong', {}, checkName(c.key)), ' ', el('a', { href: `#help-${c.key}`, class: 'small' }, t('help_link'))),
-      c.findings.length ? el('ul', { class: 'findings' }, c.findings.map((f) => el('li', {}, sevBadge(f.severity), ' ', findingText(f), f.fix_hint ? el('div', { class: 'fix' }, f.fix_hint) : null))) : el('div', { class: 'muted small' }, t('check_pass_note'))))));
+      c.findings.length ? el('ul', { class: 'findings' }, c.findings.map((f) => el('li', {}, sevBadge(f.severity), ' ', findingText(f), fixText(f) ? el('div', { class: 'fix' }, fixText(f)) : null))) : el('div', { class: 'muted small' }, t('check_pass_note'))))));
   }
-  if (resolveLang(settings) === 'tr') wrap.append(el('p', { class: 'muted small' }, t('engine_lang_note')));
   return section('audit', wrap);
 }
 
@@ -112,7 +120,7 @@ function sImages() {
     el('div', { class: 'chips' }, fmt.map(([k, v]) => el('span', { class: 'chip' }, `${k}: ${v} (${Math.round((v / total) * 100)}%)`))),
     el('div', { class: 'toolbar' }, filters.map((f) => el('button', { type: 'button', class: ui.imageFilter === f ? 'tab active' : 'tab', onclick: () => { ui.imageFilter = f; rerender('images'); } }, t(`flt_${f.replace(/-/g, '_')}`))), btn,
       el('button', { type: 'button', onclick: exportImages }, 'CSV')),
-    el('p', { class: 'muted small' }, t('images_note')),
+    el('p', { class: 'muted small' }, t('images_note')), xsiteNote(),
     table(all.filter(([k]) => cols[k]).map(([, c]) => c), rows));
 }
 
@@ -157,6 +165,7 @@ function sLinks() {
     el('div', { class: 'toolbar' }, filters.map((f) => el('button', { type: 'button', class: ui.linkFilter === f ? 'tab active' : 'tab', onclick: () => { ui.linkFilter = f; rerender('links'); } }, t(`flt_${f.replace(/-/g, '_')}`))),
       el('button', { type: 'button', onclick: runLinkCheck, disabled: ui.linkProgress !== null }, ui.linkProgress ? t('progress', ui.linkProgress) : t('btn_check_links')),
       el('button', { type: 'button', onclick: exportLinks }, 'CSV')),
+    xsiteNote(),
     el('details', {}, el('summary', {}, t('linkcheck_policy_title')), el('p', { class: 'small' }, t('linkcheck_policy'))),
     table(all.filter(([k]) => cols[k]).map(([, c]) => c), linkRows()));
 }
@@ -223,6 +232,7 @@ function sTechnical() {
       { label: t('col_value'), get: (r) => r[1], cls: 'mono' },
     ], p.selectedHeaders), el('details', {}, el('summary', {}, t('all_header_names', { n: p.headerNames.length })), el('p', { class: 'mono small' }, p.headerNames.join(', '))));
   }
+  parts.push(el('h3', {}, t('rc_title')), redirectChainView());
   parts.push(el('h3', {}, t('mixed_content')));
   if (e.mixedContent) parts.push(kvRows([[t('mc_active'), e.mixedContent.active], [t('mc_passive'), e.mixedContent.passive]]));
   else parts.push(el('p', { class: 'muted' }, t('mc_notrun')));
@@ -248,7 +258,41 @@ function sTechnical() {
     [t('sm_declared'), yesNo(sm.declaredInRobots)], [t('sm_listed'), sm.listed === null ? t('val_unknown') : `${yesNo(sm.listed)}${sm.complete ? '' : ` (${t('sm_partial', { checked: sm.checkedFiles, total: sm.childTotal })})`}`],
     [t('sm_crossorigin'), sm.skippedCrossOrigin],
   ]));
+  if (sm?.skippedCrossOrigin?.length) parts.push(xoSitemapView(sm.skippedCrossOrigin));
   return section('technical', ...parts);
+}
+
+function redirectChainView() {
+  const r = ui.redirect;
+  const btn = el('button', { type: 'button', onclick: runRedirectChain, disabled: !!r?.running }, r?.running ? t('scanning') : t('btn_redirect_chain'));
+  const out = el('div', {}, el('p', { class: 'muted small' }, t('rc_note')), el('div', { class: 'toolbar' }, btn));
+  if (!r || r.running) return out;
+  if (r.notRun) { out.append(el('p', { class: 'muted' }, el('span', { class: 'sev sev-not-run' }, t('sev_not_run')), ' ', t(`rc_notrun_${r.notRun.replace(/-/g, '_')}`))); return out; }
+  const c = r.chain;
+  out.append(el('ol', { class: 'chain' }, c.hops.map((h) => el('li', {},
+    el('span', { class: `sev sev-${h.error ? 'error' : h.status >= 400 ? 'error' : h.status >= 300 ? 'notice' : 'pass'}` }, h.error ? t('rc_error') : String(h.status ?? '?')), ' ',
+    el('span', { class: 'mono' }, h.url), h.location ? el('div', { class: 'small mono muted' }, `→ ${h.location}`) : null, h.error ? el('div', { class: 'small muted' }, h.error) : null))));
+  const redirects = c.hops.filter((h) => h.location).length;
+  out.append(el('p', { class: 'small' }, t('rc_summary', { n: redirects })));
+  if (c.loop) out.append(el('p', { class: 'error' }, t('rc_loop')));
+  if (c.truncated) out.append(el('p', { class: 'muted' }, t('rc_truncated', { n: SRULES.redirects.maxHops })));
+  else if (!c.complete && !c.error) out.append(el('p', { class: 'muted' }, t('rc_incomplete')));
+  return out;
+}
+
+function xoSitemapView(urls) {
+  const r = ui.xoSitemaps;
+  const out = el('div', {}, el('p', { class: 'muted small' }, t('xo_sm_note')),
+    el('div', { class: 'toolbar' }, el('button', { type: 'button', onclick: runXoSitemaps, disabled: !!r?.running }, r?.running ? t('scanning') : t('btn_check_xo_sitemaps'))));
+  if (r?.notRun) out.append(el('p', { class: 'muted' }, el('span', { class: 'sev sev-not-run' }, t('sev_not_run')), ' ', t('rc_notrun_refused')));
+  const rows = scan.network.sitemapCrossOrigin;
+  if (rows) out.append(table([
+    { label: 'URL', get: (x) => x.url, cls: 'mono' },
+    { label: t('col_status'), get: (x) => (x.ok ? `HTTP ${x.status} · ${x.type} · ${x.urlCount}` : el('span', { class: 'sev sev-not-run' }, x.reason && has(`reason_${x.reason.replace(/-/g, '_')}`) ? t(`reason_${x.reason.replace(/-/g, '_')}`) : `${x.status ? `HTTP ${x.status} ` : ''}${x.error || x.reason || ''}`)) },
+    { label: t('sm_listed'), get: (x) => (x.ok ? yesNo(x.listed) : '—') },
+  ], rows));
+  if (urls.length > SRULES.fetch.crossOriginSitemapCap) out.append(el('p', { class: 'muted small' }, t('xo_sm_cap', { n: SRULES.fetch.crossOriginSitemapCap })));
+  return out;
 }
 
 function sRawRendered() {
@@ -338,30 +382,58 @@ function renderAll() {
 
 // ---------- actions ----------
 
-async function runLinkCheck() {
-  const urls = scan.linkGroups.filter((g) => ['internal', 'subdomain', 'external'].includes(g.type)).map((g) => g.url).slice(0, SRULES.linkCheck.cap);
-  ui.linkProgress = { done: 0, total: urls.length }; rerender('links');
+// Probes run in batches of 12 (progress), each batch at most SRULES.linkCheck.concurrency at a time.
+// Same-origin URLs (and, without the optional host permission, every URL) go through the injected
+// page script; cross-origin URLs go from this page when the permission is granted (no CORS needed).
+const extOpts = () => ({ fetchImpl: extensionFetch, pageUrl: scan.url, timeoutMs: SRULES.linkCheck.timeoutMs, concurrency: SRULES.linkCheck.concurrency, corsBound: false });
+async function runProbes(urls, inTabMethod, extFn, store, key) {
+  const { inPage, fromExtension } = splitProbeTargets(urls, scan.url, hasHostAccess());
+  const jobs = [...inPage.map((u) => [u, 'tab']), ...fromExtension.map((u) => [u, 'ext'])];
+  ui[key] = { done: 0, total: jobs.length }; rerender(key === 'linkProgress' ? 'links' : 'images');
   try {
-    for (let i = 0; i < urls.length; i += 12) {
-      const res = await callInTab(tabId, 'checkLinks', urls.slice(i, i + 12));
-      for (const r of res) linkStatus.set(r.url, r);
-      ui.linkProgress = { done: Math.min(i + 12, urls.length), total: urls.length }; rerender('links');
+    for (let i = 0; i < jobs.length; i += 12) {
+      const batch = jobs.slice(i, i + 12);
+      const tabUrls = batch.filter((j) => j[1] === 'tab').map((j) => j[0]);
+      const extUrls = batch.filter((j) => j[1] === 'ext').map((j) => j[0]);
+      const res = [...(tabUrls.length ? await callInTab(tabId, inTabMethod, tabUrls) : []), ...(extUrls.length ? await extFn(extUrls, extOpts()) : [])];
+      for (const r of res) store.set(r.url, r);
+      ui[key] = { done: Math.min(i + 12, jobs.length), total: jobs.length }; rerender(key === 'linkProgress' ? 'links' : 'images');
     }
   } catch (e) { alert(errorText(e)); }
-  ui.linkProgress = null; rerender('links');
+  ui[key] = null; rerender(key === 'linkProgress' ? 'links' : 'images');
 }
 
-async function runImageSizes() {
+function runLinkCheck() {
+  const urls = scan.linkGroups.filter((g) => ['internal', 'subdomain', 'external'].includes(g.type)).map((g) => g.url).slice(0, SRULES.linkCheck.cap);
+  return runProbes(urls, 'checkLinks', checkLinksWith, linkStatus, 'linkProgress');
+}
+
+function runImageSizes() {
   const urls = [...new Set(scan.images.filter((i) => !i.bytes && i.src).map((i) => i.src))].slice(0, SRULES.images.sizeCheckCap);
-  ui.imageProgress = { done: 0, total: urls.length }; rerender('images');
-  try {
-    for (let i = 0; i < urls.length; i += 12) {
-      const res = await callInTab(tabId, 'measureImages', urls.slice(i, i + 12));
-      for (const r of res) imageBytes.set(r.url, r);
-      ui.imageProgress = { done: Math.min(i + 12, urls.length), total: urls.length }; rerender('images');
-    }
-  } catch (e) { alert(errorText(e)); }
-  ui.imageProgress = null; rerender('images');
+  return runProbes(urls, 'measureImages', measureImagesWith, imageBytes, 'imageProgress');
+}
+
+// permissions.request needs the click's user gesture, so it is called before any await.
+async function runRedirectChain() {
+  const ok = hasHostAccess() || await requestHostAccess();
+  if (!ok) { ui.redirect = { notRun: 'refused' }; rerender('technical'); return; }
+  ui.redirect = { running: true }; rerender('technical');
+  const r = await traceRedirects(scan.url, { maxHops: SRULES.redirects.maxHops, timeoutMs: SRULES.fetch.timeoutMs });
+  ui.redirect = r.notRun ? r : { chain: r };
+  rerender('technical');
+}
+
+async function runXoSitemaps() {
+  const ok = hasHostAccess() || await requestHostAccess();
+  if (!ok) { ui.xoSitemaps = { notRun: 'refused' }; rerender('technical'); return; }
+  ui.xoSitemaps = { running: true }; rerender('technical');
+  const urls = scan.network.sitemap.skippedCrossOrigin.slice(0, SRULES.fetch.crossOriginSitemapCap);
+  scan.network.sitemapCrossOrigin = await checkSitemapsWith(urls, { fetchImpl: extensionFetch, pageUrl: scan.url, timeoutMs: SRULES.fetch.timeoutMs, maxBytes: SRULES.fetch.maxSitemapBytes, urlCap: SRULES.fetch.sitemapUrlCap, childCap: SRULES.fetch.sitemapChildCap });
+  // The sitemap findings depend on these results: recompute the audit from the same pure functions.
+  scan.extraFindings = extraFindings(scan, SRULES);
+  scan.audit = buildAudit(scan.engine.findings, scan.extraFindings);
+  ui.xoSitemaps = null;
+  renderAll();
 }
 
 async function runCompare(input) {
@@ -399,7 +471,7 @@ async function rescan() {
   $('r-main').prepend(el('p', { class: 'muted', id: 'scanning' }, t('scanning')));
   try {
     scan = await scanTab(tabId, settings);
-    linkStatus.clear(); imageBytes.clear();
+    linkStatus.clear(); imageBytes.clear(); ui.redirect = null; ui.xoSitemaps = null;
     renderAll();
   } catch (e) {
     $('scanning')?.remove();
@@ -412,6 +484,7 @@ async function rescan() {
   applyFontSize(settings);
   await loadLocale(resolveLang(settings));
   applyI18n();
+  await initHostAccess(() => { if (scan) for (const s of ['links', 'images', 'technical']) rerender(s); });
   $('print').addEventListener('click', () => window.print());
   $('rescan').addEventListener('click', rescan);
   if (!Number.isInteger(tabId)) { $('r-main').replaceChildren(el('p', { class: 'error' }, t('err_no_tab'))); return; }

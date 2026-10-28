@@ -38,15 +38,22 @@ export function extraFindings(s, rules) {
   }
 
   // sitemap
+  // Sitemaps declared on another host are read only when the user starts that check from the report
+  // (optional host permission); their results arrive as net.sitemapCrossOrigin.
   const sm = net.sitemap;
+  const xo = (net.sitemapCrossOrigin || []).filter((r) => r.ok);
+  const xoListed = xo.some((r) => r.listed === true);
+  const xoUnchecked = (sm?.skippedCrossOrigin || []).filter((u) => !xo.some((r) => r.url === u)).length;
   if (!sm) out.push(f('sitemap', 'not-run', 'f_sitemap_notrun', { error: 'no request' }));
-  else if (!sm.found) out.push(f('sitemap', sm.checked ? 'info' : 'not-run', sm.checked ? 'f_sitemap_none' : 'f_sitemap_notrun', { error: sm.error || '', tried: (sm.tried || []).join(', ') }));
+  else if (!sm.found && !xo.length) out.push(f('sitemap', sm.checked ? 'info' : 'not-run', sm.checked ? 'f_sitemap_none' : 'f_sitemap_notrun', { error: sm.error || '', tried: (sm.tried || []).join(', ') }));
+  else if (!sm.found) { if (!xoListed) out.push(f('sitemap', 'info', 'f_sitemap_xo_not_listed', { n: xo.length })); }
   else {
     if (sm.declaredInRobots === false) out.push(f('sitemap', 'info', 'f_sitemap_undeclared'));
-    if (sm.listed === false) out.push(f('sitemap', 'info', sm.complete ? 'f_sitemap_not_listed' : 'f_sitemap_not_listed_partial', { checked: sm.checkedFiles, total: sm.childTotal }));
+    if (xoListed) { /* listed in a sitemap on another host */ }
+    else if (sm.listed === false) out.push(f('sitemap', 'info', sm.complete ? 'f_sitemap_not_listed' : 'f_sitemap_not_listed_partial', { checked: sm.checkedFiles, total: sm.childTotal }));
     else if (sm.listed === null) out.push(f('sitemap', 'not-run', 'f_sitemap_listing_notrun'));
-    if (sm.skippedCrossOrigin?.length) out.push(f('sitemap', 'not-run', 'f_sitemap_crossorigin', { n: sm.skippedCrossOrigin.length }));
   }
+  if (sm && xoUnchecked) out.push(f('sitemap', 'not-run', 'f_sitemap_crossorigin', { n: xoUnchecked }));
 
   // frames
   if (s.iframes?.length) out.push(f('frames', 'info', 'f_frames', { n: s.iframes.length }));

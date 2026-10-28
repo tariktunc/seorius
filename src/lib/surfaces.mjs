@@ -7,7 +7,7 @@
 // Without a raw run the live values stay, and the ratio is live text / live outerHTML.
 
 const SOURCE_IDS = new Set(['HEALTH-INSPECT-DOCTYPE', 'HEALTH-INSPECT-CHARSET']);
-const isRatio = (f) => f.id === 'HEALTH-INSPECT-CONTENT' && /text\/html ratio/i.test(f.message || '');
+const isRatio = (f) => f.id === 'HEALTH-INSPECT-CONTENT' && (f.msgKey ? /^e_content_ratio_/.test(f.msgKey) : /text\/html ratio/i.test(f.message || ''));
 
 export function mergeSurfaces(live, raw) {
   if (!raw) return { ...live, surfaces: { default: 'rendered-dom', doctype: 'rendered-dom', charset: 'rendered-dom', textHtmlRatio: 'rendered-dom' } };

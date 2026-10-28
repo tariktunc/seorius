@@ -1,4 +1,5 @@
-// Release check for dist/: exact permission set, no host access keys, exactly one content script
+// Release check for dist/: exact install-time permission set, no install-time host access, exact
+// optional (runtime) permission set, exactly one content script
 // (serp.js + serp.css on the Google web-search paths in src/lib/serp.mjs SERP_MATCHES and nothing
 // else), no network API in the Google results bundle, and a list of every http(s) URL that appears
 // in the built files (for manual review). Exit 1 on any defect.
@@ -11,7 +12,10 @@ const dist = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../dist
 const m = JSON.parse(await readFile(path.join(dist, 'manifest.json'), 'utf8'));
 const problems = [];
 if (JSON.stringify(m.permissions) !== JSON.stringify(['activeTab', 'scripting', 'storage'])) problems.push(`permissions are ${JSON.stringify(m.permissions)}`);
-for (const k of ['host_permissions', 'optional_permissions', 'optional_host_permissions', 'externally_connectable', 'web_accessible_resources', 'background']) if (k in m) problems.push(`manifest has ${k}`);
+for (const k of ['host_permissions', 'externally_connectable', 'web_accessible_resources', 'background']) if (k in m) problems.push(`manifest has ${k}`);
+// Optional (runtime, user-granted from the report page): exactly webRequest + http/https hosts.
+if (JSON.stringify(m.optional_permissions) !== JSON.stringify(['webRequest'])) problems.push(`optional_permissions are ${JSON.stringify(m.optional_permissions)}`);
+if (JSON.stringify(m.optional_host_permissions) !== JSON.stringify(['http://*/*', 'https://*/*'])) problems.push(`optional_host_permissions are ${JSON.stringify(m.optional_host_permissions)}`);
 
 // Content scripts: exactly the Google results script, only on Google web-search paths.
 const cs = m.content_scripts || [];
@@ -48,5 +52,5 @@ for (const f of await walk(dist)) {
     urls.get(k).add(path.relative(dist, f).replace(/\\/g, '/'));
   }
 }
-console.log(JSON.stringify({ permissions: m.permissions, content_scripts_matches: (m.content_scripts || []).flatMap((c) => c.matches || []).length, serp_network_api: net, problems, urls: [...urls].sort().map(([u, files]) => ({ url: u, files: [...files] })) }, null, 2));
+console.log(JSON.stringify({ permissions: m.permissions, optional_permissions: m.optional_permissions, optional_host_permissions: m.optional_host_permissions, content_scripts_matches: (m.content_scripts || []).flatMap((c) => c.matches || []).length, serp_network_api: net, problems, urls: [...urls].sort().map(([u, files]) => ({ url: u, files: [...files] })) }, null, 2));
 process.exit(problems.length ? 1 : 0);
